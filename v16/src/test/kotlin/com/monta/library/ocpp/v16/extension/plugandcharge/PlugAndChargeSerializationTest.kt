@@ -68,19 +68,19 @@ class PlugAndChargeSerializationTest : StringSpec({
     }
 
     "Authorize request should parse with extra type tag" {
-        val conf = dtReq(
+        val req = dtReq(
             "kempower-Authorize.req.json",
             PncAuthorizeRequest::class.java
         )
-        conf shouldNotBe null
+        req shouldNotBe null
     }
 
     "Kempower Get15118EVCertificate request should be deserialized" {
-        val conf = dtReq(
+        val req = dtReq(
             "kempower-Get15118EVCertificate.req.json",
             Get15118EVCertificateRequest::class.java
         )
-        conf shouldNotBe null
+        req shouldNotBe null
     }
 
     "Kempower GetInstalledCertificateIds response should be deserialized" {
@@ -89,5 +89,13 @@ class PlugAndChargeSerializationTest : StringSpec({
             GetInstalledCertificateIdsConfirmation::class.java
         )
         conf shouldNotBe null
+    }
+
+    "Alpitronic Authorize request should be deserialized" {
+        val req = dtReq(
+            "alpitronic-Authorize.req.json",
+            PncAuthorizeRequest::class.java
+        )
+        req shouldNotBe null
     }
 })

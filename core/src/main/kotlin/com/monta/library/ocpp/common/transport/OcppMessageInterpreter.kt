@@ -125,9 +125,6 @@ abstract class OcppMessageInterpreter(
 
                 completable.await()
             }
-            // restore the MDC context on the receiving thread
-            MDC.put("labels.charge_point_identity", ocppSessionInfo.identity)
-            MDC.put("labels.session_index", ocppSessionInfo.sessionIndex.uuid.toString())
             return result
         } catch (timeoutException: TimeoutCancellationException) {
             // cleanup the timed out deferrable
@@ -137,6 +134,10 @@ abstract class OcppMessageInterpreter(
                 msg = "Timeout for '${feature.name}' - ${messageSerializer.toPayloadString(request)}",
                 throwable = timeoutException
             )
+        } finally {
+            // restore the MDC context on the receiving thread
+            MDC.put("labels.charge_point_identity", ocppSessionInfo.identity)
+            MDC.put("labels.session_index", ocppSessionInfo.sessionIndex.uuid.toString())
         }
     }
 

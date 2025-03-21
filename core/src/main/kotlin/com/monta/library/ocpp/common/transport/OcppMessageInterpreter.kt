@@ -131,7 +131,7 @@ abstract class OcppMessageInterpreter(
             completeDeferrableRepository.getCachedDeferred(ocppSessionInfo.identity, request.uniqueId)
             throw OcppCallException(
                 errorCode = ocppErrorResponder.getInternalError(),
-                msg = "Timeout for '${feature.name}' - ${messageSerializer.toPayloadString(request)}",
+                msg = "Timeout for '${feature.name}'",
                 throwable = timeoutException
             )
         } finally {

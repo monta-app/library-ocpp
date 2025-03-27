@@ -22,7 +22,7 @@ dependencies {
     implementation(coroutines.bundles.implementation)
 
     // Core
-    implementation(platform("io.ktor:ktor-bom:3.1.1"))
+    implementation(platform("io.ktor:ktor-bom:3.1.2"))
     implementation("io.ktor:ktor-server-core-jvm")
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("io.ktor:ktor-server-host-common-jvm")
@@ -46,7 +46,7 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-dao")
     implementation("org.jetbrains.exposed:exposed-jdbc")
     implementation("org.jetbrains.exposed:exposed-java-time")
-    implementation("com.zaxxer:HikariCP:6.2.1")
+    implementation("com.zaxxer:HikariCP:6.3.0")
     runtimeOnly("com.h2database:h2:2.3.232")
 
     // Logging

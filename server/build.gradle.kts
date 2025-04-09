@@ -41,7 +41,7 @@ dependencies {
     implementation(jackson.bundles.implementation)
 
     // Database Libraries
-    implementation(platform("org.jetbrains.exposed:exposed-bom:0.60.0"))
+    implementation(platform("org.jetbrains.exposed:exposed-bom:0.61.0"))
     implementation("org.jetbrains.exposed:exposed-core")
     implementation("org.jetbrains.exposed:exposed-dao")
     implementation("org.jetbrains.exposed:exposed-jdbc")

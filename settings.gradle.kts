@@ -21,7 +21,7 @@ dependencyResolutionManagement {
 
         // Kotlin coroutines
         create("coroutines") {
-            version("coroutines", "1.10.1")
+            version("coroutines", "1.10.2")
             library("platform", "org.jetbrains.kotlinx", "kotlinx-coroutines-bom").versionRef("coroutines")
             library("core", "org.jetbrains.kotlinx", "kotlinx-coroutines-core").withoutVersion()
             library("jdk8", "org.jetbrains.kotlinx", "kotlinx-coroutines-jdk8").withoutVersion()

@@ -72,17 +72,6 @@ data class UpdateFirmwareResponse(
     val customData: CustomData? = null
 ) : OcppConfirmation {
 
-    data class CustomData(
-        val vendorId: String
-    ) {
-
-        init {
-            require(vendorId.length <= 255) {
-                "vendorId length > maximum 255 - ${vendorId.length}"
-            }
-        }
-    }
-
     enum class Status {
         Accepted,
         Rejected,

@@ -1,0 +1,21 @@
+[
+  3,
+  "d16cd067-9506-441e-902b-af1b9b15b8e4",
+  {
+    "status": "Accepted",
+    "connectorId": 1,
+    "scheduleStart": "2025-05-22T08:29:27.000Z",
+    "chargingSchedule": {
+      "duration": 60,
+      "chargingRateUnit": "A",
+      "chargingSchedulePeriod": [
+        {
+          "startPeriod": 0,
+          "limit": 32,
+          "numberPhases": 1
+        }
+      ],
+      "minChargingRate": 0
+    }
+  }
+]

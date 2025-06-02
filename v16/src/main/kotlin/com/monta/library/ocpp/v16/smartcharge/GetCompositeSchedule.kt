@@ -4,6 +4,7 @@ import com.monta.library.ocpp.common.chargingprofile.ChargingRateUnit
 import com.monta.library.ocpp.common.profile.Feature
 import com.monta.library.ocpp.common.profile.OcppConfirmation
 import com.monta.library.ocpp.common.profile.OcppRequest
+import java.time.ZonedDateTime
 
 object GetCompositeScheduleFeature : Feature {
     override val name: String = "GetCompositeSchedule"
@@ -25,6 +26,6 @@ data class GetCompositeScheduleRequest(
 data class GetCompositeScheduleConfirmation(
     val status: GetCompositeScheduleStatus,
     val connectorId: Int? = null,
-    val scheduleStart: Int? = null,
+    val scheduleStart: ZonedDateTime? = null,
     val chargingSchedule: ChargingSchedule? = null
 ) : OcppConfirmation

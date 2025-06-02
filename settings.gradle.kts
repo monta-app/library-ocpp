@@ -31,7 +31,7 @@ dependencyResolutionManagement {
 
         // Jackson serialization
         create("jackson") {
-            version("jackson", "2.18.3")
+            version("jackson", "2.19.0")
             library("platform", "com.fasterxml.jackson", "jackson-bom").versionRef("jackson")
             library("core", "com.fasterxml.jackson.core", "jackson-core").withoutVersion()
             library("annotations", "com.fasterxml.jackson.core", "jackson-annotations").withoutVersion()
@@ -45,7 +45,7 @@ dependencyResolutionManagement {
         create("kotest") {
             version("kotest", "5.9.1")
             version("strikt", "0.35.1")
-            version("jupiter", "5.12.1")
+            version("jupiter", "5.13.0")
 
             library("platform", "io.kotest", "kotest-bom").versionRef("kotest")
             library("junit5", "io.kotest", "kotest-runner-junit5-jvm").withoutVersion()

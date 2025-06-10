@@ -1,0 +1,1 @@
+[2,"req-2","MeterValues",{"connectorId":1,"transactionId":123,"meterValue":[{"timestamp":"2025-06-10T12:00:01Z","sampledValue":[{"value":"42","context":"Sample.Clock","format":"Raw","measurand":"Energy.Active.Import.Register","phase":"L1","location":"EV","unit":"Wh"}]}]}]

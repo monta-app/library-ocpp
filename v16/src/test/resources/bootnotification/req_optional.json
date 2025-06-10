@@ -1,0 +1,1 @@
+[2,"req-2","BootNotification",{"chargePointVendor":"ACME","chargePointModel":"ModelX","chargePointSerialNumber":"SN123","chargeBoxSerialNumber":"CB456","firmwareVersion":"1.2.3","iccid":"ICCID123","imsi":"IMSI456","meterType":"MeterTypeA","meterSerialNumber":"MTR789"}]

@@ -72,16 +72,19 @@ class BootNotificationSerializationTest : StringSpec({
         ocppMessage.shouldBeInstanceOf<Message.Request>()
         ocppMessage.uniqueId shouldBe "req-2"
         ocppMessage.action shouldBe "BootNotification"
-        val expectedJson = "{" +
-            "\"chargePointVendor\":\"ACME\"," +
-            "\"chargePointModel\":\"ModelX\"," +
-            "\"chargePointSerialNumber\":\"SN123\"," +
-            "\"chargeBoxSerialNumber\":\"CB456\"," +
-            "\"firmwareVersion\":\"1.2.3\"," +
-            "\"iccid\":\"ICCID123\"," +
-            "\"imsi\":\"IMSI456\"," +
-            "\"meterType\":\"MeterTypeA\"," +
-            "\"meterSerialNumber\":\"MTR789\"}"
+        val expectedJson = """
+            {
+                "chargePointVendor":"ACME",
+                "chargePointModel":"ModelX",
+                "chargePointSerialNumber":"SN123",
+                "chargeBoxSerialNumber":"CB456",
+                "firmwareVersion":"1.2.3",
+                "iccid":"ICCID123",
+                "imsi":"IMSI456",
+                "meterType":"MeterTypeA",
+                "meterSerialNumber":"MTR789"
+            }
+        """.trimIndent().replace("\n", "").replace(" ", "")
         ocppMessage.payload shouldBe TestUtils.toJsonNode(expectedJson)
         val payloadResult = messageSerializer.deserializePayload(ocppMessage, BootNotificationRequest::class.java)
         payloadResult.shouldBeInstanceOf<ParsingResult.Success<BootNotificationRequest>>()
@@ -121,10 +124,13 @@ class BootNotificationSerializationTest : StringSpec({
         ocppMessage.shouldBeInstanceOf<Message.Response>()
         ocppMessage.uniqueId shouldBe "res-1"
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssX")
-        val expectedJson = "{" +
-            "\"status\":\"Accepted\"," +
-            "\"currentTime\":\"2025-06-10T12:00:01Z\"," +
-            "\"interval\":300}"
+        val expectedJson = """
+            {
+                "status":"Accepted",
+                "currentTime":"2025-06-10T12:00:01Z",
+                "interval":300
+            }
+        """.trimIndent().replace("\n", "").replace(" ", "")
         ocppMessage.payload shouldBe TestUtils.toJsonNode(expectedJson)
         val payloadResult = messageSerializer.deserializePayload(ocppMessage, BootNotificationConfirmation::class.java)
         payloadResult.shouldBeInstanceOf<ParsingResult.Success<BootNotificationConfirmation>>()

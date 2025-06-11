@@ -14,7 +14,7 @@ class ChangeAvailabilitySerializationTest : StringSpec({
     val messageSerializer = MessageSerializer(SerializationMode.OCPP_1_6, OcppErrorResponderV16)
 
     "parse ChangeAvailability request" {
-        val jsonString = TestUtils.getFileAsString("changeavailability/req.json")
+        val jsonString = TestUtils.getFileAsString("change_availability/req.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Request>>()
         val ocppMessage = parsingResult.value
@@ -42,7 +42,7 @@ class ChangeAvailabilitySerializationTest : StringSpec({
     }
 
     "parse ChangeAvailability response" {
-        val jsonString = TestUtils.getFileAsString("changeavailability/res.json")
+        val jsonString = TestUtils.getFileAsString("change_availability/res.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Response>>()
         val ocppMessage = parsingResult.value

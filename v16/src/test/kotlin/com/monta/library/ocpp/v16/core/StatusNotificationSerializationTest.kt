@@ -15,9 +15,37 @@ import java.time.ZonedDateTime
 class StatusNotificationSerializationTest : StringSpec({
     val messageSerializer = MessageSerializer(SerializationMode.OCPP_1_6, OcppErrorResponderV16)
 
+    "parse a valid status notification request with a timestamp" {
+        val jsonString = TestUtils.getFileAsString("status_notification/req-timestamp.json")
+        val parsingResult = messageSerializer.parse(jsonString)
+
+        parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Request>>()
+        val ocppMessage = parsingResult.value
+        ocppMessage.shouldBeInstanceOf<Message.Request>()
+        val expected = messageSerializer.deserializePayload(ocppMessage, StatusNotificationRequest::class.java)
+        expected.shouldBeInstanceOf<ParsingResult.Success<StatusNotificationRequest>>()
+        ocppMessage.uniqueId shouldBe "2024120922534800000049"
+        ocppMessage.action shouldBe "StatusNotification"
+        ocppMessage.payload shouldBe TestUtils.toJsonNode("{\"connectorId\":1,\"status\":\"Available\",\"errorCode\":\"NoError\",\"info\":\"eCp_12V\",\"timestamp\":\"2024-12-09T22:53:49.000Z\"}")
+    }
+
+    "parse a valid status notification request with a timestamp without a timezone should fail" {
+        val jsonString = TestUtils.getFileAsString("status_notification/req-timestamp-no-timezone.json")
+        val parsingResult = messageSerializer.parse(jsonString)
+
+        parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Request>>()
+        val ocppMessage = parsingResult.value
+        ocppMessage.shouldBeInstanceOf<Message.Request>()
+        val expected = messageSerializer.deserializePayload(ocppMessage, StatusNotificationRequest::class.java)
+        expected.shouldBeInstanceOf<ParsingResult.Failure<StatusNotificationRequest>>()
+        ocppMessage.uniqueId shouldBe "2024120922534800000049"
+        ocppMessage.action shouldBe "StatusNotification"
+        ocppMessage.payload shouldBe TestUtils.toJsonNode("{\"connectorId\":1,\"status\":\"Available\",\"errorCode\":\"NoError\",\"info\":\"eCp_12V\",\"timestamp\":\"2024-12-09T22:53:49.000\"}")
+    }
+
     "parse StatusNotification request with only mandatory fields" {
         val testStartTime = ZonedDateTime.now()
-        val jsonString = TestUtils.getFileAsString("statusnotification/req.json")
+        val jsonString = TestUtils.getFileAsString("status_notification/req.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Request>>()
         val ocppMessage = parsingResult.value
@@ -52,7 +80,7 @@ class StatusNotificationSerializationTest : StringSpec({
     }
 
     "parse StatusNotification request with all optional fields" {
-        val jsonString = TestUtils.getFileAsString("statusnotification/req_optional.json")
+        val jsonString = TestUtils.getFileAsString("status_notification/req_optional.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Request>>()
         val ocppMessage = parsingResult.value
@@ -94,7 +122,7 @@ class StatusNotificationSerializationTest : StringSpec({
     }
 
     "parse StatusNotification response" {
-        val jsonString = TestUtils.getFileAsString("statusnotification/res.json")
+        val jsonString = TestUtils.getFileAsString("status_notification/res.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Response>>()
         val ocppMessage = parsingResult.value

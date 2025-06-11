@@ -9,11 +9,22 @@ import com.monta.library.ocpp.v16.error.OcppErrorResponderV16
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
+import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 class HeartbeatSerializationTest : StringSpec({
     val messageSerializer = MessageSerializer(SerializationMode.OCPP_1_6, OcppErrorResponderV16)
+
+    "format currentTime without millis" {
+        val now = ZonedDateTime.now(ZoneId.of("UTC"))
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssX")
+        val expected = now.format(formatter)
+
+        val heartbeatConfirmation = Message.Response("123", messageSerializer.toPayload(HeartbeatConfirmation(now)))
+
+        heartbeatConfirmation.toJsonString(messageSerializer) shouldBe "[3,\"123\",{\"currentTime\":\"$expected\"}]"
+    }
 
     "parse Heartbeat request" {
         val jsonString = TestUtils.getFileAsString("heartbeat/req.json")

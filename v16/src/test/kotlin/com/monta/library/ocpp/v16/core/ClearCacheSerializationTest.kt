@@ -14,7 +14,7 @@ class ClearCacheSerializationTest : StringSpec({
     val messageSerializer = MessageSerializer(SerializationMode.OCPP_1_6, OcppErrorResponderV16)
 
     "parse ClearCache request" {
-        val jsonString = TestUtils.getFileAsString("clearcache/req.json")
+        val jsonString = TestUtils.getFileAsString("clear_cache/req.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Request>>()
         val ocppMessage = parsingResult.value
@@ -33,7 +33,7 @@ class ClearCacheSerializationTest : StringSpec({
     }
 
     "parse ClearCache response" {
-        val jsonString = TestUtils.getFileAsString("clearcache/res.json")
+        val jsonString = TestUtils.getFileAsString("clear_cache/res.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Response>>()
         val ocppMessage = parsingResult.value

@@ -9,14 +9,34 @@ import com.monta.library.ocpp.v16.error.OcppErrorResponderV16
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
+import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 class BootNotificationSerializationTest : StringSpec({
     val messageSerializer = MessageSerializer(SerializationMode.OCPP_1_6, OcppErrorResponderV16)
 
+    "format currentTime without millis" {
+        val now = ZonedDateTime.now(ZoneId.of("UTC"))
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssX")
+        val expected = now.format(formatter)
+
+        val bootNotificationConfirmation = Message.Response(
+            "123",
+            messageSerializer.toPayload(
+                BootNotificationConfirmation(
+                    currentTime = now,
+                    interval = 240,
+                    status = RegistrationStatus.Accepted
+                )
+            )
+        )
+
+        bootNotificationConfirmation.toJsonString(messageSerializer) shouldBe "[3,\"123\",{\"currentTime\":\"$expected\",\"interval\":240,\"status\":\"Accepted\"}]"
+    }
+
     "parse BootNotification request with only mandatory fields" {
-        val jsonString = TestUtils.getFileAsString("bootnotification/req.json")
+        val jsonString = TestUtils.getFileAsString("boot_notification/req.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Request>>()
         val ocppMessage = parsingResult.value
@@ -24,9 +44,10 @@ class BootNotificationSerializationTest : StringSpec({
         ocppMessage.uniqueId shouldBe "req-1"
         ocppMessage.action shouldBe "BootNotification"
         ocppMessage.payload shouldBe TestUtils.toJsonNode(
-            "{" +
-                "\"chargePointVendor\":\"ACME\"," +
-                "\"chargePointModel\":\"ModelX\"}"
+            """{
+                "chargePointVendor":"ACME",
+                "chargePointModel":"ModelX"}
+            """.trimIndent()
         )
         val payloadResult = messageSerializer.deserializePayload(ocppMessage, BootNotificationRequest::class.java)
         payloadResult.shouldBeInstanceOf<ParsingResult.Success<BootNotificationRequest>>()
@@ -44,7 +65,7 @@ class BootNotificationSerializationTest : StringSpec({
     }
 
     "parse BootNotification request with all optional fields" {
-        val jsonString = TestUtils.getFileAsString("bootnotification/req_optional.json")
+        val jsonString = TestUtils.getFileAsString("boot_notification/req_optional.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Request>>()
         val ocppMessage = parsingResult.value
@@ -93,7 +114,7 @@ class BootNotificationSerializationTest : StringSpec({
     }
 
     "parse BootNotification response" {
-        val jsonString = TestUtils.getFileAsString("bootnotification/res.json")
+        val jsonString = TestUtils.getFileAsString("boot_notification/res.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Response>>()
         val ocppMessage = parsingResult.value

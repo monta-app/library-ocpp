@@ -1,10 +1,1 @@
-[
-  2,
-  "78ee4811-a044-417e-9c70-b51c2c296bf9",
-  "StatusNotification",
-  {
-    "connectorId": 1,
-    "errorCode": "NoError",
-    "status": "Available"
-  }
-]
+[2,"req-1","StatusNotification",{"connectorId":1,"errorCode":"NoError","status":"Available"}]

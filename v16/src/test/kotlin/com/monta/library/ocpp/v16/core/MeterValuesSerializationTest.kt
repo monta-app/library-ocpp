@@ -22,7 +22,7 @@ class MeterValuesSerializationTest : StringSpec({
     val messageSerializer = MessageSerializer(SerializationMode.OCPP_1_6, OcppErrorResponderV16)
 
     "parse MeterValues request with only mandatory fields" {
-        val jsonString = TestUtils.getFileAsString("metervalues/req.json")
+        val jsonString = TestUtils.getFileAsString("meter_values/req.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Request>>()
         val ocppMessage = parsingResult.value
@@ -62,7 +62,7 @@ class MeterValuesSerializationTest : StringSpec({
     }
 
     "parse MeterValues request with all fields" {
-        val jsonString = TestUtils.getFileAsString("metervalues/req_optional.json")
+        val jsonString = TestUtils.getFileAsString("meter_values/req_optional.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Request>>()
         val ocppMessage = parsingResult.value
@@ -126,7 +126,7 @@ class MeterValuesSerializationTest : StringSpec({
     }
 
     "parse MeterValues response" {
-        val jsonString = TestUtils.getFileAsString("metervalues/res.json")
+        val jsonString = TestUtils.getFileAsString("meter_values/res.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Response>>()
         val ocppMessage = parsingResult.value

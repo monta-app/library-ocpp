@@ -15,7 +15,7 @@ class RemoteStartTransactionSerializationTest : StringSpec({
     val messageSerializer = MessageSerializer(SerializationMode.OCPP_1_6, OcppErrorResponderV16)
 
     "parse RemoteStartTransaction request with only mandatory fields" {
-        val jsonString = TestUtils.getFileAsString("remotestarttransaction/req.json")
+        val jsonString = TestUtils.getFileAsString("remote_start_transaction/req.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Request>>()
         val ocppMessage = parsingResult.value
@@ -37,7 +37,7 @@ class RemoteStartTransactionSerializationTest : StringSpec({
     }
 
     "parse RemoteStartTransaction request with all optional fields" {
-        val jsonString = TestUtils.getFileAsString("remotestarttransaction/req_optional.json")
+        val jsonString = TestUtils.getFileAsString("remote_start_transaction/req_optional.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Request>>()
         val ocppMessage = parsingResult.value
@@ -65,7 +65,7 @@ class RemoteStartTransactionSerializationTest : StringSpec({
     }
 
     "parse RemoteStartTransaction response" {
-        val jsonString = TestUtils.getFileAsString("remotestarttransaction/res.json")
+        val jsonString = TestUtils.getFileAsString("remote_start_transaction/res.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Response>>()
         val ocppMessage = parsingResult.value

@@ -14,7 +14,7 @@ class DataTransferSerializationTest : StringSpec({
     val messageSerializer = MessageSerializer(SerializationMode.OCPP_1_6, OcppErrorResponderV16)
 
     "parse DataTransfer request with only mandatory fields" {
-        val jsonString = TestUtils.getFileAsString("datatransfer/req.json")
+        val jsonString = TestUtils.getFileAsString("data_transfer/req.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Request>>()
         val ocppMessage = parsingResult.value
@@ -36,7 +36,7 @@ class DataTransferSerializationTest : StringSpec({
     }
 
     "parse DataTransfer request with all optional fields" {
-        val jsonString = TestUtils.getFileAsString("datatransfer/req_optional.json")
+        val jsonString = TestUtils.getFileAsString("data_transfer/req_optional.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Request>>()
         val ocppMessage = parsingResult.value
@@ -58,7 +58,7 @@ class DataTransferSerializationTest : StringSpec({
     }
 
     "parse DataTransfer response with only mandatory fields" {
-        val jsonString = TestUtils.getFileAsString("datatransfer/res.json")
+        val jsonString = TestUtils.getFileAsString("data_transfer/res.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Response>>()
         val ocppMessage = parsingResult.value
@@ -78,7 +78,7 @@ class DataTransferSerializationTest : StringSpec({
     }
 
     "parse DataTransfer response with all optional fields" {
-        val jsonString = TestUtils.getFileAsString("datatransfer/res_optional.json")
+        val jsonString = TestUtils.getFileAsString("data_transfer/res_optional.json")
         val parsingResult = messageSerializer.parse(jsonString)
         parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Response>>()
         val ocppMessage = parsingResult.value

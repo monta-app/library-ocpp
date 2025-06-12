@@ -45,7 +45,7 @@ dependencyResolutionManagement {
         create("kotest") {
             version("kotest", "5.9.1")
             version("strikt", "0.35.1")
-            version("jupiter", "5.13.0")
+            version("jupiter", "5.13.1")
 
             library("platform", "io.kotest", "kotest-bom").versionRef("kotest")
             library("junit5", "io.kotest", "kotest-runner-junit5-jvm").withoutVersion()

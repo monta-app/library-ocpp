@@ -1,6 +1,7 @@
 package com.monta.library.ocpp.common.session
 
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
@@ -25,6 +26,7 @@ class OcppSession(
     private val duplicate = AtomicBoolean()
 
     init {
+        @OptIn(DelicateCoroutinesApi::class)
         GlobalScope.launch(Dispatchers.Unconfined) {
             // `supervisorScope` is used because we want to have continuous
             // processing of requestChannel even if one of the requests fails
@@ -89,7 +91,7 @@ class OcppSession(
              *
              * Note: Client preference (the order) is important, the first match is preferred.
              *
-             * @return [default] if the websocket protocols is null or empty.
+             * @return [default] if the websocket protocols are null or empty.
              * @throws IllegalArgumentException if the websocket protocols are not recognized.
              */
             @Suppress("unused")

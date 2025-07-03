@@ -10,7 +10,7 @@ import com.monta.library.ocpp.v201.error.OcppErrorResponderV201
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
-class CustomDataSerializationTest: StringSpec( {
+class CustomDataSerializationTest : StringSpec({
     val messageSerializer = MessageSerializer(SerializationMode.OCPP_2, OcppErrorResponderV201)
 
     "custom data (de)serialization should work" {
@@ -21,8 +21,9 @@ class CustomDataSerializationTest: StringSpec( {
             "123",
             "Heartbeat",
             messageSerializer.toPayload(
-                HeartbeatRequest(customData = x))
+                HeartbeatRequest(customData = x)
             )
+        )
         val serialized = heartbeatRequest.toJsonString(messageSerializer)
         serialized shouldBe "[2,\"123\",\"Heartbeat\",{\"customData\":{\"vendorId\":\"testVendor\",\"testKey\":\"testValue\"}}]"
     }

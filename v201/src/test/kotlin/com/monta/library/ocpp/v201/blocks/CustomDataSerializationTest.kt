@@ -38,5 +38,7 @@ class CustomDataSerializationTest: StringSpec( {
         request.action shouldBe "Heartbeat"
         val parsedPayload = messageSerializer.deserializePayload(request, HeartbeatRequest::class.java)
         (parsedPayload is ParsingResult.Success<HeartbeatRequest>) shouldBe true
+        (parsedPayload as ParsingResult.Success<HeartbeatRequest>).value.customData?.vendorId shouldBe "testVendor"
+        parsedPayload.value.customData?.get("testKey") shouldBe "testValue"
     }
 })

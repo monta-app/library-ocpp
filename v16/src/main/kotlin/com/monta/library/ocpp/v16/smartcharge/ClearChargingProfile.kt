@@ -18,7 +18,8 @@ enum class ClearChargingProfileStatus {
 data class ClearChargingProfileRequest(
     val id: Int? = null,
     val connectorId: Int? = null,
-    val chargingProfilePurpose: ChargingProfilePurposeType? = null
+    val chargingProfilePurpose: ChargingProfilePurposeType? = null,
+    val stackLevel: Int? = null
 ) : OcppRequest
 
 class ClearChargingProfileConfirmation(

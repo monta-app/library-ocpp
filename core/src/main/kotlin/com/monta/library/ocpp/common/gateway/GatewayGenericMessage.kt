@@ -30,4 +30,8 @@ sealed class GatewayGenericMessage(
     data class Disconnect(
         override val ocppSessionInfo: OcppSession.Info
     ) : GatewayGenericMessage(ocppSessionInfo)
+
+    data class SyncConnectivity(
+        override val ocppSessionInfo: OcppSession.Info
+    ) : GatewayGenericMessage(ocppSessionInfo)
 }

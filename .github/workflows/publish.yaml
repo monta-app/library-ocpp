@@ -56,4 +56,5 @@ jobs:
           version-mode: "SemVer"
           output: "slack"
           slack-token: ${{ secrets.SLACK_APP_TOKEN }}
-          slack-channel: "#releases"
+          # Slack channel: C02PDBL6GAU = #info-releases
+          slack-channel: "C02PDBL6GAU"

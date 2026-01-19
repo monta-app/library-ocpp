@@ -153,6 +153,7 @@ class PlugAndChargeExtensionClientTest : StringSpec() {
         return OcppSession.Info(
             "server1",
             UUID.randomUUID().toString(),
+            UUID.randomUUID().toString(),
             OcppSession.OcppVersion.V1_6,
             OcppSession.Index()
         )

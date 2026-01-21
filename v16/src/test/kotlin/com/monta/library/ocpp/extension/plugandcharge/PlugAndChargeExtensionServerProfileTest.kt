@@ -303,7 +303,7 @@ class PlugAndChargeExtensionServerProfileTest : StringSpec() {
         FEATURE_NAME_MAP.values.associateBy { it.confirmationType }
 
     private fun createSession(): OcppSession.Info {
-        return OcppSession.Info("server1", "DFSD123123",OcppSession.OcppVersion.V1_6, OcppSession.Index())
+        return OcppSession.Info("server1", "DFSD123123", OcppSession.OcppVersion.V1_6, OcppSession.Index())
     }
 
     private fun msgId() = UUID.randomUUID().toString()

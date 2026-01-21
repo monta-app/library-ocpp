@@ -52,8 +52,7 @@ open class OcppServer(
         val ocppSession = OcppSession(
             info = OcppSession.Info(
                 serverId = "",
-                identity = identity,
-                webSocketSessionId = ""
+                identity = identity
             ),
             sendFrame = sendFrame,
             closeConnection = closeConnection,

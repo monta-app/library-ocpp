@@ -73,7 +73,6 @@ open class OcppSession(
     data class Info(
         val serverId: String,
         val identity: String,
-        val webSocketSessionId: String,
         val ocppVersion: OcppVersion? = null,
         val sessionIndex: Index = Index()
     )

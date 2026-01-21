@@ -40,8 +40,7 @@ open class OcppClient(
         val ocppSession = OcppSession(
             info = OcppSession.Info(
                 serverId = "",
-                identity = identity,
-                webSocketSessionId = ""
+                identity = identity
             ),
             sendFrame = sendFrame,
             closeConnection = closeConnection,
@@ -73,8 +72,7 @@ open class OcppClient(
         return onDisconnect(
             OcppSession.Info(
                 serverId = "",
-                identity = identity,
-                webSocketSessionId = ""
+                identity = identity
             )
         )
     }

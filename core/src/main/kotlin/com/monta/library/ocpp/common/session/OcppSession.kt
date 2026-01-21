@@ -12,7 +12,7 @@ import kotlinx.coroutines.supervisorScope
 import java.util.UUID
 import java.util.concurrent.atomic.AtomicBoolean
 
-class OcppSession(
+open class OcppSession(
     val info: Info,
     private val sendFrame: suspend (message: String) -> Unit,
     private val closeConnection: suspend (closeReason: String) -> Unit,

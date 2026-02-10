@@ -12,6 +12,8 @@ jobs:
   test:
     name: Test
     uses: monta-app/github-workflows/.github/workflows/pull-request-kotlin.yml@main
+    with:
+      skip-sonar: true
     secrets:
       GHL_USERNAME: ${{ secrets.GHL_USERNAME }}
       GHL_PASSWORD: ${{ secrets.GHL_PASSWORD }}

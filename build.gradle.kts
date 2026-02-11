@@ -3,8 +3,14 @@ plugins {
     id("org.jetbrains.kotlin.jvm") apply false
     // Linter
     id("org.jlleitschuh.gradle.ktlint") version "12.3.0"
+    // Code coverage
+    id("org.jetbrains.kotlinx.kover") version "0.9.4" apply false
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
+}
+
+subprojects {
+    apply(plugin = "org.jetbrains.kotlinx.kover")
 }
 
 allprojects {

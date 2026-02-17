@@ -14,6 +14,7 @@ jobs:
     uses: monta-app/github-workflows/.github/workflows/pull-request-kotlin.yml@main
     with:
       skip-sonar: true
+      architecture: "arm64"
       kover-report-path: "core/build/reports/kover/report.xml"
     secrets:
       GHL_USERNAME: ${{ secrets.GHL_USERNAME }}

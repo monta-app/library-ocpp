@@ -1,0 +1,17 @@
+name: AI PR Review
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+  issue_comment:
+    types: [created]
+
+jobs:
+  ai-review:
+    uses: monta-app/ai-standards/.github/workflows/ai-pr-review.yml@main
+    with:
+      include-meme: false
+      dismiss-previous-reviews: true
+    secrets:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      AI_REVIEWER_SECRET_KEY: ${{ secrets.AI_REVIEWER_SECRET_KEY }}

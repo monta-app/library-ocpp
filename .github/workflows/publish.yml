@@ -40,7 +40,7 @@ jobs:
       - name: Get current version from tag
         id: get-version
         run: |
-          VERSION=$(echo ${{ github.ref_name }} | sed 's/^v//')
+          VERSION=$(echo "${{ github.ref_name }}" | sed 's/^v//')
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "Current version: $VERSION"
       # Setup JDK
@@ -59,6 +59,13 @@ jobs:
       - name: Set publish end time
         id: set-end-time
         run: echo "time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> "$GITHUB_OUTPUT"
+      # Always upload the gradle problems report
+      - name: Upload Gradle problems report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: gradle-problems-report
+          path: build/reports/problems/
   create-change-log:
     needs: publish
     name: Create and publish change log
@@ -70,15 +77,14 @@ jobs:
         with:
           service-name: "OCPP Library"
           github-release: true
-          github-token: ${{ secrets.MONTA_GITHUB_TOKEN }}
+          github-token: ${{ secrets.MONTA_BOT_TOKEN }}
           jira-app-name: "montaapp"
           jira-email: ${{ secrets.JIRA_EMAIL }}
           jira-token: ${{ secrets.JIRA_TOKEN }}
           version-mode: "SemVer"
           output: "slack"
           slack-token: ${{ secrets.SLACK_APP_TOKEN }}
-          # Slack channel: C02PDBL6GAU = #info-releases
-          slack-channel: "C02PDBL6GAU"
+          slack-channels: "#info-releases,#service-ocpp"
           # Metadata for PR/JIRA comments
           stage: "production"
           deployment-start-time: ${{ needs.publish.outputs.publish-start-time }}

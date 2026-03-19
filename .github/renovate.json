@@ -1,11 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended",
+    "local>monta-app/renovate-config",
     ":semanticCommitTypeAll(chore)"
   ],
-  "semanticCommits": "enabled",
-  "prConcurrentLimit": 2,
   "packageRules": [
     {
       "groupName": "upgrade all non-major gradle dependencies",

@@ -4,7 +4,7 @@ plugins {
     application
     kotlin("jvm")
     id("org.jlleitschuh.gradle.ktlint")
-    id("com.gradleup.shadow") version "8.3.6"
+    id("com.gradleup.shadow") version "8.3.10"
 }
 
 version = "1.0.0"
@@ -22,7 +22,7 @@ dependencies {
     implementation(coroutines.bundles.implementation)
 
     // Core
-    implementation(platform("io.ktor:ktor-bom:3.1.3"))
+    implementation(platform("io.ktor:ktor-bom:3.4.1"))
     implementation("io.ktor:ktor-server-core-jvm")
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("io.ktor:ktor-server-host-common-jvm")
@@ -46,8 +46,8 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-dao")
     implementation("org.jetbrains.exposed:exposed-jdbc")
     implementation("org.jetbrains.exposed:exposed-java-time")
-    implementation("com.zaxxer:HikariCP:6.3.0")
-    runtimeOnly("com.h2database:h2:2.3.232")
+    implementation("com.zaxxer:HikariCP:6.3.3")
+    runtimeOnly("com.h2database:h2:2.4.240")
 
     // Logging
     implementation("io.ktor:ktor-server-call-logging-jvm")

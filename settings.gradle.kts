@@ -31,7 +31,7 @@ dependencyResolutionManagement {
 
         // Jackson serialization
         create("jackson") {
-            version("jackson", "2.19.0")
+            version("jackson", "2.21.1")
             library("platform", "com.fasterxml.jackson", "jackson-bom").versionRef("jackson")
             library("core", "com.fasterxml.jackson.core", "jackson-core").withoutVersion()
             library("annotations", "com.fasterxml.jackson.core", "jackson-annotations").withoutVersion()
@@ -45,7 +45,7 @@ dependencyResolutionManagement {
         create("kotest") {
             version("kotest", "5.9.1")
             version("strikt", "0.35.1")
-            version("jupiter", "5.13.1")
+            version("jupiter", "5.14.3")
 
             library("platform", "io.kotest", "kotest-bom").versionRef("kotest")
             library("junit5", "io.kotest", "kotest-runner-junit5-jvm").withoutVersion()
@@ -60,7 +60,7 @@ dependencyResolutionManagement {
 
         // Logback
         create("logback") {
-            version("logback", "1.5.18")
+            version("logback", "1.5.32")
             library("logback", "ch.qos.logback", "logback-classic").versionRef("logback")
             bundle("implementation", listOf("logback"))
         }

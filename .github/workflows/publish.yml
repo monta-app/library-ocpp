@@ -77,7 +77,7 @@ jobs:
         with:
           service-name: "OCPP Library"
           github-release: true
-          github-token: ${{ secrets.MONTA_BOT_TOKEN }}
+          github-token: ${{ secrets.MONTA_GITHUB_TOKEN }}
           jira-app-name: "montaapp"
           jira-email: ${{ secrets.JIRA_EMAIL }}
           jira-token: ${{ secrets.JIRA_TOKEN }}

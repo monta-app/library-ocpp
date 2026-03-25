@@ -31,7 +31,7 @@ dependencyResolutionManagement {
 
         // Jackson serialization
         create("jackson") {
-            version("jackson", "2.21.1")
+            version("jackson", "2.21.2")
             library("platform", "com.fasterxml.jackson", "jackson-bom").versionRef("jackson")
             library("core", "com.fasterxml.jackson.core", "jackson-core").withoutVersion()
             library("annotations", "com.fasterxml.jackson.core", "jackson-annotations").withoutVersion()

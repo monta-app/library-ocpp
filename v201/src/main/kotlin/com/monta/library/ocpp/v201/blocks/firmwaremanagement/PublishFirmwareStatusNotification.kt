@@ -25,10 +25,11 @@ data class PublishFirmwareStatusNotificationRequest(
 
     init {
         if (location != null) {
-            for (cg_0 in location)
+            for (cg_0 in location) {
                 require(cg_0.length <= 512) {
                     "location item length > maximum 512 - ${cg_0.length}"
                 }
+            }
             require(location.isNotEmpty()) {
                 "location length < minimum 1 - ${location.size}"
             }

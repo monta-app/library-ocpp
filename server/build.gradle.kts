@@ -4,7 +4,6 @@ plugins {
     application
     kotlin("jvm")
     id("org.jlleitschuh.gradle.ktlint")
-    id("com.gradleup.shadow") version "8.3.10"
 }
 
 version = "1.0.0"
@@ -40,15 +39,6 @@ dependencies {
     implementation(platform(jackson.platform))
     implementation(jackson.bundles.implementation)
 
-    // Database Libraries
-    implementation(platform("org.jetbrains.exposed:exposed-bom:0.61.0"))
-    implementation("org.jetbrains.exposed:exposed-core")
-    implementation("org.jetbrains.exposed:exposed-dao")
-    implementation("org.jetbrains.exposed:exposed-jdbc")
-    implementation("org.jetbrains.exposed:exposed-java-time")
-    implementation("com.zaxxer:HikariCP:7.0.2")
-    runtimeOnly("com.h2database:h2:2.4.240")
-
     // Logging
     implementation("io.ktor:ktor-server-call-logging-jvm")
     implementation("io.ktor:ktor-server-call-id-jvm")
@@ -81,11 +71,6 @@ kotlin {
 }
 
 tasks {
-    shadowJar {
-        archiveBaseName.set("application")
-        archiveClassifier.set("")
-        archiveVersion.set("")
-    }
     processResources {
         duplicatesStrategy = DuplicatesStrategy.INCLUDE
     }

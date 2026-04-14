@@ -29,7 +29,6 @@ import com.monta.library.ocpp.v16.extension.plugandcharge.model.CertificateHashD
 import com.monta.library.ocpp.v16.extension.plugandcharge.model.GetCertificateIdUse
 import com.monta.library.ocpp.v16.extension.plugandcharge.model.HashAlgorithmType
 import com.monta.library.ocpp.v16.server.OcppServerV16
-import io.kotest.core.spec.Spec
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.async
@@ -53,6 +52,32 @@ class PlugAndChargeExtensionClientTest : StringSpec() {
     private lateinit var profile: PnCProfileListener
 
     init {
+        beforeSpec {
+            messageSerializer = MessageSerializer(SerializationMode.OCPP_1_6, OcppErrorResponderV16)
+            sendRequestChannel = Channel(8)
+            sendResponseChannel = Channel(8)
+            sendErrorChannel = Channel(8)
+            val res = PnCProfileListener.createServer(
+                sendRequestChannel,
+                sendResponseChannel,
+                sendErrorChannel
+            )
+            server = res.first
+            profile = res.second
+
+            getInstalledSession = createSession()
+            certificateSignedSession = createSession()
+            deleteCertificateSession = createSession()
+            installCertificateSession = createSession()
+
+            replyConsumerThread = Thread(consumer())
+            replyConsumerThread.start()
+        }
+
+        afterSpec {
+            replyConsumerThread.interrupt()
+        }
+
         "GetInstalledCertificateIdsConfirmation can be sent" {
             val conf = withTimeout(ASYNC_TIMEOUT_MS) {
                 async {
@@ -119,34 +144,6 @@ class PlugAndChargeExtensionClientTest : StringSpec() {
             }.await()
             conf.status shouldBe InstallCertificateConfirmation.Status.Accepted
         }
-    }
-
-    override suspend fun beforeSpec(spec: Spec) {
-        messageSerializer = MessageSerializer(SerializationMode.OCPP_1_6, OcppErrorResponderV16)
-        sendRequestChannel = Channel(8)
-        sendResponseChannel = Channel(8)
-        sendErrorChannel = Channel(8)
-        val res = PnCProfileListener.createServer(
-            sendRequestChannel,
-            sendResponseChannel,
-            sendErrorChannel
-        )
-        server = res.first
-        profile = res.second
-
-        getInstalledSession = createSession()
-        certificateSignedSession = createSession()
-        deleteCertificateSession = createSession()
-        installCertificateSession = createSession()
-
-        replyConsumerThread = Thread(consumer())
-        replyConsumerThread.start()
-        super.beforeSpec(spec)
-    }
-
-    override fun afterSpec(f: suspend (Spec) -> Unit) {
-        replyConsumerThread.interrupt()
-        super.afterSpec(f)
     }
 
     private fun createSession(): OcppSession.Info {

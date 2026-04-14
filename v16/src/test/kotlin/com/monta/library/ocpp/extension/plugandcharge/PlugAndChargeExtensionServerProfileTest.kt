@@ -49,7 +49,6 @@ import com.monta.library.ocpp.v16.extension.plugandcharge.model.HashAlgorithmTyp
 import com.monta.library.ocpp.v16.extension.plugandcharge.model.OCSPRequestData
 import com.monta.library.ocpp.v16.server.OcppServerV16
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.spec.Spec
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.async
@@ -68,6 +67,20 @@ class PlugAndChargeExtensionServerProfileTest : StringSpec() {
     private lateinit var profile: PnCProfileListener
 
     init {
+        beforeSpec {
+            messageSerializer = MessageSerializer(SerializationMode.OCPP_1_6, OcppErrorResponderV16)
+            sendRequestChannel = Channel(8)
+            sendResponseChannel = Channel(8)
+            sendErrorChannel = Channel(8)
+            val res = PnCProfileListener.createServer(
+                sendRequestChannel,
+                sendResponseChannel,
+                sendErrorChannel
+            )
+            server = res.first
+            profile = res.second
+        }
+
         "invalid data transfer should cause error" {
             val session = createSession()
             runBlocking {
@@ -280,21 +293,6 @@ class PlugAndChargeExtensionServerProfileTest : StringSpec() {
                 )
             }.errorCode shouldBe MessageErrorCodeV16.FormationViolation
         }
-    }
-
-    override suspend fun beforeSpec(spec: Spec) {
-        messageSerializer = MessageSerializer(SerializationMode.OCPP_1_6, OcppErrorResponderV16)
-        sendRequestChannel = Channel(8)
-        sendResponseChannel = Channel(8)
-        sendErrorChannel = Channel(8)
-        val res = PnCProfileListener.createServer(
-            sendRequestChannel,
-            sendResponseChannel,
-            sendErrorChannel
-        )
-        server = res.first
-        profile = res.second
-        super.beforeSpec(spec)
     }
 
     private val requestClazzMap: Map<Class<out OcppRequest>, Feature> =

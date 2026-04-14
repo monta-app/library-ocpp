@@ -43,7 +43,7 @@ dependencyResolutionManagement {
 
         // Kotest test framework
         create("kotest") {
-            version("kotest", "5.9.1")
+            version("kotest", "6.1.11")
             version("strikt", "0.35.1")
             version("jupiter", "6.0.3")
 

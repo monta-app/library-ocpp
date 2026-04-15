@@ -1,0 +1,53 @@
+[versions]
+kotlin = "2.3.20"
+coroutines = "1.10.2"
+jackson = "2.21.2"
+kotest = "6.1.11"
+strikt = "0.35.1"
+jupiter = "6.0.3"
+logback = "1.5.32"
+ktlint = "14.2.0"
+kover = "0.9.8"
+
+[libraries]
+# Kotlin
+kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
+kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8" }
+
+# Coroutines
+coroutines-bom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version.ref = "coroutines" }
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
+coroutines-jdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8" }
+coroutines-slf4j = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-slf4j" }
+
+# Jackson
+jackson-bom = { module = "com.fasterxml.jackson:jackson-bom", version.ref = "jackson" }
+jackson-core = { module = "com.fasterxml.jackson.core:jackson-core" }
+jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind" }
+jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
+jackson-datatype-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" }
+
+# Kotest / Testing
+kotest-bom = { module = "io.kotest:kotest-bom", version.ref = "kotest" }
+kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5-jvm" }
+kotest-assertions-core = { module = "io.kotest:kotest-assertions-core" }
+strikt-core = { module = "io.strikt:strikt-core", version.ref = "strikt" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter" }
+junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "jupiter" }
+
+# Logback
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+
+[bundles]
+kotlin = ["kotlin-stdlib-jdk8"]
+coroutines = ["coroutines-core", "coroutines-jdk8", "coroutines-slf4j"]
+jackson = ["jackson-core", "jackson-annotations", "jackson-databind", "jackson-module-kotlin", "jackson-datatype-jsr310"]
+kotest-test = ["kotest-runner-junit5", "kotest-assertions-core", "strikt-core", "junit-jupiter-params"]
+kotest-test-runtime = ["junit-jupiter-engine"]
+logback = ["logback-classic"]
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }

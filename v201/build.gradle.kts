@@ -2,8 +2,8 @@ val libraryVersion: String by project
 val javaToolChainVersion: String by project
 
 plugins {
-    id("org.jetbrains.kotlin.jvm")
-    id("org.jlleitschuh.gradle.ktlint")
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.ktlint)
     id("java-library")
     id("maven-publish")
 }
@@ -18,20 +18,20 @@ dependencies {
     // Internal Libs
     implementation(project(":core"))
     // Main
-    implementation(platform(kotlinlibs.platform))
-    implementation(kotlinlibs.bundles.implementation)
+    implementation(platform(libs.kotlin.bom))
+    implementation(libs.bundles.kotlin)
 
-    implementation(platform(coroutines.platform))
-    implementation(coroutines.bundles.implementation)
+    implementation(platform(libs.coroutines.bom))
+    implementation(libs.bundles.coroutines)
 
-    implementation(platform(jackson.platform))
-    implementation(jackson.bundles.implementation)
+    implementation(platform(libs.jackson.bom))
+    implementation(libs.bundles.jackson)
 
-    implementation(logback.bundles.implementation)
+    implementation(libs.bundles.logback)
     // Testing
-    testImplementation(platform(kotest.platform))
-    testImplementation(kotest.bundles.test.implementation)
-    testRuntimeOnly(kotest.bundles.test.runtime)
+    testImplementation(platform(libs.kotest.bom))
+    testImplementation(libs.bundles.kotest.test)
+    testRuntimeOnly(libs.bundles.kotest.test.runtime)
 }
 
 java {

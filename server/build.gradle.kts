@@ -2,8 +2,8 @@ val javaToolChainVersion: String by project
 
 plugins {
     application
-    kotlin("jvm")
-    id("org.jlleitschuh.gradle.ktlint")
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.ktlint)
 }
 
 version = "1.0.0"
@@ -14,11 +14,11 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":v201"))
 
-    implementation(platform(kotlinlibs.platform))
-    implementation(kotlinlibs.bundles.implementation)
+    implementation(platform(libs.kotlin.bom))
+    implementation(libs.bundles.kotlin)
 
-    implementation(platform(coroutines.platform))
-    implementation(coroutines.bundles.implementation)
+    implementation(platform(libs.coroutines.bom))
+    implementation(libs.bundles.coroutines)
 
     // Core
     implementation(platform("io.ktor:ktor-bom:3.4.2"))
@@ -36,13 +36,13 @@ dependencies {
     implementation("io.ktor:ktor-serialization-jackson-jvm")
 
     // Jackson
-    implementation(platform(jackson.platform))
-    implementation(jackson.bundles.implementation)
+    implementation(platform(libs.jackson.bom))
+    implementation(libs.bundles.jackson)
 
     // Logging
     implementation("io.ktor:ktor-server-call-logging-jvm")
     implementation("io.ktor:ktor-server-call-id-jvm")
-    implementation(logback.bundles.implementation)
+    implementation(libs.bundles.logback)
 
     // HttpClient
     implementation("io.ktor:ktor-client-core")

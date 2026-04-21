@@ -16,7 +16,8 @@
         "sdk (?:install|use) java (?<currentValue>[\\d.]+)-amzn"
       ],
       "depNameTemplate": "java",
-      "datasourceTemplate": "java-version"
+      "datasourceTemplate": "java-version",
+      "extractVersion": "^(?<version>\\d+\\.\\d+\\.\\d+)"
     }
   ],
   "packageRules": [

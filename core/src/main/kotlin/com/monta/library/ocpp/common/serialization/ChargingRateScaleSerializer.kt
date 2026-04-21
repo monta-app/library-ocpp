@@ -11,12 +11,12 @@ import java.math.RoundingMode
 
 class OneDecimalFloorSerializer : StdSerializer<Double>(Double::class.java) {
     override fun serialize(value: Double, gen: JsonGenerator, provider: SerializerProvider) {
-        gen.writeNumber(BigDecimal(value).setScale(1, RoundingMode.FLOOR).toDouble())
+        gen.writeNumber(BigDecimal(value).setScale(1, RoundingMode.HALF_UP).toDouble())
     }
 }
 
 class OneDecimalFloorDeserializer : StdDeserializer<Double>(Double::class.java) {
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): Double {
-        return BigDecimal(p.doubleValue).setScale(1, RoundingMode.FLOOR).toDouble()
+        return BigDecimal(p.doubleValue).setScale(1, RoundingMode.HALF_UP).toDouble()
     }
 }

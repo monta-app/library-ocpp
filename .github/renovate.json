@@ -6,6 +6,17 @@
   ],
   "semanticCommits": "enabled",
   "prConcurrentLimit": 2,
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["^jitpack\\.yml$"],
+      "matchStrings": [
+        "sdk (?:install|use) java (?<currentValue>[\\d.]+)-amzn"
+      ],
+      "depNameTemplate": "java",
+      "datasourceTemplate": "java-version"
+    }
+  ],
   "packageRules": [
     {
       "groupName": "upgrade all non-major gradle dependencies",

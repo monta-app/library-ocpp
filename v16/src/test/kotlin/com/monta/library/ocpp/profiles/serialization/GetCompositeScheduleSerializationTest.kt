@@ -68,6 +68,6 @@ class GetCompositeScheduleSerializationTest : StringSpec({
         )
 
         messageSerializer.toPayloadString(confirmation) shouldBe
-            """{"status":"Accepted","connectorId":1,"chargingSchedule":{"duration":60,"chargingRateUnit":"A","chargingSchedulePeriod":[{"startPeriod":0,"limit":32.1,"numberPhases":1}],"minChargingRate":15.6}}"""
+            """{"status":"Accepted","connectorId":1,"chargingSchedule":{"duration":60,"chargingRateUnit":"A","chargingSchedulePeriod":[{"startPeriod":0,"limit":32.1,"numberPhases":1}],"minChargingRate":15.7}}"""
     }
 })

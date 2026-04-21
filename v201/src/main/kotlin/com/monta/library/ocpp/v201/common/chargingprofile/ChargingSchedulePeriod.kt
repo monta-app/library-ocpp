@@ -1,6 +1,10 @@
 package com.monta.library.ocpp.v201.common.chargingprofile
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.monta.library.ocpp.common.chargingprofile.CommonChargingProfile
+import com.monta.library.ocpp.common.serialization.OneDecimalFloorDeserializer
+import com.monta.library.ocpp.common.serialization.OneDecimalFloorSerializer
 import com.monta.library.ocpp.v201.common.CustomData
 
 data class ChargingSchedulePeriod(
@@ -14,6 +18,8 @@ data class ChargingSchedulePeriod(
      * for example in Amperes (A) or Watts (W).
      * Accepts at most one digit fraction (e.g. 8.1).
      **/
+    @param:JsonSerialize(using = OneDecimalFloorSerializer::class)
+    @param:JsonDeserialize(using = OneDecimalFloorDeserializer::class)
     val limit: Double,
     /**
      * The number of phases that can be used for charging.

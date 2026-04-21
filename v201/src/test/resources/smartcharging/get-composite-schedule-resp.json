@@ -1,0 +1,25 @@
+[
+  3,
+  "c3d4e5f6-a7b8-9012-cdef-123456789012",
+  {
+    "status": "Accepted",
+    "schedule": {
+      "evseId": 1,
+      "duration": 3600,
+      "scheduleStart": "2025-05-22T08:29:27.000Z",
+      "chargingRateUnit": "A",
+      "chargingSchedulePeriod": [
+        {
+          "startPeriod": 0,
+          "limit": 32.123,
+          "numberPhases": 3
+        },
+        {
+          "startPeriod": 1800,
+          "limit": 20.567,
+          "numberPhases": 3
+        }
+      ]
+    }
+  }
+]

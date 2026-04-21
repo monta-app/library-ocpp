@@ -7,6 +7,8 @@ import com.monta.library.ocpp.common.serialization.MessageSerializer
 import com.monta.library.ocpp.common.serialization.ParsingResult
 import com.monta.library.ocpp.common.serialization.SerializationMode
 import com.monta.library.ocpp.v16.error.OcppErrorResponderV16
+import com.monta.library.ocpp.v16.smartcharge.ChargingSchedule
+import com.monta.library.ocpp.v16.smartcharge.ChargingSchedulePeriod
 import com.monta.library.ocpp.v16.smartcharge.GetCompositeScheduleConfirmation
 import com.monta.library.ocpp.v16.smartcharge.GetCompositeScheduleStatus
 import io.kotest.core.spec.style.StringSpec
@@ -26,7 +28,7 @@ class GetCompositeScheduleSerializationTest : StringSpec({
 
         ocppMessage.shouldBeInstanceOf<Message.Response>()
         ocppMessage.uniqueId shouldBe "d16cd067-9506-441e-902b-af1b9b15b8e4"
-        ocppMessage.payload shouldBe TestUtils.toJsonNode("{\"status\":\"Accepted\",\"connectorId\":1,\"scheduleStart\":\"2025-05-22T08:29:27.000Z\",\"chargingSchedule\":{\"duration\":60,\"chargingRateUnit\":\"A\",\"chargingSchedulePeriod\":[{\"startPeriod\":0,\"limit\":32,\"numberPhases\":1}],\"minChargingRate\":0}}")
+        ocppMessage.payload shouldBe TestUtils.toJsonNode("{\"status\":\"Accepted\",\"connectorId\":1,\"scheduleStart\":\"2025-05-22T08:29:27.000Z\",\"chargingSchedule\":{\"duration\":60,\"chargingRateUnit\":\"A\",\"chargingSchedulePeriod\":[{\"startPeriod\":0,\"limit\":32.123,\"numberPhases\":1}],\"minChargingRate\":0.1234}}")
 
         val response = messageSerializer.deserializePayload(ocppMessage, GetCompositeScheduleConfirmation::class.java)
         response.shouldBeInstanceOf<ParsingResult.Success<GetCompositeScheduleConfirmation>>()
@@ -37,13 +39,35 @@ class GetCompositeScheduleSerializationTest : StringSpec({
         payload.chargingSchedule shouldNotBeNull {
             chargingRateUnit shouldBe ChargingRateUnit.A
             duration shouldBe 60
-            minChargingRate shouldBe 0.0
+            minChargingRate shouldBe 0.1
             chargingSchedulePeriod shouldNotBeNull {
                 size shouldBe 1
                 this[0].startPeriod shouldBe 0
-                this[0].limit shouldBe 32.0
+                this[0].limit shouldBe 32.1
                 this[0].numberPhases shouldBe 1
             }
         }
+    }
+
+    "serialize a get composite schedule response and floor limit and minChargingRate to 1 decimal" {
+        val confirmation = GetCompositeScheduleConfirmation(
+            status = GetCompositeScheduleStatus.Accepted,
+            connectorId = 1,
+            chargingSchedule = ChargingSchedule(
+                duration = 60,
+                chargingRateUnit = ChargingRateUnit.A,
+                chargingSchedulePeriod = listOf(
+                    ChargingSchedulePeriod(
+                        startPeriod = 0,
+                        limit = 32.123,
+                        numberPhases = 1
+                    )
+                ),
+                minChargingRate = 15.678
+            )
+        )
+
+        messageSerializer.toPayloadString(confirmation) shouldBe
+            """{"status":"Accepted","connectorId":1,"chargingSchedule":{"duration":60,"chargingRateUnit":"A","chargingSchedulePeriod":[{"startPeriod":0,"limit":32.1,"numberPhases":1}],"minChargingRate":15.7}}"""
     }
 })

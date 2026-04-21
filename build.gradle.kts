@@ -4,7 +4,7 @@ plugins {
     // Linter
     alias(libs.plugins.ktlint)
     // Code coverage
-    alias(libs.plugins.kover) apply false
+    alias(libs.plugins.kover) apply true
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
 }
@@ -26,4 +26,11 @@ allprojects {
             }
         }
     }
+}
+
+dependencies {
+    kover(project(":core"))
+    kover(project(":v16"))
+    kover(project(":v201"))
+    kover(project(":server"))
 }

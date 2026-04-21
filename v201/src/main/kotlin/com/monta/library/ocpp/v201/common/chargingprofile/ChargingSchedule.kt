@@ -1,7 +1,11 @@
 package com.monta.library.ocpp.v201.common.chargingprofile
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.monta.library.ocpp.common.chargingprofile.ChargingRateUnit
 import com.monta.library.ocpp.common.chargingprofile.CommonChargingProfile
+import com.monta.library.ocpp.common.serialization.OneDecimalFloorDeserializer
+import com.monta.library.ocpp.common.serialization.OneDecimalFloorSerializer
 import com.monta.library.ocpp.common.toZonedDateTime
 import com.monta.library.ocpp.v201.common.CustomData
 import java.time.ZonedDateTime
@@ -22,6 +26,8 @@ data class ChargingSchedule(
     /** Charging_ Schedule. Min_ Charging_ Rate. Numeric
      urn:x-oca:ocpp:uid:1:569239
      Minimum charging rate supported by the EV. The unit of measure is defined by the chargingRateUnit. This parameter is intended to be used by a local smart charging algorithm to optimize the power allocation for in the case a charging process is inefficient at lower charging rates. Accepts at most one digit fraction (e.g. 8.1) */
+    @param:JsonSerialize(using = OneDecimalFloorSerializer::class)
+    @param:JsonDeserialize(using = OneDecimalFloorDeserializer::class)
     val minChargingRate: Double? = null,
     val salesTariff: SalesTariff? = null,
     val customData: CustomData? = null

@@ -9,7 +9,9 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["^jitpack\\.yml$"],
+      "managerFilePatterns": [
+        "/^jitpack\\.yml$/"
+      ],
       "matchStrings": [
         "sdk (?:install|use) java (?<currentValue>[\\d.]+)-amzn"
       ],

@@ -15,6 +15,7 @@ jobs:
     with:
       skip-sonar: true
       architecture: "arm64"
+      java-version: "25"
     secrets:
       GHL_USERNAME: ${{ secrets.GHL_USERNAME }}
       GHL_PASSWORD: ${{ secrets.GHL_PASSWORD }}

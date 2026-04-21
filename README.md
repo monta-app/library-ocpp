@@ -2,6 +2,8 @@
 
 ### Setup
 
+[![](https://www.jitpack.io/v/monta-app/library-ocpp.svg)](https://www.jitpack.io/#monta-app/library-ocpp)
+
 Add jitpack to your repositories section in your gradle or maven build file
 
 ```kotlin

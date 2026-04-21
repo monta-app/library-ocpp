@@ -1,0 +1,33 @@
+[
+  2,
+  "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+  "SetChargingProfile",
+  {
+    "evseId": 1,
+    "chargingProfile": {
+      "id": 99,
+      "stackLevel": 0,
+      "chargingProfilePurpose": "TxDefaultProfile",
+      "chargingProfileKind": "Absolute",
+      "chargingSchedule": [
+        {
+          "id": 1,
+          "chargingRateUnit": "A",
+          "chargingSchedulePeriod": [
+            {
+              "startPeriod": 0,
+              "limit": 16.789,
+              "numberPhases": 3
+            },
+            {
+              "startPeriod": 3600,
+              "limit": 10.456,
+              "numberPhases": 3
+            }
+          ],
+          "minChargingRate": 6.999
+        }
+      ]
+    }
+  }
+]

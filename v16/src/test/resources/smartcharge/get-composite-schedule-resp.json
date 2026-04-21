@@ -11,11 +11,11 @@
       "chargingSchedulePeriod": [
         {
           "startPeriod": 0,
-          "limit": 32,
+          "limit": 32.123,
           "numberPhases": 1
         }
       ],
-      "minChargingRate": 0
+      "minChargingRate": 0.1234
     }
   }
 ]

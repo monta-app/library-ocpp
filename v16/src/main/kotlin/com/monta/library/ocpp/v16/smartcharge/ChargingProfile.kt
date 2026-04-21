@@ -1,10 +1,14 @@
 package com.monta.library.ocpp.v16.smartcharge
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.monta.library.ocpp.common.chargingprofile.ChargingProfileKind
 import com.monta.library.ocpp.common.chargingprofile.ChargingRateUnit
 import com.monta.library.ocpp.common.chargingprofile.CommonChargingProfile
 import com.monta.library.ocpp.common.chargingprofile.CommonChargingProfilePurpose
 import com.monta.library.ocpp.common.chargingprofile.RecurrencyKind
+import com.monta.library.ocpp.common.serialization.OneDecimalFloorDeserializer
+import com.monta.library.ocpp.common.serialization.OneDecimalFloorSerializer
 import com.monta.library.ocpp.common.toZonedDateTime
 import java.time.ZonedDateTime
 
@@ -28,6 +32,8 @@ enum class ChargingProfilePurposeType {
 
 data class ChargingSchedulePeriod(
     val startPeriod: Int? = null,
+    @param:JsonSerialize(using = OneDecimalFloorSerializer::class)
+    @param:JsonDeserialize(using = OneDecimalFloorDeserializer::class)
     val limit: Double? = null,
     val numberPhases: Int = 3
 ) {
@@ -49,6 +55,8 @@ data class ChargingSchedule(
     val startSchedule: ZonedDateTime? = null,
     val chargingRateUnit: ChargingRateUnit? = null,
     val chargingSchedulePeriod: List<ChargingSchedulePeriod>,
+    @param:JsonSerialize(using = OneDecimalFloorSerializer::class)
+    @param:JsonDeserialize(using = OneDecimalFloorDeserializer::class)
     var minChargingRate: Double? = null
 ) {
     companion object {

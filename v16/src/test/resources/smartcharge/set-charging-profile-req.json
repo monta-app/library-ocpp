@@ -1,0 +1,30 @@
+[
+  2,
+  "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "SetChargingProfile",
+  {
+    "connectorId": 1,
+    "csChargingProfiles": {
+      "chargingProfileId": 42,
+      "stackLevel": 0,
+      "chargingProfilePurpose": "TxDefaultProfile",
+      "chargingProfileKind": "Absolute",
+      "chargingSchedule": {
+        "chargingRateUnit": "A",
+        "chargingSchedulePeriod": [
+          {
+            "startPeriod": 0,
+            "limit": 16.789,
+            "numberPhases": 3
+          },
+          {
+            "startPeriod": 3600,
+            "limit": 10.456,
+            "numberPhases": 3
+          }
+        ],
+        "minChargingRate": 6.999
+      }
+    }
+  }
+]

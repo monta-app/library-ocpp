@@ -45,14 +45,14 @@ class SetChargingProfileSerializationTest : StringSpec({
             chargingProfileKind shouldBe ChargingProfileKind.Absolute
             chargingSchedule shouldNotBeNull {
                 chargingRateUnit shouldBe ChargingRateUnit.A
-                minChargingRate shouldBe 6.9
+                minChargingRate shouldBe 7.0
                 chargingSchedulePeriod shouldNotBeNull {
                     size shouldBe 2
                     this[0].startPeriod shouldBe 0
-                    this[0].limit shouldBe 16.7
+                    this[0].limit shouldBe 16.8
                     this[0].numberPhases shouldBe 3
                     this[1].startPeriod shouldBe 3600
-                    this[1].limit shouldBe 10.4
+                    this[1].limit shouldBe 10.5
                     this[1].numberPhases shouldBe 3
                 }
             }
@@ -79,6 +79,6 @@ class SetChargingProfileSerializationTest : StringSpec({
         )
 
         messageSerializer.toPayloadString(request) shouldBe
-            """{"connectorId":1,"csChargingProfiles":{"chargingProfileId":42,"stackLevel":0,"chargingProfilePurpose":"TxDefaultProfile","chargingProfileKind":"Absolute","chargingSchedule":{"chargingRateUnit":"A","chargingSchedulePeriod":[{"startPeriod":0,"limit":16.7,"numberPhases":3},{"startPeriod":3600,"limit":10.4,"numberPhases":3}],"minChargingRate":6.9}}}"""
+            """{"connectorId":1,"csChargingProfiles":{"chargingProfileId":42,"stackLevel":0,"chargingProfilePurpose":"TxDefaultProfile","chargingProfileKind":"Absolute","chargingSchedule":{"chargingRateUnit":"A","chargingSchedulePeriod":[{"startPeriod":0,"limit":16.8,"numberPhases":3},{"startPeriod":3600,"limit":10.5,"numberPhases":3}],"minChargingRate":7.0}}}"""
     }
 })

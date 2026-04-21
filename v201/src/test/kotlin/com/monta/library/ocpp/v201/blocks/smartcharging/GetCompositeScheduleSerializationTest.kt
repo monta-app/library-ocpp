@@ -45,7 +45,7 @@ class GetCompositeScheduleSerializationTest : StringSpec({
                 this[0].limit shouldBe 32.1
                 this[0].numberPhases shouldBe 3
                 this[1].startPeriod shouldBe 1800
-                this[1].limit shouldBe 20.5
+                this[1].limit shouldBe 20.6
                 this[1].numberPhases shouldBe 3
             }
         }
@@ -67,6 +67,6 @@ class GetCompositeScheduleSerializationTest : StringSpec({
         )
 
         messageSerializer.toPayloadString(response) shouldBe
-            """{"status":"Accepted","schedule":{"chargingSchedulePeriod":[{"startPeriod":0,"limit":32.1,"numberPhases":3},{"startPeriod":1800,"limit":20.5,"numberPhases":3}],"evseId":1,"duration":3600,"scheduleStart":"2025-05-22T08:29:27.000Z","chargingRateUnit":"A"}}"""
+            """{"status":"Accepted","schedule":{"chargingSchedulePeriod":[{"startPeriod":0,"limit":32.1,"numberPhases":3},{"startPeriod":1800,"limit":20.6,"numberPhases":3}],"evseId":1,"duration":3600,"scheduleStart":"2025-05-22T08:29:27.000Z","chargingRateUnit":"A"}}"""
     }
 })

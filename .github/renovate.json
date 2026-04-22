@@ -16,11 +16,16 @@
         "sdk (?:install|use) java (?<currentValue>[\\d.]+)-amzn"
       ],
       "depNameTemplate": "java",
-      "datasourceTemplate": "java-version",
-      "extractVersion": "^(?<version>\\d+\\.\\d+\\.\\d+)"
+      "datasourceTemplate": "java-version"
     }
   ],
   "packageRules": [
+    {
+      "matchManagers": ["custom.regex"],
+      "matchPackageNames": ["java"],
+      "matchFileNames": ["jitpack.yml"],
+      "extractVersion": "^(?<version>\\d+\\.\\d+\\.\\d+)"
+    },
     {
       "groupName": "upgrade all non-major gradle dependencies",
       "matchManagers": [

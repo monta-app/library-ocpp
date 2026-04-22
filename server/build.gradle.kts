@@ -21,7 +21,7 @@ dependencies {
     implementation(libs.bundles.coroutines)
 
     // Core
-    implementation(platform("io.ktor:ktor-bom:3.4.2"))
+    implementation(platform("io.ktor:ktor-bom:3.4.3"))
     implementation("io.ktor:ktor-server-core-jvm")
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("io.ktor:ktor-server-host-common-jvm")

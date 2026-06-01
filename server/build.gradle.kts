@@ -33,7 +33,7 @@ dependencies {
     // Serialization
     implementation("io.ktor:ktor-server-content-negotiation-jvm")
     implementation("io.ktor:ktor-client-content-negotiation")
-    implementation("io.ktor:ktor-serialization-jackson-jvm")
+    implementation("io.ktor:ktor-serialization-jackson3-jvm")
 
     // Jackson
     implementation(platform(libs.jackson.bom))

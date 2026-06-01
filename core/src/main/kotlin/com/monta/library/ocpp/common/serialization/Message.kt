@@ -1,7 +1,7 @@
 package com.monta.library.ocpp.common.serialization
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-import com.fasterxml.jackson.databind.JsonNode
+import tools.jackson.databind.JsonNode
 
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME,

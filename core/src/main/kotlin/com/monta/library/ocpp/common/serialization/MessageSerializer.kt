@@ -1,17 +1,17 @@
 package com.monta.library.ocpp.common.serialization
 
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.databind.node.ObjectNode
-import com.fasterxml.jackson.databind.ser.std.StdSerializer
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.monta.library.ocpp.common.error.OcppErrorResponder
 import org.slf4j.LoggerFactory
+import tools.jackson.core.JsonGenerator
+import tools.jackson.databind.DeserializationFeature
+import tools.jackson.databind.JsonNode
+import tools.jackson.databind.SerializationContext
+import tools.jackson.databind.cfg.DateTimeFeature
+import tools.jackson.databind.module.SimpleModule
+import tools.jackson.databind.node.ObjectNode
+import tools.jackson.databind.ser.std.StdSerializer
+import tools.jackson.module.kotlin.jacksonMapperBuilder
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -33,9 +33,12 @@ class MessageSerializer(
         private val logger = LoggerFactory.getLogger(MessageSerializer::class.java)
     }
 
-    private val objectMapper = jacksonObjectMapper().apply {
-        registerModule(
-            JavaTimeModule().apply {
+    // Jackson 3 mappers are immutable and configured through the builder. java.time support is
+    // built into databind now, so we only register a SimpleModule for our custom ZonedDateTime
+    // serializers instead of the old JavaTimeModule.
+    private val objectMapper = jacksonMapperBuilder()
+        .addModule(
+            SimpleModule().apply {
                 // this is a bit of a flaky way to differentiate between 1.6 and 2.0.1 serialization.
                 // All 1.6 data classes use ZonedDateTime, 2.0.1 uses OffsetDateTime.
                 // Some 1.6 charge points do not accept high resolution timestamps so we just truncate to seconds.
@@ -51,11 +54,11 @@ class MessageSerializer(
                 }
             }
         )
-        setSerializationInclusion(JsonInclude.Include.NON_NULL)
-        findAndRegisterModules()
-        configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-    }
+        .changeDefaultPropertyInclusion { it.withValueInclusion(JsonInclude.Include.NON_NULL) }
+        .findAndAddModules()
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        .disable(DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS)
+        .build()
 
     fun parseMessageId(json: String): Result<String> {
         return runCatching {
@@ -186,7 +189,7 @@ class MessageSerializer(
         override fun serialize(
             value: ZonedDateTime?,
             gen: JsonGenerator?,
-            provider: SerializerProvider?
+            ctxt: SerializationContext?
         ) {
             gen?.writeString(FORMAT.format(value))
         }
@@ -200,7 +203,7 @@ class MessageSerializer(
         override fun serialize(
             value: ZonedDateTime?,
             gen: JsonGenerator?,
-            provider: SerializerProvider?
+            ctxt: SerializationContext?
         ) {
             gen?.writeString(FORMAT.format(value))
         }

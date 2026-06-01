@@ -1,11 +1,11 @@
 package com.monta.library.ocpp.v201.common.chargingprofile
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.monta.library.ocpp.common.chargingprofile.CommonChargingProfile
 import com.monta.library.ocpp.common.serialization.OneDecimalFloorDeserializer
 import com.monta.library.ocpp.common.serialization.OneDecimalFloorSerializer
 import com.monta.library.ocpp.v201.common.CustomData
+import tools.jackson.databind.annotation.JsonDeserialize
+import tools.jackson.databind.annotation.JsonSerialize
 
 data class ChargingSchedulePeriod(
     /**

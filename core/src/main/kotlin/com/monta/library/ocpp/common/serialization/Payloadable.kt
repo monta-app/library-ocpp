@@ -1,6 +1,6 @@
 package com.monta.library.ocpp.common.serialization
 
-import com.fasterxml.jackson.databind.JsonNode
+import tools.jackson.databind.JsonNode
 
 /**
  * I made up a word *_*

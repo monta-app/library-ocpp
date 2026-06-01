@@ -1,16 +1,16 @@
 package com.monta.library.ocpp.common.serialization
 
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.JsonParser
-import com.fasterxml.jackson.databind.DeserializationContext
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer
-import com.fasterxml.jackson.databind.ser.std.StdSerializer
+import tools.jackson.core.JsonGenerator
+import tools.jackson.core.JsonParser
+import tools.jackson.databind.DeserializationContext
+import tools.jackson.databind.SerializationContext
+import tools.jackson.databind.deser.std.StdDeserializer
+import tools.jackson.databind.ser.std.StdSerializer
 import java.math.BigDecimal
 import java.math.RoundingMode
 
 class OneDecimalFloorSerializer : StdSerializer<Double>(Double::class.java) {
-    override fun serialize(value: Double, gen: JsonGenerator, provider: SerializerProvider) {
+    override fun serialize(value: Double, gen: JsonGenerator, provider: SerializationContext) {
         gen.writeNumber(BigDecimal(value).setScale(1, RoundingMode.HALF_UP).toDouble())
     }
 }

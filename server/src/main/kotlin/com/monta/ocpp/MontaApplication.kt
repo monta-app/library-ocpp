@@ -19,7 +19,8 @@ import com.monta.library.ocpp.v201.blocks.provisioning.ProvisioningServerDispatc
 import com.monta.library.ocpp.v201.common.AuthorizationStatus
 import com.monta.library.ocpp.v201.common.IdTokenInfo
 import com.monta.library.ocpp.v201.server.OcppServerV201Builder
-import io.ktor.serialization.jackson.*
+import io.ktor.serialization.jackson3.JacksonWebsocketContentConverter
+import io.ktor.serialization.jackson3.jackson
 import io.ktor.server.application.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.calllogging.*
@@ -57,7 +58,7 @@ fun Application.module() {
     // WebSockets
     install(WebSockets) {
         contentConverter = JacksonWebsocketContentConverter(
-            objectmapper = MontaSerialization.getDefaultMapper()
+            MontaSerialization.getDefaultMapper()
         )
 
         pingPeriod = Duration.ofSeconds(15).toKotlinDuration()

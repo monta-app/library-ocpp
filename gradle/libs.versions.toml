@@ -1,7 +1,7 @@
 [versions]
 kotlin = "2.3.21"
 coroutines = "1.11.0"
-jackson = "2.21.3"
+jackson = "3.1.4"
 kotest = "6.1.11"
 strikt = "0.35.1"
 jupiter = "6.1.0"
@@ -21,12 +21,14 @@ coroutines-jdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8" }
 coroutines-slf4j = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-slf4j" }
 
 # Jackson
-jackson-bom = { module = "com.fasterxml.jackson:jackson-bom", version.ref = "jackson" }
-jackson-core = { module = "com.fasterxml.jackson.core:jackson-core" }
+# NOTE: Jackson 3 moved core/databind/modules to the `tools.jackson` groups & packages.
+# Annotations intentionally stay on the 2.x `com.fasterxml.jackson` artifact (pinned by the BOM),
+# and java.time (jsr310) support is now built into databind, so the jsr310 module is gone.
+jackson-bom = { module = "tools.jackson:jackson-bom", version.ref = "jackson" }
+jackson-core = { module = "tools.jackson.core:jackson-core" }
 jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations" }
-jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind" }
-jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
-jackson-datatype-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" }
+jackson-databind = { module = "tools.jackson.core:jackson-databind" }
+jackson-module-kotlin = { module = "tools.jackson.module:jackson-module-kotlin" }
 
 # Kotest / Testing
 kotest-bom = { module = "io.kotest:kotest-bom", version.ref = "kotest" }
@@ -42,7 +44,7 @@ logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "lo
 [bundles]
 kotlin = ["kotlin-stdlib-jdk8"]
 coroutines = ["coroutines-core", "coroutines-jdk8", "coroutines-slf4j"]
-jackson = ["jackson-core", "jackson-annotations", "jackson-databind", "jackson-module-kotlin", "jackson-datatype-jsr310"]
+jackson = ["jackson-core", "jackson-annotations", "jackson-databind", "jackson-module-kotlin"]
 kotest-test = ["kotest-runner-junit5", "kotest-assertions-core", "strikt-core", "junit-jupiter-params"]
 kotest-test-runtime = ["junit-jupiter-engine"]
 logback = ["logback-classic"]

@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.4.0"
+kotlin = "2.4.10"
 coroutines = "1.11.0"
 jackson = "3.2.1"
 kotest = "6.2.2"

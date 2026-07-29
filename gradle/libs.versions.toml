@@ -5,7 +5,7 @@ jackson = "3.2.1"
 kotest = "6.2.3"
 strikt = "0.35.1"
 jupiter = "6.1.2"
-logback = "1.6.0"
+logback = "1.6.1"
 ktlint = "14.2.0"
 kover = "0.9.9"
 

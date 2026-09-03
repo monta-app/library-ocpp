@@ -92,3 +92,4 @@ jobs:
           deployment-url: "https://github.com/monta-app/library-ocpp/releases/tag/v${{ needs.publish.outputs.version }}"
           comment-on-prs: true
           comment-on-jira: true
+          jira-project-blacklist: ${{ vars.CHANGELOG_JIRA_PROJECT_BLACKLIST }}

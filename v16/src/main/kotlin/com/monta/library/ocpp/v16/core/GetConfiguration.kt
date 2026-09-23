@@ -45,8 +45,9 @@ data class KeyValueType(
      * Required
      *
      * False if the value can be set with the ChangeConfiguration message.
+     * Defaults to false because some charge points (e.g. Rolec) omit it for keys they don't support.
      */
-    val readonly: Boolean,
+    val readonly: Boolean = false,
     /**
      * Optional
      *

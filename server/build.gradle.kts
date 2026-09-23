@@ -1,4 +1,4 @@
-val javaToolChainVersion: String by project
+val javaToolChainVersion = project.property("javaToolChainVersion") as String
 
 plugins {
     application

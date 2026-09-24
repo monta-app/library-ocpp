@@ -64,7 +64,7 @@ class MessageSerializer(
         return runCatching {
             val jsonNode = objectMapper.readTree(json)
             check(jsonNode.isArray)
-            jsonNode.get(1).asText()
+            jsonNode.get(1).asString()
         }
     }
 
@@ -143,7 +143,7 @@ class MessageSerializer(
             )
 
             else -> ParsingResult.Failure(
-                uniqueId = this[1].asText(),
+                uniqueId = this[1].asString(),
                 messageErrorCode = ocppErrorResponder.getPropertyConstraintViolationError(),
                 throwable = IllegalArgumentException("unknown message type messageType=$messageType")
             )
@@ -152,24 +152,24 @@ class MessageSerializer(
 
     private fun JsonNode.toOcppRequestMessage(): Message.Request {
         return Message.Request(
-            uniqueId = this[1].asText(),
-            action = this[2].asText(),
+            uniqueId = this[1].asString(),
+            action = this[2].asString(),
             payload = this[3]
         )
     }
 
     private fun JsonNode.toOcppResponseMessage(): Message.Response {
         return Message.Response(
-            uniqueId = this[1].asText(),
+            uniqueId = this[1].asString(),
             payload = this[2]
         )
     }
 
     private fun JsonNode.toOcppErrorMessage(): Message.Error {
         return Message.Error(
-            uniqueId = this[1].asText(),
-            errorCode = this[2].asText(),
-            errorDescription = this[3].asText(),
+            uniqueId = this[1].asString(),
+            errorCode = this[2].asString(),
+            errorDescription = this[3].asString(),
             errorDetails = this[4].toString()
         )
     }

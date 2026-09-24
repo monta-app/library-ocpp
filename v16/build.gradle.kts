@@ -1,5 +1,5 @@
-val libraryVersion: String by project
-val javaToolChainVersion: String by project
+val libraryVersion = project.property("libraryVersion") as String
+val javaToolChainVersion = project.property("javaToolChainVersion") as String
 
 plugins {
     alias(libs.plugins.kotlin.jvm)

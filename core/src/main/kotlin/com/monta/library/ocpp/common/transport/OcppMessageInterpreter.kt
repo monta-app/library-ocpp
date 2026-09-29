@@ -183,7 +183,12 @@ abstract class OcppMessageInterpreter(
         // If a null is returned we should just stop here, as the error is handled in the function
         val (profile, feature) = getProfileAndFeature(ocppSessionInfo, message.uniqueId, message.action) ?: return
         // If we get a null result for the getPayload function Just end here because the error has already been handled
-        val request = getPayload(ocppSessionInfo, message, feature.requestType) ?: return
+        val request = getPayload(
+            ocppSessionInfo = ocppSessionInfo,
+            message = message,
+            ignoreFailure = false,
+            clazz = feature.requestType
+        ) ?: return
 
         handleParsedRequest(profile, ocppSessionInfo, request, message)
     }
@@ -259,7 +264,12 @@ abstract class OcppMessageInterpreter(
         val (_, feature) = getProfileAndFeature(ocppSessionInfo, deferredCache.uniqueId, deferredCache.action)
             ?: return
         // If we get a null result for the getPayload function just end here because the error has already been handled
-        val confirmation = getPayload(ocppSessionInfo, message, feature.confirmationType) ?: return
+        val confirmation = getPayload(
+            ocppSessionInfo = ocppSessionInfo,
+            message = message,
+            ignoreFailure = true,
+            clazz = feature.confirmationType
+        ) ?: return
         // Lastly we send that confirmation up to our completable deferred
         deferredCache.complete(confirmation)
     }
@@ -312,14 +322,18 @@ abstract class OcppMessageInterpreter(
     private suspend fun <T, R> getPayload(
         ocppSessionInfo: OcppSession.Info,
         message: R,
+        ignoreFailure: Boolean,
         clazz: Class<T>
     ): T? where R : Message, R : Payloadable {
         return when (val result = messageSerializer.deserializePayload(message, clazz)) {
             is ParsingResult.Failure -> {
-                sendMessage(
-                    ocppSessionInfo = ocppSessionInfo,
-                    message = result.toError()
-                )
+                if (!ignoreFailure) {
+                    sendMessage(
+                        ocppSessionInfo = ocppSessionInfo,
+                        message = result.toError()
+                    )
+                }
+                logger.warn("Failed to parse message $result")
                 null
             }
 

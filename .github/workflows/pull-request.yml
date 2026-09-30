@@ -13,6 +13,8 @@ jobs:
     name: Pull Request
     uses: monta-app/github-workflows/.github/workflows/pull-request-kotlin.yml@main
     with:
+      # Public repo: fork PRs must not run on the self-hosted ARC runners in our cluster.
+      use-arc-runners: false
       skip-sonar: true
       architecture: "arm64"
       java-version: "25"

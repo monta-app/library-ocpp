@@ -1,7 +1,7 @@
 package com.monta.library.ocpp.v201.common
 
-class CustomData : HashMap<String, String?>() {
+class CustomData : HashMap<String, Any?>() {
 
     val vendorId: String
-        get() = requireNotNull(get("vendorId"))
+        get() = requireNotNull(get("vendorId")) as String
 }

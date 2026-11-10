@@ -142,3 +142,26 @@ Messages initiated by us and sent to the charge point is a little bit more diffi
 
 A rough blocking implementation of this is today in `com.monta.ocpp.service.ChargePointConnection` which implements
 `CoreProfile`
+
+## OCPP 2.1 (`ocpp-v21`)
+
+`com.monta.library.ocpp:ocpp-v21` holds the full OCPP 2.1 Edition 1 message model: all 91 actions, with the same layout
+as `ocpp-v201` (`blocks/<functional block>/<Action>.kt` with `<Action>Feature`, `<Action>Request` and `<Action>Response`,
+plus per-block `<Block>ServerDispatcher` / `<Block>ClientDispatcher`, `OcppServerV21Builder` and `OcppClientV21Builder`).
+
+* **Generated, not hand-written.** `v21/codegen/generate_v21.py` reads the official OCA JSON schemas in `v21/schemas`
+  and writes the Kotlin sources, the `V21Actions` registry (action, kebab-case slug, direction, block, feature) and
+  schema-validated test samples. Run `python3 v21/codegen/generate_v21.py` from the repository root (needs the
+  `jsonschema` package) and commit the result; never edit or reformat the generated files by hand.
+  `SchemaRoundTripTest` checks that every request/response reads and writes its schema unchanged.
+* **Types:** integer → `Long`, number → `BigDecimal`, date-time → `ZonedDateTime` (written with millisecond precision
+  in UTC), optional fields are nullable without schema defaults, and wire names that Kotlin or Jackson would change
+  (`setpoint_L2`, `ePriceLevel`, `isDefault`, enum values such as `Energy.Active.Import.Register`) carry `@JsonProperty`.
+* **OCPP-J 2.1 frames:** `SerializationMode.OCPP_2_1` adds CALLRESULTERROR (`Message.CallResultError`, type 5) and SEND
+  (`Message.Send`, type 6) and ignores any other unknown message type (`ParsingResult.Ignored`). SEND-only actions
+  (`NotifyPeriodicEventStream`) implement `OcppUnconfirmedRequest`; they are dispatched but never answered, and are sent
+  with `sendUnconfirmed`. The 1.6 and 2.0.1 modes are unchanged.
+* **Version negotiation:** `OcppSession.OcppVersion.valueOf(protocols, default)` still only resolves 1.6 and 2.0.1, so
+  existing servers keep their behaviour. Servers that speak 2.1 use
+  `OcppSession.OcppVersion.negotiate(protocols, supportedVersions)`, which returns the first subprotocol the charging
+  station offers that is supported (OCPP-J 2.1, part 4, 3.1).

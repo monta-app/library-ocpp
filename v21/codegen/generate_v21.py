@@ -616,6 +616,393 @@ def generate_registry(actions: list[Action]) -> str:
 
 
 # ---------------------------------------------------------------------------------------------------------------------
+# Block dispatchers, server and client (same API shape as the v201 module)
+# ---------------------------------------------------------------------------------------------------------------------
+BLOCK_CLASS_NAMES = {
+    "security": "Security", "provisioning": "Provisioning", "authorization": "Authorization",
+    "localauthorizationlistmanagement": "LocalAuthorizationListManagement", "transactions": "Transactions",
+    "remotecontrol": "RemoteControl", "availability": "Availability", "reservation": "Reservation",
+    "tariffandcost": "TariffAndCost", "metervalues": "MeterValues", "smartcharging": "SmartCharging",
+    "firmwaremanagement": "FirmwareManagement", "certificatemanagement": "CertificateManagement",
+    "diagnostics": "Diagnostics", "displaymessage": "DisplayMessage", "datatransfer": "DataTransfer",
+    "bidirectional": "Bidirectional", "dercontrol": "DERControl", "batteryswapping": "BatterySwapping",
+}
+
+
+def lower_first(name: str) -> str:
+    # "DERControl" -> "derControl", "AFRRSignal" -> "afrrSignal", "Heartbeat" -> "heartbeat"
+    m = re.match(r"^([A-Z]+)(?=[A-Z][a-z]|$)", name)
+    if m and len(m.group(1)) > 1:
+        return m.group(1).lower() + name[len(m.group(1)):]
+    return name[:1].lower() + name[1:]
+
+
+def method_name(action: str) -> str:
+    return lower_first(action)
+
+
+def blocks_of(actions: list[Action]) -> list[tuple[str, list[Action]]]:
+    order = list(BLOCK_CLASS_NAMES)
+    by_block: dict[str, list[Action]] = {}
+    for action in actions:
+        by_block.setdefault(action.block, []).append(action)
+    return [(b, sorted(by_block[b], key=lambda a: a.name)) for b in order if b in by_block]
+
+
+def handled_by(side: str, action: Action) -> bool:
+    """Whether the server (CSMS) or client (station) side receives this action."""
+    if side == "Server":
+        return action.direction in ("CS_TO_CSMS", "BOTH", "SEND")
+    return action.direction in ("CSMS_TO_CS", "BOTH")
+
+
+def sent_by(side: str, action: Action) -> bool:
+    if side == "Server":
+        return action.direction in ("CSMS_TO_CS", "BOTH")
+    return action.direction in ("CS_TO_CSMS", "BOTH", "SEND")
+
+
+def dispatcher(block: str, side: str, block_actions: list[Action]) -> str:
+    cls = f"{BLOCK_CLASS_NAMES[block]}{side}Dispatcher"
+    features = f"{lower_first(BLOCK_CLASS_NAMES[block])}Features"
+    received = [a for a in block_actions if handled_by(side, a)]
+    sent = [a for a in block_actions if sent_by(side, a)]
+    not_supported = (
+        "else -> throw OcppCallException(\n"
+        "                MessageErrorCodeV21.NotSupported,\n"
+        "                \"Requested Action [${request.actionName()}] is recognized but not supported by the receiver\"\n"
+        "            )"
+    )
+    out = kdoc(
+        f"{'CSMS' if side == 'Server' else 'Charging Station'} side of the OCPP 2.1 {BLOCK_CLASS_NAMES[block]} block.",
+        "",
+    )
+    if received:
+        out += f"class {cls}(\n    private val listener: Listener\n) : ProfileDispatcher {{\n\n"
+    else:
+        out += f"class {cls} : ProfileDispatcher {{\n\n"
+    out += f"    override val featureList = {features}\n\n"
+    out += (
+        "    override suspend fun handleRequest(\n"
+        "        ocppSessionInfo: OcppSession.Info,\n"
+        "        request: OcppRequest\n"
+        "    ): OcppConfirmation {\n"
+    )
+    if received:
+        out += "        return when (request) {\n"
+        for a in received:
+            if a.direction == "SEND":
+                out += (
+                    f"            is {a.request_class} -> {{\n"
+                    f"                listener.{method_name(a.name)}(ocppSessionInfo, request)\n"
+                    f"                NoConfirmation\n"
+                    f"            }}\n"
+                )
+            else:
+                out += f"            is {a.request_class} -> listener.{method_name(a.name)}(ocppSessionInfo, request)\n"
+        out += f"            {not_supported}\n        }}\n    }}\n"
+    else:
+        out += (
+            "        throw OcppCallException(\n"
+            "            MessageErrorCodeV21.NotSupported,\n"
+            "            \"Requested Action [${request.actionName()}] is recognized but not supported by the receiver\"\n"
+            "        )\n    }\n"
+        )
+    if received:
+        out += "\n    interface Listener {\n"
+        out += "\n\n".join(
+            (
+                f"        /** Unconfirmed SEND message: the return value is never sent. */\n"
+                f"        suspend fun {method_name(a.name)}(\n"
+                f"            ocppSessionInfo: OcppSession.Info,\n"
+                f"            request: {a.request_class}\n"
+                f"        )"
+            )
+            if a.direction == "SEND"
+            else (
+                f"        suspend fun {method_name(a.name)}(\n"
+                f"            ocppSessionInfo: OcppSession.Info,\n"
+                f"            request: {a.request_class}\n"
+                f"        ): {a.response_class}"
+            )
+            for a in received
+        )
+        out += "\n    }\n"
+    if sent:
+        out += "\n    interface Sender {\n"
+        out += "\n\n".join(
+            (
+                f"        /** Unconfirmed SEND message: no response is awaited. */\n"
+                f"        suspend fun {method_name(a.name)}(\n"
+                f"            request: {a.request_class}\n"
+                f"        )"
+            )
+            if a.direction == "SEND"
+            else (
+                f"        suspend fun {method_name(a.name)}(\n"
+                f"            request: {a.request_class}\n"
+                f"        ): {a.response_class}"
+            )
+            for a in sent
+        )
+        out += "\n    }\n"
+    out += "}\n"
+    return out
+
+
+def generate_block_file(block: str, block_actions: list[Action]) -> str:
+    file = KotlinFile(f"{BASE_PACKAGE}.blocks.{block}")
+    for fq in (
+        "com.monta.library.ocpp.common.profile.OcppConfirmation",
+        "com.monta.library.ocpp.common.profile.OcppRequest",
+        "com.monta.library.ocpp.common.profile.ProfileDispatcher",
+        "com.monta.library.ocpp.common.session.OcppSession",
+        "com.monta.library.ocpp.common.transport.OcppCallException",
+        f"{BASE_PACKAGE}.error.MessageErrorCodeV21",
+    ):
+        file.use(fq)
+    if any(a.direction == "SEND" for a in block_actions):
+        file.use("com.monta.library.ocpp.common.profile.NoConfirmation")
+    features = f"{lower_first(BLOCK_CLASS_NAMES[block])}Features"
+    groups = [
+        ("Charging Station to CSMS", [a for a in block_actions if a.direction in ("CS_TO_CSMS", "SEND")]),
+        ("CSMS to Charging Station", [a for a in block_actions if a.direction == "CSMS_TO_CS"]),
+        ("Either direction", [a for a in block_actions if a.direction == "BOTH"]),
+    ]
+    lines = []
+    for title, group in groups:
+        if group:
+            lines.append(f"    // {title}")
+            lines.extend(f"    {a.name}Feature" for a in group)
+    body = ",\n".join(line for line in lines if not line.strip().startswith("//"))
+    # re-insert the group comments in front of their first feature
+    rendered = []
+    for title, group in groups:
+        if not group:
+            continue
+        rendered.append(f"    // {title}\n" + ",\n".join(f"    {a.name}Feature" for a in group))
+    file.chunks.append(
+        kdoc(f"All features of the OCPP 2.1 {BLOCK_CLASS_NAMES[block]} block.", "")
+        + f"val {features} = listOf(\n" + ",\n".join(rendered) + "\n)\n"
+    )
+    file.chunks.append(dispatcher(block, "Server", block_actions))
+    file.chunks.append(dispatcher(block, "Client", block_actions))
+    return file.render()
+
+
+def generate_endpoint(side: str, actions: list[Action]) -> str:
+    """OcppServerV21 / OcppClientV21 + their builders."""
+    blocks = blocks_of(actions)
+    is_server = side == "Server"
+    package = f"{BASE_PACKAGE}.{'server' if is_server else 'client'}"
+    name = "OcppServerV21" if is_server else "OcppClientV21"
+
+    builder = KotlinFile(package)
+    builder.use("com.monta.library.ocpp.common.profile.Feature")
+    builder.use("com.monta.library.ocpp.common.profile.OcppConfirmation")
+    builder.use("com.monta.library.ocpp.common.profile.OcppRequest")
+    builder.use("com.monta.library.ocpp.common.profile.ProfileDispatcher")
+    builder.use("com.monta.library.ocpp.common.session.OcppSession")
+    builder.use("com.monta.library.ocpp.common.transport.OcppCallException")
+    builder.use(f"{BASE_PACKAGE}.error.MessageErrorCodeV21")
+    builder.use(
+        "com.monta.library.ocpp.server.BaseOcppServerBuilder" if is_server
+        else "com.monta.library.ocpp.client.BaseOcppClientBuilder"
+    )
+    methods = []
+    all_features = []
+    for block, block_actions in blocks:
+        cls = f"{BLOCK_CLASS_NAMES[block]}{side}Dispatcher"
+        features = f"{lower_first(BLOCK_CLASS_NAMES[block])}Features"
+        builder.use(f"{BASE_PACKAGE}.blocks.{block}.{cls}")
+        builder.use(f"{BASE_PACKAGE}.blocks.{block}.{features}")
+        all_features.append(features)
+        if any(handled_by(side, a) for a in block_actions):
+            methods.append(
+                f"    fun add{BLOCK_CLASS_NAMES[block]}(listener: {cls}.Listener): {name}Builder {{\n"
+                f"        profiles.add({cls}(listener))\n"
+                f"        return this\n"
+                f"    }}\n"
+            )
+        else:
+            methods.append(
+                f"    fun add{BLOCK_CLASS_NAMES[block]}(): {name}Builder {{\n"
+                f"        profiles.add({cls}())\n"
+                f"        return this\n"
+                f"    }}\n"
+            )
+    if is_server:
+        build = (
+            f"    fun build(): {name} {{\n"
+            "        if (sendMessage == null && ocppSessionRepository == null) {\n"
+            "            throw IllegalStateException(\"server must be configured in either 'gateway' or 'local mode'\")\n"
+            "        }\n\n"
+            f"        return {name}(\n"
+            "            onConnect = requireNotNull(onConnect),\n"
+            "            onDisconnect = requireNotNull(onDisconnect),\n"
+            "            sendMessage = sendMessage,\n"
+            "            ocppSessionRepository = ocppSessionRepository,\n"
+            "            settings = requireNotNull(settings),\n"
+            "            profiles = withSendOnlyBlocks(profiles)\n"
+            "        )\n"
+            "    }\n"
+        )
+    else:
+        build = (
+            f"    fun build(): {name} {{\n"
+            f"        return {name}(\n"
+            "            onConnect = requireNotNull(onConnect),\n"
+            "            onDisconnect = requireNotNull(onDisconnect),\n"
+            "            ocppSessionRepository = requireNotNull(ocppSessionRepository),\n"
+            "            settings = requireNotNull(settings),\n"
+            "            profiles = withSendOnlyBlocks(profiles),\n"
+            "            sendHook = sendHook\n"
+            "        )\n"
+            "    }\n"
+        )
+    builder.chunks.append(
+        kdoc(
+            f"Builds an {name}. Add a block for every part of OCPP 2.1 this side handles; blocks that are not added are "
+            "still registered for sending, and their incoming requests are answered with NotSupported.",
+            "",
+        )
+        + f"class {name}Builder : {'BaseOcppServerBuilder' if is_server else 'BaseOcppClientBuilder'}<{name}Builder>() {{\n\n"
+        + "\n".join(methods)
+        + "\n"
+        + build
+        + "}\n"
+    )
+    builder.chunks.append(
+        "private val allBlockFeatures: List<List<Feature>> = listOf(\n"
+        + ",\n".join(f"    {f}" for f in all_features)
+        + "\n)\n"
+    )
+    builder.chunks.append(
+        "/** Registers the features of every block that was not added, so its messages can still be sent. */\n"
+        "private fun withSendOnlyBlocks(profiles: Set<ProfileDispatcher>): Set<ProfileDispatcher> {\n"
+        "    val added = profiles.flatMap { it.featureList }.toSet()\n"
+        "    val missing = allBlockFeatures.filter { features -> features.none { it in added } }\n"
+        "    return profiles + missing.map { SendOnlyDispatcher(it) }\n"
+        "}\n"
+    )
+    builder.chunks.append(
+        "private class SendOnlyDispatcher(\n"
+        "    override val featureList: List<Feature>\n"
+        ") : ProfileDispatcher {\n"
+        "    override suspend fun handleRequest(\n"
+        "        ocppSessionInfo: OcppSession.Info,\n"
+        "        request: OcppRequest\n"
+        "    ): OcppConfirmation {\n"
+        "        throw OcppCallException(\n"
+        "            MessageErrorCodeV21.NotSupported,\n"
+        "            \"Requested Action [${request.actionName()}] is recognized but not supported by the receiver\"\n"
+        "        )\n"
+        "    }\n"
+        "}\n"
+    )
+
+    endpoint = KotlinFile(package)
+    for fq in (
+        "com.monta.library.ocpp.common.profile.ProfileDispatcher",
+        "com.monta.library.ocpp.common.serialization.SerializationMode",
+        "com.monta.library.ocpp.common.session.OcppSession",
+        "com.monta.library.ocpp.common.session.OcppSessionRepository",
+        "com.monta.library.ocpp.common.transport.OcppSettings",
+        f"{BASE_PACKAGE}.error.OcppErrorResponderV21",
+    ):
+        endpoint.use(fq)
+    if is_server:
+        endpoint.use("com.monta.library.ocpp.common.OcppMessageListener")
+        endpoint.use("com.monta.library.ocpp.common.OcppServerEventListener")
+        endpoint.use("com.monta.library.ocpp.common.serialization.Message")
+        endpoint.use("com.monta.library.ocpp.server.OcppServer")
+        header = (
+            f"class {name} internal constructor(\n"
+            "    onConnect: OcppServerEventListener,\n"
+            "    onDisconnect: OcppServerEventListener,\n"
+            "    sendMessage: OcppMessageListener<Message>?,\n"
+            "    ocppSessionRepository: OcppSessionRepository?,\n"
+            "    settings: OcppSettings,\n"
+            "    profiles: Set<ProfileDispatcher>\n"
+            ") : OcppServer(\n"
+            "    onConnect = onConnect,\n"
+            "    onDisconnect = onDisconnect,\n"
+            "    sendMessage = sendMessage,\n"
+            "    ocppSessionRepository = ocppSessionRepository,\n"
+            "    serializationMode = SerializationMode.OCPP_2_1,\n"
+            "    ocppErrorResponder = OcppErrorResponderV21,\n"
+            "    settings = settings,\n"
+            "    profiles = profiles\n"
+            ") {\n"
+        )
+    else:
+        endpoint.use("com.monta.library.ocpp.client.OcppClient")
+        endpoint.use("com.monta.library.ocpp.common.OcppClientConnectionEvent")
+        endpoint.use("com.monta.library.ocpp.common.OcppClientDisconnectionEvent")
+        header = (
+            f"class {name} internal constructor(\n"
+            "    onConnect: OcppClientConnectionEvent,\n"
+            "    onDisconnect: OcppClientDisconnectionEvent,\n"
+            "    ocppSessionRepository: OcppSessionRepository,\n"
+            "    settings: OcppSettings,\n"
+            "    profiles: Set<ProfileDispatcher>,\n"
+            "    sendHook: suspend (String, String) -> String?\n"
+            ") : OcppClient(\n"
+            "    onConnect = onConnect,\n"
+            "    onDisconnect = onDisconnect,\n"
+            "    ocppSessionRepository = ocppSessionRepository,\n"
+            "    serializationMode = SerializationMode.OCPP_2_1,\n"
+            "    ocppErrorResponder = OcppErrorResponderV21,\n"
+            "    settings = settings,\n"
+            "    profiles = profiles,\n"
+            "    sendHook = sendHook\n"
+            ") {\n"
+        )
+    senders = []
+    for block, block_actions in blocks:
+        sent = [a for a in block_actions if sent_by(side, a)]
+        if not sent:
+            continue
+        cls = f"{BLOCK_CLASS_NAMES[block]}{side}Dispatcher"
+        endpoint.use(f"{BASE_PACKAGE}.blocks.{block}.{cls}")
+        impls = []
+        for a in sent:
+            endpoint.use(f"{a.package}.{a.request_class}")
+            if a.direction == "SEND":
+                impls.append(
+                    f"            override suspend fun {method_name(a.name)}(\n"
+                    f"                request: {a.request_class}\n"
+                    f"            ) = sendUnconfirmed(ocppSessionInfo, request)"
+                )
+            else:
+                endpoint.use(f"{a.package}.{a.response_class}")
+                impls.append(
+                    f"            override suspend fun {method_name(a.name)}(\n"
+                    f"                request: {a.request_class}\n"
+                    f"            ) = send(ocppSessionInfo, request) as {a.response_class}"
+                )
+        senders.append(
+            f"    fun as{BLOCK_CLASS_NAMES[block]}Block(\n"
+            "        ocppSessionInfo: OcppSession.Info\n"
+            f"    ): {cls}.Sender {{\n"
+            f"        return object : {cls}.Sender {{\n"
+            + "\n\n".join(impls)
+            + "\n        }\n    }\n"
+        )
+    endpoint.chunks.append(
+        kdoc(
+            f"OCPP 2.1 {'CSMS' if is_server else 'Charging Station'}; create it with {name}Builder. "
+            f"The as...Block(sessionInfo) functions send the messages of a block to the other side.",
+            "",
+        )
+        + header
+        + "\n".join(senders)
+        + "}\n"
+    )
+    return builder.render(), endpoint.render()
+
+
+# ---------------------------------------------------------------------------------------------------------------------
 # Samples
 # ---------------------------------------------------------------------------------------------------------------------
 class SampleBuilder:
@@ -725,6 +1112,20 @@ def main():
         class_name = definitions.class_name(def_name)
         (common_dir / f"{class_name}.kt").write_text(generate_common_file(def_name, renderer, definitions), encoding="utf-8")
         common_count += 1
+
+    for block, block_actions in blocks_of(actions):
+        (MAIN_DIR / "blocks" / block / f"{BLOCK_CLASS_NAMES[block]}Block.kt").write_text(
+            generate_block_file(block, block_actions), encoding="utf-8"
+        )
+    for side, folder in (("Server", "server"), ("Client", "client")):
+        builder_src, endpoint_src = generate_endpoint(side, actions)
+        target = MAIN_DIR / folder
+        if target.exists():
+            shutil.rmtree(target)
+        target.mkdir(parents=True)
+        name = "OcppServerV21" if side == "Server" else "OcppClientV21"
+        (target / f"{name}Builder.kt").write_text(builder_src, encoding="utf-8")
+        (target / f"{name}.kt").write_text(endpoint_src, encoding="utf-8")
 
     (MAIN_DIR / "V21Actions.kt").write_text(generate_registry(actions), encoding="utf-8")
     write_samples(actions, definitions)

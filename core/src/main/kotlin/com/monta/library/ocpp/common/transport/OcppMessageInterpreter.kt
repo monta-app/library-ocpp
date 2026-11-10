@@ -70,6 +70,10 @@ abstract class OcppMessageInterpreter(
             is ParsingResult.Success -> {
                 receiveMessage(ocppSessionInfo, result.value)
             }
+
+            is ParsingResult.Ignored -> {
+                logger.warn("ignoring message with unknown message type ${result.messageTypeId} (uniqueId=${result.uniqueId})")
+            }
         }
     }
 
@@ -81,7 +85,32 @@ abstract class OcppMessageInterpreter(
             is Message.Request -> onRequest(ocppSessionInfo, message)
             is Message.Response -> onResponse(ocppSessionInfo, message)
             is Message.Error -> onError(ocppSessionInfo, message)
+            is Message.Send -> onSend(ocppSessionInfo, message)
+            is Message.CallResultError -> onCallResultError(ocppSessionInfo, message)
         }
+    }
+
+    /**
+     * Sends an OCPP 2.1 SEND message (message type 6). SEND messages are unconfirmed: no response is awaited.
+     */
+    suspend fun sendUnconfirmed(
+        ocppSessionInfo: OcppSession.Info,
+        ocppRequest: OcppRequest
+    ) {
+        val feature = requestTypeToFeature[ocppRequest::class.java]
+
+        requireNotNull(feature) { "feature not found for request ${ocppRequest::class.java}" }
+
+        sendMessage(
+            ocppSessionInfo = ocppSessionInfo,
+            message = Message.Send(
+                uniqueId = UUID.randomUUID().toString(),
+                action = feature.name,
+                payload = messageSerializer.toPayload(
+                    value = ocppRequest
+                )
+            )
+        )
     }
 
     suspend fun send(
@@ -297,6 +326,48 @@ abstract class OcppMessageInterpreter(
         )
     }
 
+    /**
+     * Handles an incoming OCPP 2.1 SEND message. The receiver SHALL NOT respond to a SEND, so failures are only logged.
+     */
+    private suspend fun onSend(
+        ocppSessionInfo: OcppSession.Info,
+        message: Message.Send
+    ) {
+        val (profile, feature) = actionToProfile[message.action] ?: run {
+            logger.warn("ignoring SEND message with unknown action [${message.action}] (uniqueId=${message.uniqueId})")
+            return
+        }
+
+        val request = when (val result = messageSerializer.deserializePayload(message, feature.requestType)) {
+            is ParsingResult.Success -> result.value
+            is ParsingResult.Failure -> {
+                logger.warn("Failed to parse SEND message $result")
+                return
+            }
+            is ParsingResult.Ignored -> return
+        }
+
+        runCatching {
+            profile.handleRequest(
+                ocppSessionInfo = ocppSessionInfo,
+                request = request
+            )
+        }.onFailure { throwable ->
+            logger.warn("Failed to handle SEND message with action [${message.action}] (profile $profile)", throwable)
+        }
+    }
+
+    /**
+     * Called when the other party could not process a CALLRESULT we sent (OCPP 2.1 CALLRESULTERROR).
+     * There is nothing pending to complete, so by default this is only logged.
+     */
+    protected open suspend fun onCallResultError(
+        ocppSessionInfo: OcppSession.Info,
+        message: Message.CallResultError
+    ) {
+        logger.warn("received CALLRESULTERROR for our response uniqueId=${message.uniqueId}: ${message.errorCode} ${message.errorDescription}")
+    }
+
     private suspend fun getProfileAndFeature(
         ocppSessionInfo: OcppSession.Info,
         uniqueId: String,
@@ -340,6 +411,8 @@ abstract class OcppMessageInterpreter(
             is ParsingResult.Success -> {
                 result.value
             }
+
+            is ParsingResult.Ignored -> null
         }
     }
 

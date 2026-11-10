@@ -43,4 +43,31 @@ class OcppVersionTest : StringSpec({
             OcppSession.OcppVersion.valueOf("anEntirelyDifferentProtocol", OcppSession.OcppVersion.V2_0_1)
         }
     }
+    "valueOf never resolves OCPP 2.1 (opt-in via negotiate only)" {
+        shouldThrow<IllegalArgumentException> {
+            OcppSession.OcppVersion.valueOf("ocpp2.1", OcppSession.OcppVersion.V1_6)
+        }
+        OcppSession.OcppVersion.valueOf("ocpp2.1, ocpp1.6", OcppSession.OcppVersion.V2_0_1) shouldBe OcppSession.OcppVersion.V1_6
+    }
+
+    "negotiate honours the charging station's order" {
+        val all = OcppSession.OcppVersion.entries.toSet()
+        OcppSession.OcppVersion.negotiate("ocpp2.1, ocpp2.0.1, ocpp1.6", all) shouldBe OcppSession.OcppVersion.V2_1
+        OcppSession.OcppVersion.negotiate("ocpp1.6,ocpp2.1", all) shouldBe OcppSession.OcppVersion.V1_6
+        OcppSession.OcppVersion.negotiate("ocpp2.0.1", all) shouldBe OcppSession.OcppVersion.V2_0_1
+        OcppSession.OcppVersion.negotiate("ocpp1.5, ocpp2.1", all) shouldBe OcppSession.OcppVersion.V2_1
+    }
+
+    "negotiate only returns supported versions" {
+        val legacy = setOf(OcppSession.OcppVersion.V1_6, OcppSession.OcppVersion.V2_0_1)
+        OcppSession.OcppVersion.negotiate("ocpp2.1, ocpp2.0.1", legacy) shouldBe OcppSession.OcppVersion.V2_0_1
+        OcppSession.OcppVersion.negotiate("ocpp2.1", legacy) shouldBe null
+    }
+
+    "negotiate returns null for absent or unknown protocols" {
+        val all = OcppSession.OcppVersion.entries.toSet()
+        OcppSession.OcppVersion.negotiate(null, all) shouldBe null
+        OcppSession.OcppVersion.negotiate(" ", all) shouldBe null
+        OcppSession.OcppVersion.negotiate("ocpp1.5,soap", all) shouldBe null
+    }
 })

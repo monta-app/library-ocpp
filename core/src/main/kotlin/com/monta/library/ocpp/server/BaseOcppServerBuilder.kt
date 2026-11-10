@@ -40,10 +40,17 @@ abstract class BaseOcppServerBuilder<T> {
         return this as T
     }
 
+    /**
+     * @param sendCallResultError listener for outgoing OCPP 2.1 CALLRESULTERROR messages (only needed for OCPP 2.1)
+     * @param sendSend listener for outgoing OCPP 2.1 SEND messages (only needed for OCPP 2.1)
+     */
+    @JvmOverloads
     fun gatewayMode(
         sendRequest: OcppMessageListener<Message.Request>,
         sendResponse: OcppMessageListener<Message.Response>,
-        sendError: OcppMessageListener<Message.Error>
+        sendError: OcppMessageListener<Message.Error>,
+        sendCallResultError: OcppMessageListener<Message.CallResultError>? = null,
+        sendSend: OcppMessageListener<Message.Send>? = null
     ): T {
         this.sendMessage =
             { messageSerializer: MessageSerializer, ocppSessionInfo: OcppSession.Info, message: Message ->
@@ -58,6 +65,16 @@ abstract class BaseOcppServerBuilder<T> {
 
                     is Message.Error -> {
                         sendError(messageSerializer, ocppSessionInfo, message)
+                    }
+
+                    is Message.CallResultError -> {
+                        checkNotNull(sendCallResultError) { "gatewayMode: no listener configured for CALLRESULTERROR messages" }
+                            .invoke(messageSerializer, ocppSessionInfo, message)
+                    }
+
+                    is Message.Send -> {
+                        checkNotNull(sendSend) { "gatewayMode: no listener configured for SEND messages" }
+                            .invoke(messageSerializer, ocppSessionInfo, message)
                     }
                 }
             }

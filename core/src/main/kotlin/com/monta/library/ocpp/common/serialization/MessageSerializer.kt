@@ -17,7 +17,13 @@ import java.time.format.DateTimeFormatter
 
 enum class SerializationMode {
     OCPP_1_6,
-    OCPP_2
+    OCPP_2,
+
+    /**
+     * OCPP 2.1: same payload serialization as [OCPP_2], but the RPC framework also knows CALLRESULTERROR (5) and SEND (6)
+     * and ignores frames with any other unknown message type (OCPP-J 2.1, part 4, section 4.1.3).
+     */
+    OCPP_2_1
 }
 
 class MessageSerializer(
@@ -28,6 +34,8 @@ class MessageSerializer(
         private const val TYPE_NUMBER_CALL = 2
         private const val TYPE_NUMBER_CALL_RESULT = 3
         private const val TYPE_NUMBER_CALL_ERROR = 4
+        private const val TYPE_NUMBER_CALL_RESULT_ERROR = 5
+        private const val TYPE_NUMBER_SEND = 6
 
         @JvmStatic
         private val logger = LoggerFactory.getLogger(MessageSerializer::class.java)
@@ -48,7 +56,8 @@ class MessageSerializer(
                         addSerializer(ZonedDateTime::class.java, Ocpp16ZonedDateSerializer())
                     }
 
-                    SerializationMode.OCPP_2 -> {
+                    SerializationMode.OCPP_2,
+                    SerializationMode.OCPP_2_1 -> {
                         addSerializer(ZonedDateTime::class.java, Ocpp2ZonedDateSerializer())
                     }
                 }
@@ -59,6 +68,8 @@ class MessageSerializer(
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
         .disable(DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS)
         .build()
+
+    private val supportsOcpp21Frames = serializationMode == SerializationMode.OCPP_2_1
 
     fun parseMessageId(json: String): Result<String> {
         return runCatching {
@@ -142,12 +153,35 @@ class MessageSerializer(
                 value = this.toOcppErrorMessage()
             )
 
-            else -> ParsingResult.Failure(
-                uniqueId = this[1].asString(),
-                messageErrorCode = ocppErrorResponder.getPropertyConstraintViolationError(),
-                throwable = IllegalArgumentException("unknown message type messageType=$messageType")
+            TYPE_NUMBER_CALL_RESULT_ERROR -> if (supportsOcpp21Frames) {
+                ParsingResult.Success(value = this.toOcppCallResultErrorMessage())
+            } else {
+                this.unknownMessageType(messageType)
+            }
+
+            TYPE_NUMBER_SEND -> if (supportsOcpp21Frames) {
+                ParsingResult.Success(value = this.toOcppSendMessage())
+            } else {
+                this.unknownMessageType(messageType)
+            }
+
+            else -> this.unknownMessageType(messageType)
+        }
+    }
+
+    private fun JsonNode.unknownMessageType(messageType: Int?): ParsingResult<Message> {
+        if (supportsOcpp21Frames) {
+            // OCPP 2.1: "When a system receives a message with a Message Type Number not in this list, it SHALL ignore the message"
+            return ParsingResult.Ignored(
+                uniqueId = this[1]?.asString().orEmpty(),
+                messageTypeId = messageType
             )
         }
+        return ParsingResult.Failure(
+            uniqueId = this[1].asString(),
+            messageErrorCode = ocppErrorResponder.getPropertyConstraintViolationError(),
+            throwable = IllegalArgumentException("unknown message type messageType=$messageType")
+        )
     }
 
     private fun JsonNode.toOcppRequestMessage(): Message.Request {
@@ -163,6 +197,54 @@ class MessageSerializer(
             uniqueId = this[1].asString(),
             payload = this[2]
         )
+    }
+
+    private fun JsonNode.toOcppCallResultErrorMessage(): Message.CallResultError {
+        return Message.CallResultError(
+            uniqueId = this[1].asString(),
+            errorCode = this[2].asString(),
+            errorDescription = this[3].asString(),
+            errorDetails = this[4]?.toString() ?: "{}"
+        )
+    }
+
+    private fun JsonNode.toOcppSendMessage(): Message.Send {
+        return Message.Send(
+            uniqueId = this[1].asString(),
+            action = this[2].asString(),
+            payload = this[3]
+        )
+    }
+
+    /**
+     * Writes an OCPP-J frame `[messageTypeId, "uniqueId", ...elements]` with proper JSON escaping.
+     * Elements may be [String]s, [Int]s or [JsonNode]s.
+     */
+    internal fun writeFrame(
+        messageTypeId: Int,
+        uniqueId: String,
+        vararg elements: Any
+    ): String {
+        val frame = objectMapper.createArrayNode()
+        frame.add(messageTypeId)
+        frame.add(uniqueId)
+        elements.forEach { element ->
+            when (element) {
+                is JsonNode -> frame.add(element)
+                is String -> frame.add(element)
+                is Int -> frame.add(element)
+                else -> frame.add(objectMapper.valueToTree<JsonNode>(element))
+            }
+        }
+        return objectMapper.writeValueAsString(frame)
+    }
+
+    /**
+     * Parses the raw errorDetails of a CALLERROR / CALLRESULTERROR, falling back to an empty object if it is not a JSON object.
+     */
+    internal fun parseErrorDetails(errorDetails: String): JsonNode {
+        val parsed = runCatching { objectMapper.readTree(errorDetails) }.getOrNull()
+        return if (parsed != null && parsed.isObject) parsed else objectMapper.createObjectNode()
     }
 
     private fun JsonNode.toOcppErrorMessage(): Message.Error {

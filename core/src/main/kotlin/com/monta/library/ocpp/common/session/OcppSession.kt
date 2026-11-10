@@ -81,15 +81,24 @@ open class OcppSession(
         val webSocketProtocol: String
     ) {
         V1_6("ocpp1.6"),
-        V2_0_1("ocpp2.0.1");
+        V2_0_1("ocpp2.0.1"),
+        V2_1("ocpp2.1");
 
         companion object {
+            /**
+             * The versions [valueOf] resolves. [V2_1] is deliberately left out so that existing consumers keep
+             * selecting 1.6 / 2.0.1 exactly as before; OCPP 2.1 has to be opted into via [negotiate].
+             */
+            private val legacyProtocolsByString = listOf(V1_6, V2_0_1).associateBy { it.webSocketProtocol }
+
             private val protocolsByString = entries.associateBy { it.webSocketProtocol }
 
             /**
              * Returns the OCPP version based on the given websocket protocols.
              *
              * Note: Client preference (the order) is important, the first match is preferred.
+             *
+             * Only resolves [V1_6] and [V2_0_1] (see [negotiate] for OCPP 2.1).
              *
              * @return [default] if the websocket protocols are null or empty.
              * @throws IllegalArgumentException if the websocket protocols are not recognized.
@@ -103,8 +112,32 @@ open class OcppSession(
 
                 return webSocketProtocols.split(',')
                     .firstNotNullOfOrNull {
-                        protocolsByString[it.trim()]
+                        legacyProtocolsByString[it.trim()]
                     } ?: throw IllegalArgumentException("Illegal websocket protocols '$webSocketProtocols'")
+            }
+
+            /**
+             * Picks the OCPP version for a connection from the `Sec-WebSocket-Protocol` header value(s) offered by the
+             * Charging Station, restricted to the versions in [supported].
+             *
+             * The Charging Station lists its subprotocols in order of preference (OCPP-J 2.1, part 4, section 3.1), so the
+             * first offered subprotocol that is also in [supported] wins.
+             *
+             * @param webSocketProtocols comma separated subprotocols as sent by the Charging Station (may be null)
+             * @param supported the versions the caller is able to speak
+             * @return the negotiated version, or null when the header is absent/blank or none of the offered
+             * subprotocols is supported
+             */
+            fun negotiate(
+                webSocketProtocols: String?,
+                supported: Set<OcppVersion>
+            ): OcppVersion? {
+                if (webSocketProtocols.isNullOrBlank()) return null
+
+                return webSocketProtocols.split(',')
+                    .firstNotNullOfOrNull { protocol ->
+                        protocolsByString[protocol.trim()]?.takeIf { it in supported }
+                    }
             }
         }
     }

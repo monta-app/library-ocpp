@@ -100,5 +100,74 @@ sealed class Message(
         }
     }
 
+    /**
+     * OCPP 2.1 CALLRESULTERROR (message type 5): sent back on receipt of a CALLRESULT that could not be processed.
+     *
+     * Only parsed/produced by a [MessageSerializer] in [SerializationMode.OCPP_2_1].
+     */
+    data class CallResultError(
+        /**
+         * This must be the exact same id as the CALLRESULT that caused this error.
+         */
+        override val uniqueId: String,
+        /**
+         * This field must contain a string from the RPC Framework Error Codes table.
+         */
+        val errorCode: String,
+        /**
+         * Should be filled in if possible, otherwise a clear empty string “”
+         */
+        val errorDescription: String,
+        /**
+         * This JSON object describes error details in an undefined way.
+         * If there are no error details you MUST fill in an empty object \{}
+         */
+        val errorDetails: String = "{}"
+    ) : Message(uniqueId) {
+
+        companion object {
+            const val MESSAGE_TYPE_ID: Int = 5
+        }
+
+        override fun toJsonString(serializer: MessageSerializer): String {
+            return serializer.writeFrame(
+                MESSAGE_TYPE_ID,
+                uniqueId,
+                errorCode,
+                errorDescription,
+                serializer.parseErrorDetails(errorDetails)
+            )
+        }
+    }
+
+    /**
+     * OCPP 2.1 SEND (message type 6): an unconfirmed message, the receiver SHALL NOT respond to it.
+     *
+     * Only parsed/produced by a [MessageSerializer] in [SerializationMode.OCPP_2_1].
+     */
+    data class Send(
+        /**
+         * Unique identifier of this message (must not be reused for another CALL or SEND).
+         */
+        override val uniqueId: String,
+        /**
+         * The name of the action, e.g. "NotifyPeriodicEventStream".
+         */
+        val action: String,
+        /**
+         * Payload is a JSON object containing the arguments relevant to the Action.
+         */
+        override val payload: JsonNode
+    ) : Message(uniqueId), Payloadable {
+
+        companion object {
+            const val MESSAGE_TYPE_ID: Int = 6
+        }
+
+        override fun toJsonString(serializer: MessageSerializer): String {
+            return serializer.writeFrame(MESSAGE_TYPE_ID, uniqueId, action, payload)
+        }
+    }
+
     abstract fun toJsonString(serializer: MessageSerializer): String
 }

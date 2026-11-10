@@ -1,0 +1,22 @@
+{
+  "idToken": {
+    "additionalInfo": [
+      {
+        "additionalIdToken": "Monta OCPP 2.1",
+        "type": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      }
+    ],
+    "idToken": "Monta OCPP 2.1",
+    "type": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "requestId": 7,
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

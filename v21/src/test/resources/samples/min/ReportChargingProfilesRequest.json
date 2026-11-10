@@ -1,0 +1,24 @@
+{
+  "requestId": 1,
+  "chargingLimitSource": "Monta OCPP 2.1",
+  "chargingProfile": [
+    {
+      "id": 1,
+      "stackLevel": 1,
+      "chargingProfilePurpose": "ChargingStationExternalConstraints",
+      "chargingProfileKind": "Absolute",
+      "chargingSchedule": [
+        {
+          "id": 1,
+          "chargingRateUnit": "W",
+          "chargingSchedulePeriod": [
+            {
+              "startPeriod": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "evseId": 1
+}

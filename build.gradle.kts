@@ -32,5 +32,6 @@ dependencies {
     kover(project(":core"))
     kover(project(":v16"))
     kover(project(":v201"))
+    kover(project(":v21"))
     kover(project(":server"))
 }

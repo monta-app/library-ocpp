@@ -1,0 +1,8 @@
+{
+  "duration": 7,
+  "chargingRateUnit": "A",
+  "evseId": 7,
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

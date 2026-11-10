@@ -1,0 +1,36 @@
+{
+  "batteryData": [
+    {
+      "evseId": 7,
+      "serialNumber": "Monta OCPP 2.1",
+      "soC": 12.5,
+      "soH": 12.5,
+      "productionDate": "2025-01-23T12:34:56.789Z",
+      "vendorInfo": "Monta OCPP 2.1",
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    }
+  ],
+  "eventType": "BatteryOutTimeout",
+  "idToken": {
+    "additionalInfo": [
+      {
+        "additionalIdToken": "Monta OCPP 2.1",
+        "type": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      }
+    ],
+    "idToken": "Monta OCPP 2.1",
+    "type": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "requestId": 7,
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

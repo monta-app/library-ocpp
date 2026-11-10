@@ -1,0 +1,66 @@
+{
+  "status": "Rejected",
+  "statusInfo": {
+    "reasonCode": "Monta OCPP 2.1",
+    "additionalInfo": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "schedule": {
+    "evseId": 7,
+    "duration": 7,
+    "scheduleStart": "2025-01-23T12:34:56.789Z",
+    "chargingRateUnit": "A",
+    "chargingSchedulePeriod": [
+      {
+        "startPeriod": 7,
+        "limit": 12.5,
+        "limit_L2": 12.5,
+        "limit_L3": 12.5,
+        "numberPhases": 3,
+        "phaseToUse": 3,
+        "dischargeLimit": 0.0,
+        "dischargeLimit_L2": 0.0,
+        "dischargeLimit_L3": 0.0,
+        "setpoint": 12.5,
+        "setpoint_L2": 12.5,
+        "setpoint_L3": 12.5,
+        "setpointReactive": 12.5,
+        "setpointReactive_L2": 12.5,
+        "setpointReactive_L3": 12.5,
+        "preconditioningRequest": true,
+        "evseSleep": true,
+        "v2xBaseline": 12.5,
+        "operationMode": "LocalLoadBalancing",
+        "v2xFreqWattCurve": [
+          {
+            "frequency": 12.5,
+            "power": 12.5,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          }
+        ],
+        "v2xSignalWattCurve": [
+          {
+            "signal": 7,
+            "power": 12.5,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          }
+        ],
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      }
+    ],
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

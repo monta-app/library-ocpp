@@ -1,0 +1,18 @@
+{
+  "retries": 7,
+  "retryInterval": 7,
+  "requestId": 7,
+  "firmware": {
+    "location": "Monta OCPP 2.1",
+    "retrieveDateTime": "2025-01-23T12:34:56.789Z",
+    "installDateTime": "2025-01-23T12:34:56.789Z",
+    "signingCertificate": "Monta OCPP 2.1",
+    "signature": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

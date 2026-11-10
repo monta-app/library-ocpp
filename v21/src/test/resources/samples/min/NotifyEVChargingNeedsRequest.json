@@ -1,0 +1,6 @@
+{
+  "evseId": 1,
+  "chargingNeeds": {
+    "requestedEnergyTransfer": "AC_single_phase"
+  }
+}

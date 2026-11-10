@@ -1,0 +1,7 @@
+{
+  "chargingStation": {
+    "model": "Monta OCPP 2.1",
+    "vendorName": "Monta OCPP 2.1"
+  },
+  "reason": "ApplicationReset"
+}

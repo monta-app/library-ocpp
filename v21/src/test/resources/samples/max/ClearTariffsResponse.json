@@ -1,0 +1,21 @@
+{
+  "clearTariffsResult": [
+    {
+      "statusInfo": {
+        "reasonCode": "Monta OCPP 2.1",
+        "additionalInfo": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "tariffId": "Monta OCPP 2.1",
+      "status": "NoTariff",
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    }
+  ],
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

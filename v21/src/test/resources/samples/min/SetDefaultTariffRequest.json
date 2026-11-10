@@ -1,0 +1,7 @@
+{
+  "evseId": 1,
+  "tariff": {
+    "tariffId": "Monta OCPP 2.1",
+    "currency": "Mon"
+  }
+}

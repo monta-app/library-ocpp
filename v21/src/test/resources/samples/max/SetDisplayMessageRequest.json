@@ -1,0 +1,48 @@
+{
+  "message": {
+    "display": {
+      "evse": {
+        "id": 7,
+        "connectorId": 7,
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "name": "Monta OCPP 2.1",
+      "instance": "Monta OCPP 2.1",
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "id": 7,
+    "priority": "NormalCycle",
+    "state": "Discharging",
+    "startDateTime": "2025-01-23T12:34:56.789Z",
+    "endDateTime": "2025-01-23T12:34:56.789Z",
+    "transactionId": "Monta OCPP 2.1",
+    "message": {
+      "format": "QRCODE",
+      "language": "Monta OC",
+      "content": "Monta OCPP 2.1",
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "messageExtra": [
+      {
+        "format": "QRCODE",
+        "language": "Monta OC",
+        "content": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      }
+    ],
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

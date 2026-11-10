@@ -1,0 +1,17 @@
+{
+  "log": {
+    "remoteLocation": "Monta OCPP 2.1",
+    "oldestTimestamp": "2025-01-23T12:34:56.789Z",
+    "latestTimestamp": "2025-01-23T12:34:56.789Z",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "logType": "DataCollectorLog",
+  "requestId": 7,
+  "retries": 7,
+  "retryInterval": 7,
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

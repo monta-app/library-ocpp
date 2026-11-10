@@ -1,0 +1,8 @@
+{
+  "certificateChain": "Monta OCPP 2.1",
+  "certificateType": "V2G20Certificate",
+  "requestId": 7,
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "eventType": "Ended",
+  "timestamp": "2025-01-23T12:34:56.789Z",
+  "triggerReason": "AbnormalCondition",
+  "seqNo": 1,
+  "transactionInfo": {
+    "transactionId": "Monta OCPP 2.1"
+  }
+}

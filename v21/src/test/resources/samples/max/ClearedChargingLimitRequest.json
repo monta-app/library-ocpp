@@ -1,0 +1,7 @@
+{
+  "chargingLimitSource": "Monta OCPP 2.1",
+  "evseId": 7,
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

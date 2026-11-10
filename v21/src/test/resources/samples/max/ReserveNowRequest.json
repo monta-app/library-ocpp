@@ -1,0 +1,41 @@
+{
+  "id": 7,
+  "expiryDateTime": "2025-01-23T12:34:56.789Z",
+  "connectorType": "Monta OCPP 2.1",
+  "idToken": {
+    "additionalInfo": [
+      {
+        "additionalIdToken": "Monta OCPP 2.1",
+        "type": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      }
+    ],
+    "idToken": "Monta OCPP 2.1",
+    "type": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "evseId": 7,
+  "groupIdToken": {
+    "additionalInfo": [
+      {
+        "additionalIdToken": "Monta OCPP 2.1",
+        "type": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      }
+    ],
+    "idToken": "Monta OCPP 2.1",
+    "type": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

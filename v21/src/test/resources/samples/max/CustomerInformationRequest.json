@@ -1,0 +1,34 @@
+{
+  "customerCertificate": {
+    "hashAlgorithm": "SHA512",
+    "issuerNameHash": "Monta OCPP 2.1",
+    "issuerKeyHash": "Monta OCPP 2.1",
+    "serialNumber": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "idToken": {
+    "additionalInfo": [
+      {
+        "additionalIdToken": "Monta OCPP 2.1",
+        "type": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      }
+    ],
+    "idToken": "Monta OCPP 2.1",
+    "type": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "requestId": 7,
+  "report": true,
+  "clear": true,
+  "customerIdentifier": "Monta OCPP 2.1",
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

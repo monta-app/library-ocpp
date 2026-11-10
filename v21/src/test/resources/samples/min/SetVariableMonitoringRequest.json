@@ -1,0 +1,15 @@
+{
+  "setMonitoringData": [
+    {
+      "value": 1.5,
+      "type": "UpperThreshold",
+      "severity": 1,
+      "component": {
+        "name": "Monta OCPP 2.1"
+      },
+      "variable": {
+        "name": "Monta OCPP 2.1"
+      }
+    }
+  ]
+}

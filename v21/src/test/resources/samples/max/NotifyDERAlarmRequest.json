@@ -1,0 +1,10 @@
+{
+  "controlType": "WattVar",
+  "gridEventFault": "VoltageImbalance",
+  "alarmEnded": true,
+  "timestamp": "2025-01-23T12:34:56.789Z",
+  "extraInfo": "Monta OCPP 2.1",
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

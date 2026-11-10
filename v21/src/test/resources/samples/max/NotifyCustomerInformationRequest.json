@@ -1,0 +1,10 @@
+{
+  "data": "Monta OCPP 2.1",
+  "tbc": true,
+  "seqNo": 7,
+  "generatedAt": "2025-01-23T12:34:56.789Z",
+  "requestId": 7,
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

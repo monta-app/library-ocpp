@@ -1,0 +1,12 @@
+{
+  "iso15118SchemaVersion": "Monta OCPP 2.1",
+  "action": "Update",
+  "exiRequest": "Monta OCPP 2.1",
+  "maximumContractCertificateChains": 7,
+  "prioritizedEMAIDs": [
+    "Monta OCPP 2.1"
+  ],
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

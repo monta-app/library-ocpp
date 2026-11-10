@@ -1,0 +1,35 @@
+{
+  "setVariableData": [
+    {
+      "attributeType": "MaxSet",
+      "attributeValue": "Monta OCPP 2.1",
+      "component": {
+        "evse": {
+          "id": 7,
+          "connectorId": 7,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        },
+        "name": "Monta OCPP 2.1",
+        "instance": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "variable": {
+        "name": "Monta OCPP 2.1",
+        "instance": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    }
+  ],
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

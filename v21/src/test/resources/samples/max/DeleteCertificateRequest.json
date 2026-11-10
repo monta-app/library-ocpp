@@ -1,0 +1,14 @@
+{
+  "certificateHashData": {
+    "hashAlgorithm": "SHA512",
+    "issuerNameHash": "Monta OCPP 2.1",
+    "issuerKeyHash": "Monta OCPP 2.1",
+    "serialNumber": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

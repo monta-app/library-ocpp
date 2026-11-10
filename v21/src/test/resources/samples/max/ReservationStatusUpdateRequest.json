@@ -1,0 +1,7 @@
+{
+  "reservationId": 7,
+  "reservationUpdateStatus": "NoTransaction",
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

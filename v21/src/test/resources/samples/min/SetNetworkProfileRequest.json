@@ -1,0 +1,10 @@
+{
+  "configurationSlot": 1,
+  "connectionData": {
+    "ocppInterface": "Wired0",
+    "ocppTransport": "SOAP",
+    "messageTimeout": 1,
+    "ocppCsmsUrl": "Monta OCPP 2.1",
+    "securityProfile": 1
+  }
+}

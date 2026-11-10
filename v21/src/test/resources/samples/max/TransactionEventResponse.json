@@ -1,0 +1,71 @@
+{
+  "totalCost": 12.5,
+  "chargingPriority": 7,
+  "idTokenInfo": {
+    "status": "Unknown",
+    "cacheExpiryDateTime": "2025-01-23T12:34:56.789Z",
+    "chargingPriority": 7,
+    "groupIdToken": {
+      "additionalInfo": [
+        {
+          "additionalIdToken": "Monta OCPP 2.1",
+          "type": "Monta OCPP 2.1",
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        }
+      ],
+      "idToken": "Monta OCPP 2.1",
+      "type": "Monta OCPP 2.1",
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "language1": "Monta OC",
+    "language2": "Monta OC",
+    "evseId": [
+      7
+    ],
+    "personalMessage": {
+      "format": "QRCODE",
+      "language": "Monta OC",
+      "content": "Monta OCPP 2.1",
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "transactionLimit": {
+    "maxCost": 12.5,
+    "maxEnergy": 12.5,
+    "maxTime": 7,
+    "maxSoC": 7,
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "updatedPersonalMessage": {
+    "format": "QRCODE",
+    "language": "Monta OC",
+    "content": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "updatedPersonalMessageExtra": [
+    {
+      "format": "QRCODE",
+      "language": "Monta OC",
+      "content": "Monta OCPP 2.1",
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    }
+  ],
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

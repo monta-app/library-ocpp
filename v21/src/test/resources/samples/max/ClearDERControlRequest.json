@@ -1,0 +1,8 @@
+{
+  "isDefault": true,
+  "controlType": "WattVar",
+  "controlId": "Monta OCPP 2.1",
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

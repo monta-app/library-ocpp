@@ -1,0 +1,166 @@
+{
+  "evseId": 7,
+  "maxScheduleTuples": 7,
+  "chargingNeeds": {
+    "acChargingParameters": {
+      "energyAmount": 12.5,
+      "evMinCurrent": 12.5,
+      "evMaxCurrent": 12.5,
+      "evMaxVoltage": 12.5,
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "derChargingParameters": {
+      "evSupportedDERControl": [
+        "WattVar"
+      ],
+      "evOverExcitedMaxDischargePower": 12.5,
+      "evOverExcitedPowerFactor": 12.5,
+      "evUnderExcitedMaxDischargePower": 12.5,
+      "evUnderExcitedPowerFactor": 12.5,
+      "maxApparentPower": 12.5,
+      "maxChargeApparentPower": 12.5,
+      "maxChargeApparentPower_L2": 12.5,
+      "maxChargeApparentPower_L3": 12.5,
+      "maxDischargeApparentPower": 12.5,
+      "maxDischargeApparentPower_L2": 12.5,
+      "maxDischargeApparentPower_L3": 12.5,
+      "maxChargeReactivePower": 12.5,
+      "maxChargeReactivePower_L2": 12.5,
+      "maxChargeReactivePower_L3": 12.5,
+      "minChargeReactivePower": 12.5,
+      "minChargeReactivePower_L2": 12.5,
+      "minChargeReactivePower_L3": 12.5,
+      "maxDischargeReactivePower": 12.5,
+      "maxDischargeReactivePower_L2": 12.5,
+      "maxDischargeReactivePower_L3": 12.5,
+      "minDischargeReactivePower": 12.5,
+      "minDischargeReactivePower_L2": 12.5,
+      "minDischargeReactivePower_L3": 12.5,
+      "nominalVoltage": 12.5,
+      "nominalVoltageOffset": 12.5,
+      "maxNominalVoltage": 12.5,
+      "minNominalVoltage": 12.5,
+      "evInverterManufacturer": "Monta OCPP 2.1",
+      "evInverterModel": "Monta OCPP 2.1",
+      "evInverterSerialNumber": "Monta OCPP 2.1",
+      "evInverterSwVersion": "Monta OCPP 2.1",
+      "evInverterHwVersion": "Monta OCPP 2.1",
+      "evIslandingDetectionMethod": [
+        "OtherActive"
+      ],
+      "evIslandingTripTime": 12.5,
+      "evMaximumLevel1DCInjection": 12.5,
+      "evDurationLevel1DCInjection": 12.5,
+      "evMaximumLevel2DCInjection": 12.5,
+      "evDurationLevel2DCInjection": 12.5,
+      "evReactiveSusceptance": 12.5,
+      "evSessionTotalDischargeEnergyAvailable": 12.5,
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "evEnergyOffer": {
+      "evAbsolutePriceSchedule": {
+        "timeAnchor": "2025-01-23T12:34:56.789Z",
+        "currency": "Mon",
+        "evAbsolutePriceScheduleEntries": [
+          {
+            "duration": 7,
+            "evPriceRule": [
+              {
+                "energyFee": 12.5,
+                "powerRangeStart": 12.5,
+                "customData": {
+                  "vendorId": "com.monta"
+                }
+              }
+            ],
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          }
+        ],
+        "priceAlgorithm": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "evPowerSchedule": {
+        "evPowerScheduleEntries": [
+          {
+            "duration": 7,
+            "power": 12.5,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          }
+        ],
+        "timeAnchor": "2025-01-23T12:34:56.789Z",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "requestedEnergyTransfer": "WPT",
+    "dcChargingParameters": {
+      "evMaxCurrent": 12.5,
+      "evMaxVoltage": 12.5,
+      "evMaxPower": 12.5,
+      "evEnergyCapacity": 12.5,
+      "energyAmount": 12.5,
+      "stateOfCharge": 7,
+      "fullSoC": 7,
+      "bulkSoC": 7,
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "v2xChargingParameters": {
+      "minChargePower": 12.5,
+      "minChargePower_L2": 12.5,
+      "minChargePower_L3": 12.5,
+      "maxChargePower": 12.5,
+      "maxChargePower_L2": 12.5,
+      "maxChargePower_L3": 12.5,
+      "minDischargePower": 12.5,
+      "minDischargePower_L2": 12.5,
+      "minDischargePower_L3": 12.5,
+      "maxDischargePower": 12.5,
+      "maxDischargePower_L2": 12.5,
+      "maxDischargePower_L3": 12.5,
+      "minChargeCurrent": 12.5,
+      "maxChargeCurrent": 12.5,
+      "minDischargeCurrent": 12.5,
+      "maxDischargeCurrent": 12.5,
+      "minVoltage": 12.5,
+      "maxVoltage": 12.5,
+      "evTargetEnergyRequest": 12.5,
+      "evMinEnergyRequest": 12.5,
+      "evMaxEnergyRequest": 12.5,
+      "evMinV2XEnergyRequest": 12.5,
+      "evMaxV2XEnergyRequest": 12.5,
+      "targetSoC": 7,
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "availableEnergyTransfer": [
+      "WPT"
+    ],
+    "controlMode": "DynamicControl",
+    "mobilityNeedsMode": "EVCC_SECC",
+    "departureTime": "2025-01-23T12:34:56.789Z",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "timestamp": "2025-01-23T12:34:56.789Z",
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "status": "NotFound",
+  "statusInfo": {
+    "reasonCode": "Monta OCPP 2.1",
+    "additionalInfo": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "supersededIds": [
+    "Monta OCPP 2.1"
+  ],
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

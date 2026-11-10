@@ -1,0 +1,23 @@
+{
+  "chargingProfileId": 7,
+  "scheduleUpdate": {
+    "limit": 12.5,
+    "limit_L2": 12.5,
+    "limit_L3": 12.5,
+    "dischargeLimit": 0.0,
+    "dischargeLimit_L2": 0.0,
+    "dischargeLimit_L3": 0.0,
+    "setpoint": 12.5,
+    "setpoint_L2": 12.5,
+    "setpoint_L3": 12.5,
+    "setpointReactive": 12.5,
+    "setpointReactive_L2": 12.5,
+    "setpointReactive_L3": 12.5,
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

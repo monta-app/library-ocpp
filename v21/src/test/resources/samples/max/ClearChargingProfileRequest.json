@@ -1,0 +1,14 @@
+{
+  "chargingProfileId": 7,
+  "chargingProfileCriteria": {
+    "evseId": 7,
+    "chargingProfilePurpose": "LocalGeneration",
+    "stackLevel": 7,
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

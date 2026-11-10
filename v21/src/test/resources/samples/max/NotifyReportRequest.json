@@ -1,0 +1,61 @@
+{
+  "requestId": 7,
+  "generatedAt": "2025-01-23T12:34:56.789Z",
+  "reportData": [
+    {
+      "component": {
+        "evse": {
+          "id": 7,
+          "connectorId": 7,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        },
+        "name": "Monta OCPP 2.1",
+        "instance": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "variable": {
+        "name": "Monta OCPP 2.1",
+        "instance": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "variableAttribute": [
+        {
+          "type": "MaxSet",
+          "value": "Monta OCPP 2.1",
+          "mutability": "ReadWrite",
+          "persistent": true,
+          "constant": true,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        }
+      ],
+      "variableCharacteristics": {
+        "unit": "Monta OCPP 2.1",
+        "dataType": "MemberList",
+        "minLimit": 12.5,
+        "maxLimit": 12.5,
+        "maxElements": 7,
+        "valuesList": "Monta OCPP 2.1",
+        "supportsMonitoring": true,
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    }
+  ],
+  "tbc": true,
+  "seqNo": 7,
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

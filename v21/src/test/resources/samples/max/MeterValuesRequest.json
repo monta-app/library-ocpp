@@ -1,0 +1,42 @@
+{
+  "evseId": 7,
+  "meterValue": [
+    {
+      "sampledValue": [
+        {
+          "value": 12.5,
+          "measurand": "Voltage.Maximum",
+          "context": "Trigger",
+          "phase": "L3-L1",
+          "location": "Upstream",
+          "signedMeterValue": {
+            "signedMeterData": "Monta OCPP 2.1",
+            "signingMethod": "Monta OCPP 2.1",
+            "encodingMethod": "Monta OCPP 2.1",
+            "publicKey": "Monta OCPP 2.1",
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          },
+          "unitOfMeasure": {
+            "unit": "Monta OCPP 2.1",
+            "multiplier": 7,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          },
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        }
+      ],
+      "timestamp": "2025-01-23T12:34:56.789Z",
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    }
+  ],
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

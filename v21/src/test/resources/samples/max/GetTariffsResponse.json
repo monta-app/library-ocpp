@@ -1,0 +1,29 @@
+{
+  "status": "NoTariff",
+  "statusInfo": {
+    "reasonCode": "Monta OCPP 2.1",
+    "additionalInfo": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "tariffAssignments": [
+    {
+      "tariffId": "Monta OCPP 2.1",
+      "tariffKind": "DriverTariff",
+      "validFrom": "2025-01-23T12:34:56.789Z",
+      "evseIds": [
+        7
+      ],
+      "idTokens": [
+        "Monta OCPP 2.1"
+      ],
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    }
+  ],
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

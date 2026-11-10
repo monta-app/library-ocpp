@@ -1,0 +1,11 @@
+{
+  "id": [
+    7
+  ],
+  "requestId": 7,
+  "priority": "NormalCycle",
+  "state": "Discharging",
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

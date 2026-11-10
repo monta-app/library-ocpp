@@ -1,0 +1,245 @@
+{
+  "curve": [
+    {
+      "curve": {
+        "curveData": [
+          {
+            "x": 12.5,
+            "y": 12.5,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          }
+        ],
+        "hysteresis": {
+          "hysteresisHigh": 12.5,
+          "hysteresisLow": 12.5,
+          "hysteresisDelay": 12.5,
+          "hysteresisGradient": 12.5,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        },
+        "priority": 7,
+        "reactivePowerParams": {
+          "vRef": 12.5,
+          "autonomousVRefEnable": true,
+          "autonomousVRefTimeConstant": 12.5,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        },
+        "voltageParams": {
+          "hv10MinMeanValue": 12.5,
+          "hv10MinMeanTripDelay": 12.5,
+          "powerDuringCessation": "Reactive",
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        },
+        "yUnit": "PctEffectiveV",
+        "responseTime": 12.5,
+        "startTime": "2025-01-23T12:34:56.789Z",
+        "duration": 12.5,
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "id": "Monta OCPP 2.1",
+      "curveType": "WattVar",
+      "isDefault": true,
+      "isSuperseded": true,
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    }
+  ],
+  "enterService": [
+    {
+      "enterService": {
+        "priority": 7,
+        "highVoltage": 12.5,
+        "lowVoltage": 12.5,
+        "highFreq": 12.5,
+        "lowFreq": 12.5,
+        "delay": 12.5,
+        "randomDelay": 12.5,
+        "rampRate": 12.5,
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "id": "Monta OCPP 2.1",
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    }
+  ],
+  "fixedPFAbsorb": [
+    {
+      "fixedPF": {
+        "priority": 7,
+        "displacement": 12.5,
+        "excitation": true,
+        "startTime": "2025-01-23T12:34:56.789Z",
+        "duration": 12.5,
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "id": "Monta OCPP 2.1",
+      "isDefault": true,
+      "isSuperseded": true,
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    }
+  ],
+  "fixedPFInject": [
+    {
+      "fixedPF": {
+        "priority": 7,
+        "displacement": 12.5,
+        "excitation": true,
+        "startTime": "2025-01-23T12:34:56.789Z",
+        "duration": 12.5,
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "id": "Monta OCPP 2.1",
+      "isDefault": true,
+      "isSuperseded": true,
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    }
+  ],
+  "fixedVar": [
+    {
+      "fixedVar": {
+        "priority": 7,
+        "setpoint": 12.5,
+        "unit": "PctEffectiveV",
+        "startTime": "2025-01-23T12:34:56.789Z",
+        "duration": 12.5,
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "id": "Monta OCPP 2.1",
+      "isDefault": true,
+      "isSuperseded": true,
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    }
+  ],
+  "freqDroop": [
+    {
+      "freqDroop": {
+        "priority": 7,
+        "overFreq": 12.5,
+        "underFreq": 12.5,
+        "overDroop": 12.5,
+        "underDroop": 12.5,
+        "responseTime": 12.5,
+        "startTime": "2025-01-23T12:34:56.789Z",
+        "duration": 12.5,
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "id": "Monta OCPP 2.1",
+      "isDefault": true,
+      "isSuperseded": true,
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    }
+  ],
+  "gradient": [
+    {
+      "gradient": {
+        "priority": 7,
+        "gradient": 12.5,
+        "softGradient": 12.5,
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "id": "Monta OCPP 2.1",
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    }
+  ],
+  "limitMaxDischarge": [
+    {
+      "id": "Monta OCPP 2.1",
+      "isDefault": true,
+      "isSuperseded": true,
+      "limitMaxDischarge": {
+        "priority": 7,
+        "pctMaxDischargePower": 12.5,
+        "powerMonitoringMustTrip": {
+          "curveData": [
+            {
+              "x": 12.5,
+              "y": 12.5,
+              "customData": {
+                "vendorId": "com.monta"
+              }
+            }
+          ],
+          "hysteresis": {
+            "hysteresisHigh": 12.5,
+            "hysteresisLow": 12.5,
+            "hysteresisDelay": 12.5,
+            "hysteresisGradient": 12.5,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          },
+          "priority": 7,
+          "reactivePowerParams": {
+            "vRef": 12.5,
+            "autonomousVRefEnable": true,
+            "autonomousVRefTimeConstant": 12.5,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          },
+          "voltageParams": {
+            "hv10MinMeanValue": 12.5,
+            "hv10MinMeanTripDelay": 12.5,
+            "powerDuringCessation": "Reactive",
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          },
+          "yUnit": "PctEffectiveV",
+          "responseTime": 12.5,
+          "startTime": "2025-01-23T12:34:56.789Z",
+          "duration": 12.5,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        },
+        "startTime": "2025-01-23T12:34:56.789Z",
+        "duration": 12.5,
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    }
+  ],
+  "requestId": 7,
+  "tbc": true,
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

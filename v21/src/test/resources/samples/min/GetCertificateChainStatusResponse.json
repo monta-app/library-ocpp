@@ -1,0 +1,15 @@
+{
+  "certificateStatus": [
+    {
+      "certificateHashData": {
+        "hashAlgorithm": "SHA256",
+        "issuerNameHash": "Monta OCPP 2.1",
+        "issuerKeyHash": "Monta OCPP 2.1",
+        "serialNumber": "Monta OCPP 2.1"
+      },
+      "source": "CRL",
+      "status": "Good",
+      "nextUpdate": "2025-01-23T12:34:56.789Z"
+    }
+  ]
+}

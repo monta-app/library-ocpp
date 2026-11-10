@@ -1,0 +1,17 @@
+{
+  "status": "PublishFailed",
+  "location": [
+    "Monta OCPP 2.1"
+  ],
+  "requestId": 7,
+  "statusInfo": {
+    "reasonCode": "Monta OCPP 2.1",
+    "additionalInfo": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

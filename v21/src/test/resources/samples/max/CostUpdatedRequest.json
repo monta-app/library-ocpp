@@ -1,0 +1,7 @@
+{
+  "totalCost": 12.5,
+  "transactionId": "Monta OCPP 2.1",
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

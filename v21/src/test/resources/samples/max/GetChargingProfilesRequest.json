@@ -1,0 +1,20 @@
+{
+  "requestId": 7,
+  "evseId": 7,
+  "chargingProfile": {
+    "chargingProfilePurpose": "LocalGeneration",
+    "stackLevel": 7,
+    "chargingProfileId": [
+      7
+    ],
+    "chargingLimitSource": [
+      "Monta OCPP 2.1"
+    ],
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

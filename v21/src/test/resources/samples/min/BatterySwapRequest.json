@@ -1,0 +1,16 @@
+{
+  "batteryData": [
+    {
+      "evseId": 1,
+      "serialNumber": "Monta OCPP 2.1",
+      "soC": 1.5,
+      "soH": 1.5
+    }
+  ],
+  "eventType": "BatteryIn",
+  "idToken": {
+    "idToken": "Monta OCPP 2.1",
+    "type": "Monta OCPP 2.1"
+  },
+  "requestId": 1
+}

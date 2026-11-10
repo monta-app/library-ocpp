@@ -1,0 +1,10 @@
+{
+  "message": {
+    "id": 1,
+    "priority": "AlwaysFront",
+    "message": {
+      "format": "ASCII",
+      "content": "Monta OCPP 2.1"
+    }
+  }
+}

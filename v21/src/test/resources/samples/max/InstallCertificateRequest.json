@@ -1,0 +1,7 @@
+{
+  "certificateType": "OEMRootCertificate",
+  "certificate": "Monta OCPP 2.1",
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

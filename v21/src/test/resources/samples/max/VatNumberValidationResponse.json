@@ -1,0 +1,26 @@
+{
+  "company": {
+    "name": "Monta OCPP 2.1",
+    "address1": "Monta OCPP 2.1",
+    "address2": "Monta OCPP 2.1",
+    "city": "Monta OCPP 2.1",
+    "postalCode": "Monta OCPP 2.1",
+    "country": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "statusInfo": {
+    "reasonCode": "Monta OCPP 2.1",
+    "additionalInfo": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "vatNumber": "Monta OCPP 2.1",
+  "evseId": 7,
+  "status": "Rejected",
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "evseId": 7,
+  "connectorId": 7,
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

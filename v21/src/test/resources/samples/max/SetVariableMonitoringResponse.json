@@ -1,0 +1,44 @@
+{
+  "setMonitoringResult": [
+    {
+      "id": 7,
+      "statusInfo": {
+        "reasonCode": "Monta OCPP 2.1",
+        "additionalInfo": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "status": "Duplicate",
+      "type": "TargetDeltaRelative",
+      "component": {
+        "evse": {
+          "id": 7,
+          "connectorId": 7,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        },
+        "name": "Monta OCPP 2.1",
+        "instance": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "variable": {
+        "name": "Monta OCPP 2.1",
+        "instance": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "severity": 7,
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    }
+  ],
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

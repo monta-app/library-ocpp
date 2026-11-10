@@ -1,0 +1,14 @@
+{
+  "evse": {
+    "id": 7,
+    "connectorId": 7,
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "requestedMessage": "CustomTrigger",
+  "customTrigger": "Monta OCPP 2.1",
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

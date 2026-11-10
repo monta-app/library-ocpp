@@ -1,0 +1,7 @@
+{
+  "ongoingIndicator": true,
+  "messagesInQueue": true,
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

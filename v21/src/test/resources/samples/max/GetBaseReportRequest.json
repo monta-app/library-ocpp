@@ -1,0 +1,7 @@
+{
+  "requestId": 7,
+  "reportBase": "SummaryInventory",
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

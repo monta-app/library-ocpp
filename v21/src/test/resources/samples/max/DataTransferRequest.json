@@ -1,0 +1,10 @@
+{
+  "messageId": "Monta OCPP 2.1",
+  "data": {
+    "key": "value"
+  },
+  "vendorId": "Monta OCPP 2.1",
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

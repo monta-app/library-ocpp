@@ -1,0 +1,42 @@
+{
+  "configurationSlot": 7,
+  "connectionData": {
+    "apn": {
+      "apn": "Monta OCPP 2.1",
+      "apnUserName": "Monta OCPP 2.1",
+      "apnPassword": "Monta OCPP 2.1",
+      "simPin": 7,
+      "preferredNetwork": "Monta ",
+      "useOnlyPreferredNetwork": true,
+      "apnAuthentication": "AUTO",
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "ocppVersion": "OCPP21",
+    "ocppInterface": "Any",
+    "ocppTransport": "JSON",
+    "messageTimeout": 7,
+    "ocppCsmsUrl": "Monta OCPP 2.1",
+    "securityProfile": 7,
+    "identity": "Monta OCPP 2.1",
+    "basicAuthPassword": "Monta OCPP 2.1",
+    "vpn": {
+      "server": "Monta OCPP 2.1",
+      "user": "Monta OCPP 2.1",
+      "group": "Monta OCPP 2.1",
+      "password": "Monta OCPP 2.1",
+      "key": "Monta OCPP 2.1",
+      "type": "PPTP",
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "transactionId": "Monta OCPP 2.1",
+  "pspRef": "Monta OCPP 2.1",
+  "status": "Failed",
+  "statusInfo": "Monta OCPP 2.1",
+  "settlementAmount": 12.5,
+  "settlementTime": "2025-01-23T12:34:56.789Z",
+  "receiptId": "Monta OCPP 2.1",
+  "receiptUrl": "Monta OCPP 2.1",
+  "vatCompany": {
+    "name": "Monta OCPP 2.1",
+    "address1": "Monta OCPP 2.1",
+    "address2": "Monta OCPP 2.1",
+    "city": "Monta OCPP 2.1",
+    "postalCode": "Monta OCPP 2.1",
+    "country": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "vatNumber": "Monta OCPP 2.1",
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

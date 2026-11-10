@@ -1,0 +1,9 @@
+{
+  "transactionId": "Monta OCPP 2.1",
+  "allowedEnergyTransfer": [
+    "WPT"
+  ],
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

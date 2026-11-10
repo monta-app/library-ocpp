@@ -1,0 +1,10 @@
+{
+  "location": "Monta OCPP 2.1",
+  "retries": 7,
+  "checksum": "Monta OCPP 2.1",
+  "requestId": 7,
+  "retryInterval": 7,
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "constantStreamData": {
+    "id": 7,
+    "params": {
+      "interval": 7,
+      "values": 7,
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "variableMonitoringId": 7,
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

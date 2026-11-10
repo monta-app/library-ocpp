@@ -1,0 +1,314 @@
+{
+  "evseId": 7,
+  "groupIdToken": {
+    "additionalInfo": [
+      {
+        "additionalIdToken": "Monta OCPP 2.1",
+        "type": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      }
+    ],
+    "idToken": "Monta OCPP 2.1",
+    "type": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "idToken": {
+    "additionalInfo": [
+      {
+        "additionalIdToken": "Monta OCPP 2.1",
+        "type": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      }
+    ],
+    "idToken": "Monta OCPP 2.1",
+    "type": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "remoteStartId": 7,
+  "chargingProfile": {
+    "id": 7,
+    "stackLevel": 7,
+    "chargingProfilePurpose": "LocalGeneration",
+    "chargingProfileKind": "Dynamic",
+    "recurrencyKind": "Weekly",
+    "validFrom": "2025-01-23T12:34:56.789Z",
+    "validTo": "2025-01-23T12:34:56.789Z",
+    "transactionId": "Monta OCPP 2.1",
+    "maxOfflineDuration": 7,
+    "chargingSchedule": [
+      {
+        "id": 7,
+        "limitAtSoC": {
+          "soc": 7,
+          "limit": 12.5,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        },
+        "startSchedule": "2025-01-23T12:34:56.789Z",
+        "duration": 7,
+        "chargingRateUnit": "A",
+        "minChargingRate": 12.5,
+        "powerTolerance": 12.5,
+        "signatureId": 7,
+        "digestValue": "Monta OCPP 2.1",
+        "useLocalTime": true,
+        "chargingSchedulePeriod": [
+          {
+            "startPeriod": 7,
+            "limit": 12.5,
+            "limit_L2": 12.5,
+            "limit_L3": 12.5,
+            "numberPhases": 3,
+            "phaseToUse": 3,
+            "dischargeLimit": 0.0,
+            "dischargeLimit_L2": 0.0,
+            "dischargeLimit_L3": 0.0,
+            "setpoint": 12.5,
+            "setpoint_L2": 12.5,
+            "setpoint_L3": 12.5,
+            "setpointReactive": 12.5,
+            "setpointReactive_L2": 12.5,
+            "setpointReactive_L3": 12.5,
+            "preconditioningRequest": true,
+            "evseSleep": true,
+            "v2xBaseline": 12.5,
+            "operationMode": "LocalLoadBalancing",
+            "v2xFreqWattCurve": [
+              {
+                "frequency": 12.5,
+                "power": 12.5,
+                "customData": {
+                  "vendorId": "com.monta"
+                }
+              }
+            ],
+            "v2xSignalWattCurve": [
+              {
+                "signal": 7,
+                "power": 12.5,
+                "customData": {
+                  "vendorId": "com.monta"
+                }
+              }
+            ],
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          }
+        ],
+        "randomizedDelay": 7,
+        "salesTariff": {
+          "id": 7,
+          "salesTariffDescription": "Monta OCPP 2.1",
+          "numEPriceLevels": 7,
+          "salesTariffEntry": [
+            {
+              "relativeTimeInterval": {
+                "start": 7,
+                "duration": 7,
+                "customData": {
+                  "vendorId": "com.monta"
+                }
+              },
+              "ePriceLevel": 7,
+              "consumptionCost": [
+                {
+                  "startValue": 12.5,
+                  "cost": [
+                    {
+                      "costKind": "RenewableGenerationPercentage",
+                      "amount": 7,
+                      "amountMultiplier": 7,
+                      "customData": {
+                        "vendorId": "com.monta"
+                      }
+                    }
+                  ],
+                  "customData": {
+                    "vendorId": "com.monta"
+                  }
+                }
+              ],
+              "customData": {
+                "vendorId": "com.monta"
+              }
+            }
+          ],
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        },
+        "absolutePriceSchedule": {
+          "timeAnchor": "2025-01-23T12:34:56.789Z",
+          "priceScheduleID": 7,
+          "priceScheduleDescription": "Monta OCPP 2.1",
+          "currency": "Mon",
+          "language": "Monta OC",
+          "priceAlgorithm": "Monta OCPP 2.1",
+          "minimumCost": {
+            "exponent": 7,
+            "value": 7,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          },
+          "maximumCost": {
+            "exponent": 7,
+            "value": 7,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          },
+          "priceRuleStacks": [
+            {
+              "duration": 7,
+              "priceRule": [
+                {
+                  "parkingFeePeriod": 7,
+                  "carbonDioxideEmission": 7,
+                  "renewableGenerationPercentage": 7,
+                  "energyFee": {
+                    "exponent": 7,
+                    "value": 7,
+                    "customData": {
+                      "vendorId": "com.monta"
+                    }
+                  },
+                  "parkingFee": {
+                    "exponent": 7,
+                    "value": 7,
+                    "customData": {
+                      "vendorId": "com.monta"
+                    }
+                  },
+                  "powerRangeStart": {
+                    "exponent": 7,
+                    "value": 7,
+                    "customData": {
+                      "vendorId": "com.monta"
+                    }
+                  },
+                  "customData": {
+                    "vendorId": "com.monta"
+                  }
+                }
+              ],
+              "customData": {
+                "vendorId": "com.monta"
+              }
+            }
+          ],
+          "taxRules": [
+            {
+              "taxRuleID": 7,
+              "taxRuleName": "Monta OCPP 2.1",
+              "taxIncludedInPrice": true,
+              "appliesToEnergyFee": true,
+              "appliesToParkingFee": true,
+              "appliesToOverstayFee": true,
+              "appliesToMinimumMaximumCost": true,
+              "taxRate": {
+                "exponent": 7,
+                "value": 7,
+                "customData": {
+                  "vendorId": "com.monta"
+                }
+              },
+              "customData": {
+                "vendorId": "com.monta"
+              }
+            }
+          ],
+          "overstayRuleList": {
+            "overstayPowerThreshold": {
+              "exponent": 7,
+              "value": 7,
+              "customData": {
+                "vendorId": "com.monta"
+              }
+            },
+            "overstayRule": [
+              {
+                "overstayFee": {
+                  "exponent": 7,
+                  "value": 7,
+                  "customData": {
+                    "vendorId": "com.monta"
+                  }
+                },
+                "overstayRuleDescription": "Monta OCPP 2.1",
+                "startTime": 7,
+                "overstayFeePeriod": 7,
+                "customData": {
+                  "vendorId": "com.monta"
+                }
+              }
+            ],
+            "overstayTimeThreshold": 7,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          },
+          "additionalSelectedServices": [
+            {
+              "serviceFee": {
+                "exponent": 7,
+                "value": 7,
+                "customData": {
+                  "vendorId": "com.monta"
+                }
+              },
+              "serviceName": "Monta OCPP 2.1",
+              "customData": {
+                "vendorId": "com.monta"
+              }
+            }
+          ],
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        },
+        "priceLevelSchedule": {
+          "priceLevelScheduleEntries": [
+            {
+              "duration": 7,
+              "priceLevel": 7,
+              "customData": {
+                "vendorId": "com.monta"
+              }
+            }
+          ],
+          "timeAnchor": "2025-01-23T12:34:56.789Z",
+          "priceScheduleId": 7,
+          "priceScheduleDescription": "Monta OCPP 2.1",
+          "numberOfPriceLevels": 7,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        },
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      }
+    ],
+    "invalidAfterOfflineDuration": true,
+    "dynUpdateInterval": 7,
+    "dynUpdateTime": "2025-01-23T12:34:56.789Z",
+    "priceScheduleSignature": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

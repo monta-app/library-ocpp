@@ -1,0 +1,48 @@
+{
+  "generatedAt": "2025-01-23T12:34:56.789Z",
+  "tbc": true,
+  "seqNo": 7,
+  "eventData": [
+    {
+      "eventId": 7,
+      "timestamp": "2025-01-23T12:34:56.789Z",
+      "trigger": "Periodic",
+      "cause": 7,
+      "actualValue": "Monta OCPP 2.1",
+      "techCode": "Monta OCPP 2.1",
+      "techInfo": "Monta OCPP 2.1",
+      "cleared": true,
+      "transactionId": "Monta OCPP 2.1",
+      "component": {
+        "evse": {
+          "id": 7,
+          "connectorId": 7,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        },
+        "name": "Monta OCPP 2.1",
+        "instance": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "variableMonitoringId": 7,
+      "eventNotificationType": "CustomMonitor",
+      "variable": {
+        "name": "Monta OCPP 2.1",
+        "instance": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "severity": 7,
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    }
+  ],
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

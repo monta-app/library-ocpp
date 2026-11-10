@@ -1,0 +1,13 @@
+{
+  "evse": {
+    "id": 7,
+    "connectorId": 7,
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "operationalStatus": "Operative",
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

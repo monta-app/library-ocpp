@@ -1,0 +1,326 @@
+{
+  "tariff": {
+    "tariffId": "Monta OCPP 2.1",
+    "description": [
+      {
+        "format": "QRCODE",
+        "language": "Monta OC",
+        "content": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      }
+    ],
+    "currency": "Mon",
+    "energy": {
+      "prices": [
+        {
+          "priceKwh": 12.5,
+          "conditions": {
+            "startTimeOfDay": "Monta OCPP 2.1",
+            "endTimeOfDay": "Monta OCPP 2.1",
+            "dayOfWeek": [
+              "Sunday"
+            ],
+            "validFromDate": "Monta OCPP 2.1",
+            "validToDate": "Monta OCPP 2.1",
+            "evseKind": "DC",
+            "minEnergy": 12.5,
+            "maxEnergy": 12.5,
+            "minCurrent": 12.5,
+            "maxCurrent": 12.5,
+            "minPower": 12.5,
+            "maxPower": 12.5,
+            "minTime": 7,
+            "maxTime": 7,
+            "minChargingTime": 7,
+            "maxChargingTime": 7,
+            "minIdleTime": 7,
+            "maxIdleTime": 7,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          },
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        }
+      ],
+      "taxRates": [
+        {
+          "type": "Monta OCPP 2.1",
+          "tax": 12.5,
+          "stack": 7,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        }
+      ],
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "validFrom": "2025-01-23T12:34:56.789Z",
+    "chargingTime": {
+      "prices": [
+        {
+          "priceMinute": 12.5,
+          "conditions": {
+            "startTimeOfDay": "Monta OCPP 2.1",
+            "endTimeOfDay": "Monta OCPP 2.1",
+            "dayOfWeek": [
+              "Sunday"
+            ],
+            "validFromDate": "Monta OCPP 2.1",
+            "validToDate": "Monta OCPP 2.1",
+            "evseKind": "DC",
+            "minEnergy": 12.5,
+            "maxEnergy": 12.5,
+            "minCurrent": 12.5,
+            "maxCurrent": 12.5,
+            "minPower": 12.5,
+            "maxPower": 12.5,
+            "minTime": 7,
+            "maxTime": 7,
+            "minChargingTime": 7,
+            "maxChargingTime": 7,
+            "minIdleTime": 7,
+            "maxIdleTime": 7,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          },
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        }
+      ],
+      "taxRates": [
+        {
+          "type": "Monta OCPP 2.1",
+          "tax": 12.5,
+          "stack": 7,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        }
+      ],
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "idleTime": {
+      "prices": [
+        {
+          "priceMinute": 12.5,
+          "conditions": {
+            "startTimeOfDay": "Monta OCPP 2.1",
+            "endTimeOfDay": "Monta OCPP 2.1",
+            "dayOfWeek": [
+              "Sunday"
+            ],
+            "validFromDate": "Monta OCPP 2.1",
+            "validToDate": "Monta OCPP 2.1",
+            "evseKind": "DC",
+            "minEnergy": 12.5,
+            "maxEnergy": 12.5,
+            "minCurrent": 12.5,
+            "maxCurrent": 12.5,
+            "minPower": 12.5,
+            "maxPower": 12.5,
+            "minTime": 7,
+            "maxTime": 7,
+            "minChargingTime": 7,
+            "maxChargingTime": 7,
+            "minIdleTime": 7,
+            "maxIdleTime": 7,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          },
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        }
+      ],
+      "taxRates": [
+        {
+          "type": "Monta OCPP 2.1",
+          "tax": 12.5,
+          "stack": 7,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        }
+      ],
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "fixedFee": {
+      "prices": [
+        {
+          "conditions": {
+            "startTimeOfDay": "Monta OCPP 2.1",
+            "endTimeOfDay": "Monta OCPP 2.1",
+            "dayOfWeek": [
+              "Sunday"
+            ],
+            "validFromDate": "Monta OCPP 2.1",
+            "validToDate": "Monta OCPP 2.1",
+            "evseKind": "DC",
+            "paymentBrand": "Monta OCPP 2.1",
+            "paymentRecognition": "Monta OCPP 2.1",
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          },
+          "priceFixed": 12.5,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        }
+      ],
+      "taxRates": [
+        {
+          "type": "Monta OCPP 2.1",
+          "tax": 12.5,
+          "stack": 7,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        }
+      ],
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "reservationTime": {
+      "prices": [
+        {
+          "priceMinute": 12.5,
+          "conditions": {
+            "startTimeOfDay": "Monta OCPP 2.1",
+            "endTimeOfDay": "Monta OCPP 2.1",
+            "dayOfWeek": [
+              "Sunday"
+            ],
+            "validFromDate": "Monta OCPP 2.1",
+            "validToDate": "Monta OCPP 2.1",
+            "evseKind": "DC",
+            "minEnergy": 12.5,
+            "maxEnergy": 12.5,
+            "minCurrent": 12.5,
+            "maxCurrent": 12.5,
+            "minPower": 12.5,
+            "maxPower": 12.5,
+            "minTime": 7,
+            "maxTime": 7,
+            "minChargingTime": 7,
+            "maxChargingTime": 7,
+            "minIdleTime": 7,
+            "maxIdleTime": 7,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          },
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        }
+      ],
+      "taxRates": [
+        {
+          "type": "Monta OCPP 2.1",
+          "tax": 12.5,
+          "stack": 7,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        }
+      ],
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "reservationFixed": {
+      "prices": [
+        {
+          "conditions": {
+            "startTimeOfDay": "Monta OCPP 2.1",
+            "endTimeOfDay": "Monta OCPP 2.1",
+            "dayOfWeek": [
+              "Sunday"
+            ],
+            "validFromDate": "Monta OCPP 2.1",
+            "validToDate": "Monta OCPP 2.1",
+            "evseKind": "DC",
+            "paymentBrand": "Monta OCPP 2.1",
+            "paymentRecognition": "Monta OCPP 2.1",
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          },
+          "priceFixed": 12.5,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        }
+      ],
+      "taxRates": [
+        {
+          "type": "Monta OCPP 2.1",
+          "tax": 12.5,
+          "stack": 7,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        }
+      ],
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "minCost": {
+      "exclTax": 12.5,
+      "inclTax": 12.5,
+      "taxRates": [
+        {
+          "type": "Monta OCPP 2.1",
+          "tax": 12.5,
+          "stack": 7,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        }
+      ],
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "maxCost": {
+      "exclTax": 12.5,
+      "inclTax": 12.5,
+      "taxRates": [
+        {
+          "type": "Monta OCPP 2.1",
+          "tax": 12.5,
+          "stack": 7,
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        }
+      ],
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "transactionId": "Monta OCPP 2.1",
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "chargingStation": {
+    "serialNumber": "Monta OCPP 2.1",
+    "model": "Monta OCPP 2.1",
+    "modem": {
+      "iccid": "Monta OCPP 2.1",
+      "imsi": "Monta OCPP 2.1",
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "vendorName": "Monta OCPP 2.1",
+    "firmwareVersion": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "reason": "Watchdog",
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

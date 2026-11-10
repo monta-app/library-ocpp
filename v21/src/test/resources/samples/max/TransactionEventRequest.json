@@ -1,0 +1,245 @@
+{
+  "costDetails": {
+    "chargingPeriods": [
+      {
+        "dimensions": [
+          {
+            "type": "ChargingTime",
+            "volume": 12.5,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          }
+        ],
+        "tariffId": "Monta OCPP 2.1",
+        "startPeriod": "2025-01-23T12:34:56.789Z",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      }
+    ],
+    "totalCost": {
+      "currency": "Mon",
+      "typeOfCost": "MaxCost",
+      "fixed": {
+        "exclTax": 12.5,
+        "inclTax": 12.5,
+        "taxRates": [
+          {
+            "type": "Monta OCPP 2.1",
+            "tax": 12.5,
+            "stack": 7,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          }
+        ],
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "energy": {
+        "exclTax": 12.5,
+        "inclTax": 12.5,
+        "taxRates": [
+          {
+            "type": "Monta OCPP 2.1",
+            "tax": 12.5,
+            "stack": 7,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          }
+        ],
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "chargingTime": {
+        "exclTax": 12.5,
+        "inclTax": 12.5,
+        "taxRates": [
+          {
+            "type": "Monta OCPP 2.1",
+            "tax": 12.5,
+            "stack": 7,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          }
+        ],
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "idleTime": {
+        "exclTax": 12.5,
+        "inclTax": 12.5,
+        "taxRates": [
+          {
+            "type": "Monta OCPP 2.1",
+            "tax": 12.5,
+            "stack": 7,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          }
+        ],
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "reservationTime": {
+        "exclTax": 12.5,
+        "inclTax": 12.5,
+        "taxRates": [
+          {
+            "type": "Monta OCPP 2.1",
+            "tax": 12.5,
+            "stack": 7,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          }
+        ],
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "reservationFixed": {
+        "exclTax": 12.5,
+        "inclTax": 12.5,
+        "taxRates": [
+          {
+            "type": "Monta OCPP 2.1",
+            "tax": 12.5,
+            "stack": 7,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          }
+        ],
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "total": {
+        "exclTax": 12.5,
+        "inclTax": 12.5,
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      },
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "totalUsage": {
+      "energy": 12.5,
+      "chargingTime": 7,
+      "idleTime": 7,
+      "reservationTime": 7,
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "failureToCalculate": true,
+    "failureReason": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "eventType": "Updated",
+  "meterValue": [
+    {
+      "sampledValue": [
+        {
+          "value": 12.5,
+          "measurand": "Voltage.Maximum",
+          "context": "Trigger",
+          "phase": "L3-L1",
+          "location": "Upstream",
+          "signedMeterValue": {
+            "signedMeterData": "Monta OCPP 2.1",
+            "signingMethod": "Monta OCPP 2.1",
+            "encodingMethod": "Monta OCPP 2.1",
+            "publicKey": "Monta OCPP 2.1",
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          },
+          "unitOfMeasure": {
+            "unit": "Monta OCPP 2.1",
+            "multiplier": 7,
+            "customData": {
+              "vendorId": "com.monta"
+            }
+          },
+          "customData": {
+            "vendorId": "com.monta"
+          }
+        }
+      ],
+      "timestamp": "2025-01-23T12:34:56.789Z",
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    }
+  ],
+  "timestamp": "2025-01-23T12:34:56.789Z",
+  "triggerReason": "UnlockCommand",
+  "seqNo": 7,
+  "offline": true,
+  "numberOfPhasesUsed": 3,
+  "cableMaxCurrent": 7,
+  "reservationId": 7,
+  "preconditioningStatus": "Preconditioning",
+  "evseSleep": true,
+  "transactionInfo": {
+    "transactionId": "Monta OCPP 2.1",
+    "chargingState": "Idle",
+    "timeSpentCharging": 7,
+    "stoppedReason": "ReqEnergyTransferRejected",
+    "remoteStartId": 7,
+    "operationMode": "LocalLoadBalancing",
+    "tariffId": "Monta OCPP 2.1",
+    "transactionLimit": {
+      "maxCost": 12.5,
+      "maxEnergy": 12.5,
+      "maxTime": 7,
+      "maxSoC": 7,
+      "customData": {
+        "vendorId": "com.monta"
+      }
+    },
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "evse": {
+    "id": 7,
+    "connectorId": 7,
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "idToken": {
+    "additionalInfo": [
+      {
+        "additionalIdToken": "Monta OCPP 2.1",
+        "type": "Monta OCPP 2.1",
+        "customData": {
+          "vendorId": "com.monta"
+        }
+      }
+    ],
+    "idToken": "Monta OCPP 2.1",
+    "type": "Monta OCPP 2.1",
+    "customData": {
+      "vendorId": "com.monta"
+    }
+  },
+  "customData": {
+    "vendorId": "com.monta"
+  }
+}

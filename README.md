@@ -165,3 +165,19 @@ plus per-block `<Block>ServerDispatcher` / `<Block>ClientDispatcher`, `OcppServe
   existing servers keep their behaviour. Servers that speak 2.1 use
   `OcppSession.OcppVersion.negotiate(protocols, supportedVersions)`, which returns the first subprotocol the charging
   station offers that is supported (OCPP-J 2.1, part 4, 3.1).
+
+### Upgrading to 4.0.0
+
+4.0.0 adds OCPP 2.1 and is source-breaking for code that `when`s over these types without an `else`:
+
+| Type | Added |
+|---|---|
+| `Message` | `Message.Send`, `Message.CallResultError` |
+| `ParsingResult` | `ParsingResult.Ignored` |
+| `OcppSession.OcppVersion` | `V2_1` |
+| `SerializationMode` | `OCPP_2_1` |
+
+Add the branches (preferably explicit ones rather than `else`, so the next addition shows up at compile time too).
+They are unreachable unless you opt in to OCPP 2.1 with `OcppVersion.negotiate()` and `SerializationMode.OCPP_2_1`:
+`valueOf()` never returns `V2_1`, and the 1.6 / 2.0.1 serializers never produce the new message or parsing results.
+Runtime behaviour for 1.6 and 2.0.1 is unchanged.

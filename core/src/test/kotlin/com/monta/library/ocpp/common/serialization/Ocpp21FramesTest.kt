@@ -87,4 +87,34 @@ class Ocpp21FramesTest : StringSpec({
         reparsed.shouldBeInstanceOf<ParsingResult.Success<Message>>()
         reparsed.value shouldBe Message.Send("19223201", "NotifyPeriodicEventStream", payload)
     }
+    "a SEND or CALLRESULTERROR that cannot be read is ignored, never answered (2.1 mode)" {
+        listOf(
+            """[6,"s-1"]""",
+            """[6,"s-1","NotifyPeriodicEventStream"]""",
+            """[6,"s-1","NotifyPeriodicEventStream","not an object"]""",
+            """[6,42,"NotifyPeriodicEventStream",{}]""",
+            """[5,"r-1"]""",
+            """[5,"r-1","FormatViolation"]"""
+        ).forEach { frame ->
+            val result = serializer21.parse(frame)
+            result.shouldBeInstanceOf<ParsingResult.Ignored<Message>>()
+            result.messageTypeId shouldBe frame[1].digitToInt()
+        }
+    }
+
+    "an unreadable message id is answered with -1 in 2.1 mode only" {
+        val invalidJson = serializer21.parse("""[2,"abc""")
+        invalidJson.shouldBeInstanceOf<ParsingResult.Failure<Message>>()
+        invalidJson.uniqueId shouldBe "-1"
+        // the id is readable: keep it
+        val incompleteCall = serializer21.parse("""[2,"call-1"]""")
+        incompleteCall.shouldBeInstanceOf<ParsingResult.Failure<Message>>()
+        incompleteCall.uniqueId shouldBe "call-1"
+        // 1.6 and 2.0.1 unchanged
+        listOf(serializer2, serializer16).forEach { serializer ->
+            val result = serializer.parse("""[2,"abc""")
+            result.shouldBeInstanceOf<ParsingResult.Failure<Message>>()
+            result.uniqueId shouldBe ""
+        }
+    }
 })

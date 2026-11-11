@@ -37,6 +37,9 @@ class MessageSerializer(
         private const val TYPE_NUMBER_CALL_RESULT_ERROR = 5
         private const val TYPE_NUMBER_SEND = 6
 
+        /** OCPP-J 2.1 part 4, 4.2.3: "When also the MessageId cannot be read, the CALLERROR SHALL contain "-1"". */
+        private const val UNREADABLE_MESSAGE_ID = "-1"
+
         @JvmStatic
         private val logger = LoggerFactory.getLogger(MessageSerializer::class.java)
     }
@@ -91,11 +94,18 @@ class MessageSerializer(
         } catch (exception: Exception) {
             logger.warn("failed to deserialize message", exception)
             ParsingResult.Failure(
-                uniqueId = "",
+                uniqueId = if (supportsOcpp21Frames) readableMessageId(json) ?: UNREADABLE_MESSAGE_ID else "",
                 messageErrorCode = ocppErrorResponder.getJsonFormatError(),
                 throwable = exception
             )
         }
+    }
+
+    /** The frame's message id if it can be read, otherwise null. */
+    private fun readableMessageId(json: String): String? {
+        val node = runCatching { objectMapper.readTree(json) }.getOrNull() ?: return null
+        val id = node.takeIf { it.isArray }?.get(1)
+        return if (id != null && id.isString) id.asString() else null
     }
 
     fun <T> parseDataTransferExtension(
@@ -154,13 +164,17 @@ class MessageSerializer(
             )
 
             TYPE_NUMBER_CALL_RESULT_ERROR -> if (supportsOcpp21Frames) {
-                ParsingResult.Success(value = this.toOcppCallResultErrorMessage())
+                this.toOcppCallResultErrorMessage()
+                    ?.let { ParsingResult.Success<Message>(value = it) }
+                    ?: this.ignored(messageType, "CALLRESULTERROR frame cannot be read")
             } else {
                 this.unknownMessageType(messageType)
             }
 
             TYPE_NUMBER_SEND -> if (supportsOcpp21Frames) {
-                ParsingResult.Success(value = this.toOcppSendMessage())
+                this.toOcppSendMessage()
+                    ?.let { ParsingResult.Success<Message>(value = it) }
+                    ?: this.ignored(messageType, "SEND frame cannot be read")
             } else {
                 this.unknownMessageType(messageType)
             }
@@ -169,13 +183,19 @@ class MessageSerializer(
         }
     }
 
+    private fun JsonNode.ignored(messageType: Int?, reason: String): ParsingResult<Message> {
+        val id = this[1]
+        return ParsingResult.Ignored(
+            uniqueId = if (id != null && id.isString) id.asString() else "",
+            messageTypeId = messageType,
+            reason = reason
+        )
+    }
+
     private fun JsonNode.unknownMessageType(messageType: Int?): ParsingResult<Message> {
         if (supportsOcpp21Frames) {
             // OCPP 2.1: "When a system receives a message with a Message Type Number not in this list, it SHALL ignore the message"
-            return ParsingResult.Ignored(
-                uniqueId = this[1]?.asString().orEmpty(),
-                messageTypeId = messageType
-            )
+            return this.ignored(messageType, "unknown message type $messageType")
         }
         return ParsingResult.Failure(
             uniqueId = this[1].asString(),
@@ -199,20 +219,30 @@ class MessageSerializer(
         )
     }
 
-    private fun JsonNode.toOcppCallResultErrorMessage(): Message.CallResultError {
+    /** Null when the frame cannot be read: `[5, "id", "errorCode", "errorDescription", {errorDetails}]`. */
+    private fun JsonNode.toOcppCallResultErrorMessage(): Message.CallResultError? {
+        val id = this[1]
+        val code = this[2]
+        val description = this[3]
+        if (id == null || !id.isString || code == null || !code.isString || description == null || !description.isString) return null
         return Message.CallResultError(
-            uniqueId = this[1].asString(),
-            errorCode = this[2].asString(),
-            errorDescription = this[3].asString(),
+            uniqueId = id.asString(),
+            errorCode = code.asString(),
+            errorDescription = description.asString(),
             errorDetails = this[4]?.toString() ?: "{}"
         )
     }
 
-    private fun JsonNode.toOcppSendMessage(): Message.Send {
+    /** Null when the frame cannot be read: `[6, "id", "Action", {payload}]`. */
+    private fun JsonNode.toOcppSendMessage(): Message.Send? {
+        val id = this[1]
+        val action = this[2]
+        val payload = this[3]
+        if (id == null || !id.isString || action == null || !action.isString || payload == null || !payload.isObject) return null
         return Message.Send(
-            uniqueId = this[1].asString(),
-            action = this[2].asString(),
-            payload = this[3]
+            uniqueId = id.asString(),
+            action = action.asString(),
+            payload = payload
         )
     }
 

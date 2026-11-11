@@ -22,10 +22,13 @@ sealed class ParsingResult<T> {
     }
 
     /**
-     * The frame had a message type the receiver must ignore (OCPP-J 2.1, part 4, section 4.1.3). No response must be sent.
+     * OCPP 2.1 only: a frame the receiver must not answer. Either its message type is unknown (OCPP-J 2.1, part 4,
+     * 4.1.3 and 4.4), or it is a SEND or CALLRESULTERROR that cannot be read (part 4, 4.2.4: a SEND is never answered;
+     * a CALLRESULTERROR is itself an answer).
      */
     data class Ignored<T>(
         val uniqueId: String,
-        val messageTypeId: Int?
+        val messageTypeId: Int?,
+        val reason: String
     ) : ParsingResult<T>()
 }

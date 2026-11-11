@@ -5,6 +5,7 @@ import com.monta.library.ocpp.common.error.OcppErrorResponder
 import com.monta.library.ocpp.common.profile.Feature
 import com.monta.library.ocpp.common.profile.OcppConfirmation
 import com.monta.library.ocpp.common.profile.OcppRequest
+import com.monta.library.ocpp.common.profile.OcppUnconfirmedRequest
 import com.monta.library.ocpp.common.profile.ProfileDispatcher
 import com.monta.library.ocpp.common.serialization.Message
 import com.monta.library.ocpp.common.serialization.MessageSerializer
@@ -20,6 +21,9 @@ import org.slf4j.MDC
 import java.util.UUID
 import kotlin.time.Duration
 
+/** OCPP-J: ErrorDescription is string[255]. */
+private const val MAX_ERROR_DESCRIPTION_LENGTH = 255
+
 abstract class OcppMessageInterpreter(
     serializationMode: SerializationMode,
     private val ocppErrorResponder: OcppErrorResponder,
@@ -29,6 +33,7 @@ abstract class OcppMessageInterpreter(
 ) {
 
     protected val messageSerializer = MessageSerializer(serializationMode, ocppErrorResponder)
+    private val ocpp21 = serializationMode == SerializationMode.OCPP_2_1
     private val completeDeferrableRepository = CompleteDeferrableRepository<DeferredCache, OcppConfirmation>()
 
     private val actionToProfile = run {
@@ -72,7 +77,7 @@ abstract class OcppMessageInterpreter(
             }
 
             is ParsingResult.Ignored -> {
-                logger.warn("ignoring message with unknown message type ${result.messageTypeId} (uniqueId=${result.uniqueId})")
+                logger.warn("ignoring message type ${result.messageTypeId} (uniqueId=${result.uniqueId}): ${result.reason}")
             }
         }
     }
@@ -118,6 +123,9 @@ abstract class OcppMessageInterpreter(
         ocppRequest: OcppRequest,
         timeout: Duration? = null
     ): OcppConfirmation {
+        require(ocppRequest !is OcppUnconfirmedRequest) {
+            "${ocppRequest.actionName()} is an unconfirmed (SEND) message without a response: use sendUnconfirmed()"
+        }
         val feature = requestTypeToFeature[ocppRequest::class.java]
 
         requireNotNull(feature) { "feature not found for request ${ocppRequest::class.java}" }
@@ -292,6 +300,10 @@ abstract class OcppMessageInterpreter(
         // Get the feature associated with the cache'd request
         val (_, feature) = getProfileAndFeature(ocppSessionInfo, deferredCache.uniqueId, deferredCache.action)
             ?: return
+        if (ocpp21) {
+            onResponse21(ocppSessionInfo, message, deferredCache, feature)
+            return
+        }
         // If we get a null result for the getPayload function just end here because the error has already been handled
         val confirmation = getPayload(
             ocppSessionInfo = ocppSessionInfo,
@@ -301,6 +313,44 @@ abstract class OcppMessageInterpreter(
         ) ?: return
         // Lastly we send that confirmation up to our completable deferred
         deferredCache.complete(confirmation)
+    }
+
+    /**
+     * OCPP 2.1: a CALLRESULT that cannot be processed is answered with a CALLRESULTERROR (OCPP-J 2.1, part 4, 4.2.3), and
+     * the waiting [send] fails at once instead of timing out. 1.6 and 2.0.1 keep logging and dropping it.
+     */
+    private suspend fun onResponse21(
+        ocppSessionInfo: OcppSession.Info,
+        message: Message.Response,
+        deferredCache: DeferredCache,
+        feature: Feature
+    ) {
+        when (val result = messageSerializer.deserializePayload(message, feature.confirmationType)) {
+            is ParsingResult.Success -> deferredCache.complete(result.value)
+            is ParsingResult.Failure -> {
+                logger.warn("Failed to parse ${feature.name} response $result")
+                val errorCode = ocppErrorResponder.getJsonFormatError().getName()
+                val description = "Invalid ${feature.name}Response: ${failureReason(result.throwable)}".take(MAX_ERROR_DESCRIPTION_LENGTH)
+                sendMessage(
+                    ocppSessionInfo = ocppSessionInfo,
+                    message = Message.CallResultError(
+                        uniqueId = message.uniqueId,
+                        errorCode = errorCode,
+                        errorDescription = description
+                    )
+                )
+                deferredCache.completeExceptionally(ResponseException(errorCode, description, "{}"))
+            }
+            is ParsingResult.Ignored -> Unit
+        }
+    }
+
+    /** The innermost cause's first line, e.g. "model length > maximum 20 - 21" (Jackson wraps the actual reason). */
+    private fun failureReason(throwable: Throwable): String {
+        return generateSequence(throwable) { it.cause }
+            .mapNotNull { it.message?.lineSequence()?.firstOrNull()?.trim() }
+            .lastOrNull { it.isNotBlank() }
+            ?: throwable::class.simpleName.orEmpty()
     }
 
     private fun onError(

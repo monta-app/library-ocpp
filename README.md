@@ -145,9 +145,10 @@ A rough blocking implementation of this is today in `com.monta.ocpp.service.Char
 
 ## OCPP 2.1 (`ocpp-v21`)
 
-`com.monta.library.ocpp:ocpp-v21` holds the full OCPP 2.1 Edition 1 message model: all 91 actions, with the same layout
-as `ocpp-v201` (`blocks/<functional block>/<Action>.kt` with `<Action>Feature`, `<Action>Request` and `<Action>Response`,
-plus per-block `<Block>ServerDispatcher` / `<Block>ClientDispatcher`, `OcppServerV21Builder` and `OcppClientV21Builder`).
+`com.monta.library.ocpp:ocpp-v21` holds the full OCPP 2.1 message model (Editions 1 and 2 share the same JSON
+schemas): all 91 actions, with the same layout as `ocpp-v201` (`blocks/<functional block>/<Action>.kt` with
+`<Action>Feature`, `<Action>Request` and `<Action>Response`, plus per-block `<Block>ServerDispatcher` /
+`<Block>ClientDispatcher`, `OcppServerV21Builder` and `OcppClientV21Builder`).
 
 * **Generated, not hand-written.** `v21/codegen/generate_v21.py` reads the official OCA JSON schemas in `v21/schemas`
   and writes the Kotlin sources, the `V21Actions` registry (action, kebab-case slug, direction, block, feature) and

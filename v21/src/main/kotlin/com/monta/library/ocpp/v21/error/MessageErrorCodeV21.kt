@@ -8,7 +8,13 @@ enum class MessageErrorCodeV21(
     FormatViolation("Payload for Action is syntactically incorrect"),
     GenericError("Any other error not covered by the more specific error codes in this table"),
     InternalError("An internal error occurred and the receiver was not able to process the requested Action successfully"),
-    MessageTypeNotSupported("A message with an Message Type Number received that is not supported by this implementation."),
+
+    /**
+     * Deprecated in OCPP 2.1 (OCPP-J part 4 errata 2026-02): a message with an unknown message type is ignored, not
+     * answered. Kept so that a CALLERROR carrying this code can still be read.
+     */
+    MessageTypeNotSupported("(deprecated) A message with a Message Type Number that is not supported by this implementation."),
+
     NotImplemented("Requested Action is not known by receiver"),
     NotSupported("Requested Action is recognized but not supported by the receiver"),
     OccurrenceConstraintViolation("Payload for Action is syntactically correct but at least one of the fields violates occurrence constraints"),

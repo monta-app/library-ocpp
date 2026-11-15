@@ -23,8 +23,8 @@ sealed class ParsingResult<T> {
 
     /**
      * OCPP 2.1 only: a frame the receiver must not answer. Either its message type is unknown (OCPP-J 2.1, part 4,
-     * 4.1.3 and 4.4), or it is a SEND or CALLRESULTERROR that cannot be read (part 4, 4.2.4: a SEND is never answered;
-     * a CALLRESULTERROR is itself an answer).
+     * 4.1.3; errata 2026-02 removed the duplicate rule in 4.4), or it is a SEND or CALLRESULTERROR that cannot be read
+     * (part 4, 4.2.4: a SEND is never answered; a CALLRESULTERROR is itself an answer).
      */
     data class Ignored<T>(
         val uniqueId: String,

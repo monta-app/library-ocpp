@@ -175,10 +175,16 @@ class MessageSerializer(
     }
 
     private fun <T> deserializePayload(
-        jsonNode: JsonNode,
+        jsonNode: JsonNode?,
         clazz: Class<T>
     ): T {
-        return objectMapper.treeToValue(jsonNode, clazz)
+        // OCPP-J allows null as well as {} for an empty payload. Jackson turns a null node into a null value
+        // instead of failing, which would hand callers a null typed as non-null, so read null as {}: payloads
+        // without required fields then parse, and payloads with them fail as a format error.
+        val payload = if (jsonNode == null || jsonNode.isNull || jsonNode.isMissingNode) getEmptyPayload() else jsonNode
+        return requireNotNull(objectMapper.treeToValue(payload, clazz)) {
+            "payload deserialized to null as ${clazz.simpleName}"
+        }
     }
 
     class Ocpp16ZonedDateSerializer : StdSerializer<ZonedDateTime>(ZonedDateTime::class.java) {

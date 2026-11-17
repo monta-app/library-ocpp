@@ -60,6 +60,16 @@ class HeartbeatSerializationTest : StringSpec({
         payloadResult.value.currentTime.format(formatter) shouldBe "2025-06-10T12:00:01Z"
     }
 
+    "parse a Heartbeat request with a null payload" {
+        val parsingResult = messageSerializer.parse("[2,\"req-1\",\"Heartbeat\",null]")
+        parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Request>>()
+        val ocppMessage = parsingResult.value
+        ocppMessage.shouldBeInstanceOf<Message.Request>()
+        val payloadResult = messageSerializer.deserializePayload(ocppMessage, HeartbeatRequest::class.java)
+        payloadResult.shouldBeInstanceOf<ParsingResult.Success<HeartbeatRequest>>()
+        payloadResult.value shouldBe HeartbeatRequest
+    }
+
     "serialize Heartbeat response" {
         val confirmation = HeartbeatConfirmation(
             currentTime = ZonedDateTime.parse("2025-06-10T12:00:01Z")

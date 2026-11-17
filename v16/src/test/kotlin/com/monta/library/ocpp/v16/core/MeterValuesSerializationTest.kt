@@ -137,6 +137,16 @@ class MeterValuesSerializationTest : StringSpec({
         payloadResult.shouldBeInstanceOf<ParsingResult.Success<MeterValuesConfirmation>>()
     }
 
+    "fail to parse a MeterValues request with a null payload" {
+        val parsingResult = messageSerializer.parse("[2,\"req-1\",\"MeterValues\",null]")
+        parsingResult.shouldBeInstanceOf<ParsingResult.Success<Message.Request>>()
+        val ocppMessage = parsingResult.value
+        ocppMessage.shouldBeInstanceOf<Message.Request>()
+        val payloadResult = messageSerializer.deserializePayload(ocppMessage, MeterValuesRequest::class.java)
+        payloadResult.shouldBeInstanceOf<ParsingResult.Failure<MeterValuesRequest>>()
+        payloadResult.uniqueId shouldBe "req-1"
+    }
+
     "serialize MeterValues response" {
         val confirmation = MeterValuesConfirmation
         val message = Message.Response("res-1", messageSerializer.toPayload(confirmation))

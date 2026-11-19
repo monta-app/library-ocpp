@@ -72,6 +72,25 @@ class Ocpp21FramesTest : StringSpec({
         message.toJsonString(serializer21) shouldBe """[5,"id\"1","FormatViolation","field \"status\" missing",{"a":1}]"""
     }
 
+    "CALLERROR, CALL and CALLRESULT are written with proper escaping in every mode" {
+        listOf(serializer16, serializer2, serializer21).forEach { serializer ->
+            Message.Error(
+                uniqueId = "id\"1",
+                errorCode = "FormatViolation",
+                errorDescription = "Cannot deserialize \"Bogus\"\nline 2 \\ end",
+                errorDetails = """{"a":1}"""
+            ).toJsonString(serializer) shouldBe """[4,"id\"1","FormatViolation","Cannot deserialize \"Bogus\"\nline 2 \\ end",{"a":1}]"""
+            Message.Error("x", "GenericError", "", "not json").toJsonString(serializer) shouldBe """[4,"x","GenericError","",{}]"""
+
+            val payload = (serializer.parse("""[2,"x","A",{"id":1}]""") as ParsingResult.Success<Message>)
+                .value
+                .let { it as Message.Request }
+                .payload
+            Message.Request("q\"1", "Heartbeat", payload).toJsonString(serializer) shouldBe """[2,"q\"1","Heartbeat",{"id":1}]"""
+            Message.Response("q\"1", payload).toJsonString(serializer) shouldBe """[3,"q\"1",{"id":1}]"""
+        }
+    }
+
     "CALLRESULTERROR with invalid details falls back to an empty object" {
         Message.CallResultError("x", "GenericError", "", "not json").toJsonString(serializer21) shouldBe """[5,"x","GenericError","",{}]"""
     }

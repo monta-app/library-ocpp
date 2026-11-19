@@ -36,11 +36,10 @@ sealed class Message(
 
         companion object {
             private const val MESSAGE_TYPE_ID: Int = 2
-            private const val JSON_FORMAT = "[$MESSAGE_TYPE_ID,\"%s\",\"%s\",%s]"
         }
 
         override fun toJsonString(serializer: MessageSerializer): String {
-            return JSON_FORMAT.format(uniqueId, action, serializer.serializePayload(payload))
+            return serializer.writeFrame(MESSAGE_TYPE_ID, uniqueId, action, payload)
         }
     }
 
@@ -61,11 +60,10 @@ sealed class Message(
 
         companion object {
             private const val MESSAGE_TYPE_ID: Int = 3
-            private const val JSON_FORMAT = "[$MESSAGE_TYPE_ID,\"%s\",%s]"
         }
 
         override fun toJsonString(serializer: MessageSerializer): String {
-            return JSON_FORMAT.format(uniqueId, serializer.serializePayload(payload))
+            return serializer.writeFrame(MESSAGE_TYPE_ID, uniqueId, payload)
         }
     }
 
@@ -92,11 +90,18 @@ sealed class Message(
 
         companion object {
             private const val MESSAGE_TYPE_ID: Int = 4
-            private const val JSON_FORMAT = "[$MESSAGE_TYPE_ID,\"%s\",\"%s\",\"%s\",%s]"
         }
 
+        // Written as a JSON array so quotes, backslashes and line breaks in the description are escaped (an
+        // exception message often contains them); details that aren't a JSON object become {}.
         override fun toJsonString(serializer: MessageSerializer): String {
-            return JSON_FORMAT.format(uniqueId, errorCode, errorDescription, errorDetails)
+            return serializer.writeFrame(
+                MESSAGE_TYPE_ID,
+                uniqueId,
+                errorCode,
+                errorDescription,
+                serializer.parseErrorDetails(errorDetails)
+            )
         }
     }
 
